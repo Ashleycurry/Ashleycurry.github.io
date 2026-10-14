@@ -11,11 +11,11 @@
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f9fd">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1628">
 <meta name="color-scheme" content="light dark">
-<link rel="canonical" href="https://xiaogao-code.github.io/2026/10/10/sync-calc-params-motion-control/">
+<link rel="canonical" href="https://ashleycurry.github.io/xiaogao-code.github.io/2026/10/10/sync-calc-params-motion-control/">
 <meta name="description" content="双轴步进电机同步运动控制完整工程——Sync_CalcParams 参数比例缩放实现两轴同时启停，AVR446 整数递推梯形加减速无浮点规划速度曲线，ESP8266 无线透传 + Python 上位机实时轨迹可视化。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="双轴步进电机同步运动控制：Sync_CalcParams 与 AVR446 梯形加减速">
-<meta property="og:url" content="https://xiaogao-code.github.io/2026/10/10/sync-calc-params-motion-control/index.html">
+<meta property="og:url" content="https://ashleycurry.github.io/xiaogao-code.github.io/2026/10/10/sync-calc-params-motion-control/index.html">
 <meta property="og:site_name" content="XiaoGao 的代码笔记">
 <meta property="og:description" content="双轴步进电机同步运动控制完整工程——Sync_CalcParams 参数比例缩放实现两轴同时启停，AVR446 整数递推梯形加减速无浮点规划速度曲线，ESP8266 无线透传 + Python 上位机实时轨迹可视化。">
 <meta property="og:locale" content="zh_CN">
@@ -41,13 +41,13 @@
     });
   })();
 </script>
-<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/xiaogao-code.github.io/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
 
 
 <link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400..900&family=Noto+Sans+SC:wght@900&display=swap">
 
-<link rel="stylesheet" href="/css/bisect.css">
-<link rel="alternate" type="application/atom+xml" title="XiaoGao 的代码笔记" href="/atom.xml">
+<link rel="stylesheet" href="/xiaogao-code.github.io/css/bisect.css">
+<link rel="alternate" type="application/atom+xml" title="XiaoGao 的代码笔记" href="/xiaogao-code.github.io/atom.xml">
 <script type="speculationrules">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.xml"}}]},"eagerness":"moderate"}]}
 </script>
@@ -69,7 +69,7 @@
 
 
 <header class="bs-header" data-header>
-  <a class="bs-brand" href="/" aria-label="XiaoGao 的代码笔记 首页">
+  <a class="bs-brand" href="/xiaogao-code.github.io/" aria-label="XiaoGao 的代码笔记 首页">
     <span class="bs-mark" aria-hidden="true"></span>
     <span class="bs-brand__name">XiaoGao 的代码笔记</span>
   </a>
@@ -77,7 +77,7 @@
     <ul>
       
       <li>
-        <a href="/" aria-current="page">
+        <a href="/xiaogao-code.github.io/" aria-current="page">
           <span class="bs-nav__no">01</span>
           <span class="bs-nav__zh">文章</span>
           <span class="bs-nav__en">Posts</span>
@@ -85,7 +85,7 @@
       </li>
       
       <li>
-        <a href="/archives/">
+        <a href="/xiaogao-code.github.io/archives/">
           <span class="bs-nav__no">02</span>
           <span class="bs-nav__zh">归档</span>
           <span class="bs-nav__en">Archive</span>
@@ -93,7 +93,7 @@
       </li>
       
       <li>
-        <a href="/categories/">
+        <a href="/xiaogao-code.github.io/categories/">
           <span class="bs-nav__no">03</span>
           <span class="bs-nav__zh">分类</span>
           <span class="bs-nav__en">Categories</span>
@@ -101,7 +101,7 @@
       </li>
       
       <li>
-        <a href="/tags/">
+        <a href="/xiaogao-code.github.io/tags/">
           <span class="bs-nav__no">04</span>
           <span class="bs-nav__zh">标签</span>
           <span class="bs-nav__en">Tags</span>
@@ -109,7 +109,7 @@
       </li>
       
       <li>
-        <a href="/about/">
+        <a href="/xiaogao-code.github.io/about/">
           <span class="bs-nav__no">05</span>
           <span class="bs-nav__zh">关于</span>
           <span class="bs-nav__en">About</span>
@@ -144,7 +144,7 @@
 <article class="bs-post" data-font="sans">
   <header class="bs-phead">
     <div class="bs-phead__text">
-      <p class="bs-kicker">NO.20 · <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/">机器人</a></p>
+      <p class="bs-kicker">NO.20 · <a href="/xiaogao-code.github.io/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/">机器人</a></p>
       <h1 class="bs-phead__title">双轴步进电机同步运动控制：Sync_CalcParams 与 AVR446 梯形加减速</h1>
       <p class="bs-phead__desc">双轴步进电机同步运动控制完整工程——Sync_CalcParams 参数比例缩放实现两轴同时启停，AVR446 整数递推梯形加减速无浮点规划速度曲线，ESP8266 无线透传 + Python 上位机实时轨迹可视化。</p>
       <dl class="bs-phead__meta">
@@ -267,7 +267,7 @@
   <footer class="bs-pfoot">
     
     <ul class="bs-tags" aria-label="标签">
-      <li><a href="/tags/STM32/">#STM32</a></li><li><a href="/tags/%E6%AD%A5%E8%BF%9B%E7%94%B5%E6%9C%BA/">#步进电机</a></li><li><a href="/tags/%E8%BF%90%E5%8A%A8%E6%8E%A7%E5%88%B6/">#运动控制</a></li><li><a href="/tags/AVR446/">#AVR446</a></li><li><a href="/tags/ESP8266/">#ESP8266</a></li><li><a href="/tags/%E4%B8%8A%E4%BD%8D%E6%9C%BA/">#上位机</a></li>
+      <li><a href="/xiaogao-code.github.io/tags/STM32/">#STM32</a></li><li><a href="/xiaogao-code.github.io/tags/%E6%AD%A5%E8%BF%9B%E7%94%B5%E6%9C%BA/">#步进电机</a></li><li><a href="/xiaogao-code.github.io/tags/%E8%BF%90%E5%8A%A8%E6%8E%A7%E5%88%B6/">#运动控制</a></li><li><a href="/xiaogao-code.github.io/tags/AVR446/">#AVR446</a></li><li><a href="/xiaogao-code.github.io/tags/ESP8266/">#ESP8266</a></li><li><a href="/xiaogao-code.github.io/tags/%E4%B8%8A%E4%BD%8D%E6%9C%BA/">#上位机</a></li>
     </ul>
     
     <div class="bs-pfoot__grid">
@@ -275,7 +275,7 @@
       <p class="bs-license">
         <span class="bs-kicker">LICENSE</span>
         本文作者 XiaoGao，采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可。
-        转载请注明出处：<a href="https://xiaogao-code.github.io/2026/10/10/sync-calc-params-motion-control/">https:&#x2F;&#x2F;xiaogao-code.github.io&#x2F;2026&#x2F;10&#x2F;10&#x2F;sync-calc-params-motion-control&#x2F;</a>
+        转载请注明出处：<a href="https://ashleycurry.github.io/xiaogao-code.github.io/2026/10/10/sync-calc-params-motion-control/">https:&#x2F;&#x2F;ashleycurry.github.io&#x2F;xiaogao-code.github.io&#x2F;2026&#x2F;10&#x2F;10&#x2F;sync-calc-params-motion-control&#x2F;</a>
       </p>
       
       
@@ -286,7 +286,7 @@
   <nav class="bs-pnav" aria-label="分页">
     <span class="bs-pnav__item bs-pnav__item--newer is-empty"><span class="bs-kicker">这是最新的一篇</span></span>
     
-    <a class="bs-pnav__item bs-pnav__item--older" href="/2026/09/29/stm32f407-smart-timer-controller/" rel="next">
+    <a class="bs-pnav__item bs-pnav__item--older" href="/xiaogao-code.github.io/2026/09/29/stm32f407-smart-timer-controller/" rel="next">
       <span class="bs-kicker">较早 OLDER →</span><span class="bs-pnav__t">STM32F407 智能定时用电控制器：四状态机 + 1ms 分时调度</span>
     </a>
     
@@ -298,7 +298,7 @@
 
 <footer class="bs-footer">
   <div class="bs-footer__white">
-    <a class="bs-brand bs-brand--footer" href="/">
+    <a class="bs-brand bs-brand--footer" href="/xiaogao-code.github.io/">
       <span class="bs-mark" aria-hidden="true"></span>
       <span class="bs-brand__name">XiaoGao 的代码笔记</span>
     </a>
@@ -307,7 +307,7 @@
       
       <li><a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">GitHub</a></li>
       
-      <li><a href="/atom.xml">RSS</a></li>
+      <li><a href="/xiaogao-code.github.io/atom.xml">RSS</a></li>
     </ul>
     <p class="bs-footer__meta">
       © 2026 XiaoGao
@@ -330,7 +330,7 @@
     </div>
   </div>
 </footer>
-<script id="bs-config" type="application/json">{"root":"/","search":"/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
+<script id="bs-config" type="application/json">{"root":"/xiaogao-code.github.io/","search":"/xiaogao-code.github.io/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
 
 <dialog class="bs-search" id="bs-search" aria-label="搜索文章或输入命令">
   <form class="bs-search__bar" method="dialog" role="search">
@@ -343,6 +343,6 @@
   <p class="bs-search__hint"><span>↑↓ 选择</span><span>↵ 打开</span><span>&gt;theme · &gt;random · &gt;top · &gt;archive</span></p>
 </dialog>
 
-<script type="module" src="/js/bisect.js"></script>
+<script type="module" src="/xiaogao-code.github.io/js/bisect.js"></script>
 </body>
 </html>

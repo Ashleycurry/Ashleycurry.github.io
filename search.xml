@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>模拟电路与常用元器件：软硬件的交界处</title>
-    <url>/2026/05/10/analog-circuits-and-components/</url>
+    <url>/xiaogao-code.github.io/2026/05/10/analog-circuits-and-components/</url>
     <content><![CDATA[<p>写嵌入式软件，离不开对硬件的理解。这份笔记整理模拟电路基础、常用电子元器件、半导体器件和硬件参数英文资料，适合嵌入式软件开发者补齐硬件基础。</p>
 <span id="more"></span>
 
@@ -113,8 +113,80 @@
       </tags>
   </entry>
   <entry>
+    <title>C 语言学习笔记：从语法基础到指针与内存</title>
+    <url>/xiaogao-code.github.io/2026/03/05/c-systems-programming/</url>
+    <content><![CDATA[<p>C 语言是嵌入式开发的起点，也是理解内存、编译与硬件之间关系的第一扇门。这套笔记从编程基础和开发环境开始，逐步覆盖 C 语言的核心语法、数据类型、指针、动态内存和文件操作，适合系统学习、课堂复习和编写 C 语言练习程序。</p>
+<span id="more"></span>
+
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><p>建议按照以下顺序阅读：</p>
+<ol>
+<li>了解程序、编程语言和 C 语言的发展背景；</li>
+<li>配置 C 语言开发环境，完成第一个 C 程序；</li>
+<li>学习变量、常量、进制、数据类型和类型转换；</li>
+<li>掌握运算符、表达式和程序控制语句；</li>
+<li>学习数组、字符串、函数和作用域；</li>
+<li>理解指针、指针与数组的关系，以及函数指针；</li>
+<li>学习预处理器、自定义数据类型和结构化数据；</li>
+<li>掌握动态内存分配和基本文件操作；</li>
+<li>使用断点调试和课后练习巩固知识。</li>
+</ol>
+<h2 id="笔记-01：入门与基础语法"><a href="#笔记-01：入门与基础语法" class="headerlink" title="笔记 01：入门与基础语法"></a>笔记 01：入门与基础语法</h2><p>第一份笔记覆盖 C 语言入门和基础语法：</p>
+<ul>
+<li><strong>C 语言概述</strong>：程序的概念、计算机语言简史、C 语言的发展与发行版本；</li>
+<li><strong>开发快速入门</strong>：开发工具选择、MinGW-w64 安装、VS Code 安装与配置；</li>
+<li><strong>第一个 C 程序</strong>：创建、编译、运行和分析 <code>Hello World</code>；</li>
+<li><strong>程序运行机制</strong>：预处理、编译、汇编、链接和运行；</li>
+<li><strong>变量与常量</strong>：变量声明、输入输出、标识符、关键字、<code>#define</code> 和 <code>const</code>；</li>
+<li><strong>二进制与进制转换</strong>：二进制、十进制、十六进制，以及原码、反码和补码；</li>
+<li><strong>数据类型</strong>：整数、浮点数、字符、布尔类型、格式占位符和类型转换；</li>
+<li><strong>运算符</strong>：算术、关系、逻辑、赋值、位运算、三元运算符和优先级；</li>
+<li><strong>程序控制语句</strong>：顺序、分支、<code>switch</code>、<code>while</code>、<code>do...while</code>、<code>for</code>、嵌套循环及跳转控制；</li>
+<li><strong>断点调试</strong>：断点设置、逐过程调试和逐断点调试。</li>
+</ul>
+<h2 id="笔记-02：指针、内存与文件"><a href="#笔记-02：指针、内存与文件" class="headerlink" title="笔记 02：指针、内存与文件"></a>笔记 02：指针、内存与文件</h2><p>第二份笔记在基础语法之上继续介绍 C 语言的核心能力：</p>
+<ul>
+<li><strong>数组与字符串</strong>：一维数组、字符数组、多维数组、数组遍历和数组越界；</li>
+<li><strong>函数</strong>：函数声明、调用、参数、返回值、函数原型和作用域；</li>
+<li><strong>递归与常用函数</strong>：递归函数，以及字符串、输入输出、日期时间和数学函数；</li>
+<li><strong>指针</strong>：地址、解引用、指针运算、指针与数组、字符指针、函数指针和多级指针；</li>
+<li><strong>指针安全</strong>：空指针、野指针、指针越界和释放后使用等常见问题；</li>
+<li><strong>预处理器</strong>：宏定义、带参数的宏、文件包含和条件编译；</li>
+<li><strong>自定义数据类型</strong>：枚举、结构体、共用体和 <code>typedef</code>；</li>
+<li><strong>动态内存分配</strong>：<code>void *</code>、<code>malloc</code>、<code>calloc</code>、<code>realloc</code>、<code>free</code> 以及内存管理原则；</li>
+<li><strong>文件操作</strong>：标准输入输出、文件打开与关闭、文件读写和常用文件函数。</li>
+</ul>
+<h2 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h2><p>笔记以 Windows 环境下的 C 语言开发为主要示例，推荐使用：</p>
+<ul>
+<li><a href="https://code.visualstudio.com/">Visual Studio Code</a>：编辑 C 语言源代码；</li>
+<li><a href="https://www.mingw-w64.org/">MinGW-w64</a>：提供 GCC 编译器工具链；</li>
+<li>VS Code 的 <strong>C&#x2F;C++ Extension Pack</strong>：提供代码编辑、编译和调试支持。</li>
+</ul>
+<p>也可以根据个人习惯选择 Visual Studio、Code::Blocks、CLion 或在线 C 编译器。</p>
+<h2 id="阅读建议"><a href="#阅读建议" class="headerlink" title="阅读建议"></a>阅读建议</h2><ul>
+<li>先通读概念，再运行文档中的代码示例；</li>
+<li>为每个章节单独创建练习目录，记录编译器输出和调试过程；</li>
+<li>重点练习指针、数组、函数和动态内存之间的关系；</li>
+<li>涉及编译器、操作系统或平台差异的内容，应结合当前开发环境进行验证。</li>
+</ul>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><p>笔记与文档源码见 GitHub 仓库：</p>
+<ul>
+<li><a href="https://github.com/Ashleycurry/c-systems-programming-handbook">c-systems-programming-handbook</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>编程语言</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>指针</tag>
+        <tag>内存管理</tag>
+        <tag>文件操作</tag>
+        <tag>学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>客户信息管理系统：C11 分层架构的控制台实战</title>
-    <url>/2026/09/08/customer-management-system/</url>
+    <url>/xiaogao-code.github.io/2026/09/08/customer-management-system/</url>
     <content><![CDATA[<p>学完 C 语言语法，最缺的就是一个”像样”的项目。这个客户信息管理系统把课程里的单文件示例重构为分层架构：应用层编排流程、领域层管理业务、界面层处理输入输出，并补齐了输入校验、动态数组、结果码和资源释放这些工程细节。</p>
 <span id="more"></span>
 
@@ -204,7 +276,7 @@
   </entry>
   <entry>
     <title>C++ 学习笔记：类与对象、模板与 STL 的完整路线</title>
-    <url>/2026/03/18/cpp-learning-notes/</url>
+    <url>/xiaogao-code.github.io/2026/03/18/cpp-learning-notes/</url>
     <content><![CDATA[<p>C++ 在 C 的基础上引入了面向对象、泛型编程和强大的标准库。这套笔记按课程顺序整理，内容覆盖 C++ 入门、面向对象、内存管理、模板和 STL 容器，目标是建立可持续扩展的 C++ 知识结构。</p>
 <span id="more"></span>
 
@@ -321,16 +393,16 @@
         <category>编程语言</category>
       </categories>
       <tags>
+        <tag>内存管理</tag>
         <tag>C++</tag>
         <tag>面向对象</tag>
         <tag>STL</tag>
         <tag>模板</tag>
-        <tag>内存管理</tag>
       </tags>
   </entry>
   <entry>
     <title>数据结构与算法笔记：从线性结构到查找与排序</title>
-    <url>/2026/04/28/data-structures-and-algorithms/</url>
+    <url>/xiaogao-code.github.io/2026/04/28/data-structures-and-algorithms/</url>
     <content><![CDATA[<p>算法是程序的骨架，数据结构是算法的舞台。这份笔记整理数据结构与算法课程的核心内容，覆盖数据结构基础、线性结构、算法复杂度、查找算法和排序算法，并附带一份复杂度速查表。</p>
 <span id="more"></span>
 
@@ -442,80 +514,8 @@
       </tags>
   </entry>
   <entry>
-    <title>C 语言学习笔记：从语法基础到指针与内存</title>
-    <url>/2026/03/05/c-systems-programming/</url>
-    <content><![CDATA[<p>C 语言是嵌入式开发的起点，也是理解内存、编译与硬件之间关系的第一扇门。这套笔记从编程基础和开发环境开始，逐步覆盖 C 语言的核心语法、数据类型、指针、动态内存和文件操作，适合系统学习、课堂复习和编写 C 语言练习程序。</p>
-<span id="more"></span>
-
-<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><p>建议按照以下顺序阅读：</p>
-<ol>
-<li>了解程序、编程语言和 C 语言的发展背景；</li>
-<li>配置 C 语言开发环境，完成第一个 C 程序；</li>
-<li>学习变量、常量、进制、数据类型和类型转换；</li>
-<li>掌握运算符、表达式和程序控制语句；</li>
-<li>学习数组、字符串、函数和作用域；</li>
-<li>理解指针、指针与数组的关系，以及函数指针；</li>
-<li>学习预处理器、自定义数据类型和结构化数据；</li>
-<li>掌握动态内存分配和基本文件操作；</li>
-<li>使用断点调试和课后练习巩固知识。</li>
-</ol>
-<h2 id="笔记-01：入门与基础语法"><a href="#笔记-01：入门与基础语法" class="headerlink" title="笔记 01：入门与基础语法"></a>笔记 01：入门与基础语法</h2><p>第一份笔记覆盖 C 语言入门和基础语法：</p>
-<ul>
-<li><strong>C 语言概述</strong>：程序的概念、计算机语言简史、C 语言的发展与发行版本；</li>
-<li><strong>开发快速入门</strong>：开发工具选择、MinGW-w64 安装、VS Code 安装与配置；</li>
-<li><strong>第一个 C 程序</strong>：创建、编译、运行和分析 <code>Hello World</code>；</li>
-<li><strong>程序运行机制</strong>：预处理、编译、汇编、链接和运行；</li>
-<li><strong>变量与常量</strong>：变量声明、输入输出、标识符、关键字、<code>#define</code> 和 <code>const</code>；</li>
-<li><strong>二进制与进制转换</strong>：二进制、十进制、十六进制，以及原码、反码和补码；</li>
-<li><strong>数据类型</strong>：整数、浮点数、字符、布尔类型、格式占位符和类型转换；</li>
-<li><strong>运算符</strong>：算术、关系、逻辑、赋值、位运算、三元运算符和优先级；</li>
-<li><strong>程序控制语句</strong>：顺序、分支、<code>switch</code>、<code>while</code>、<code>do...while</code>、<code>for</code>、嵌套循环及跳转控制；</li>
-<li><strong>断点调试</strong>：断点设置、逐过程调试和逐断点调试。</li>
-</ul>
-<h2 id="笔记-02：指针、内存与文件"><a href="#笔记-02：指针、内存与文件" class="headerlink" title="笔记 02：指针、内存与文件"></a>笔记 02：指针、内存与文件</h2><p>第二份笔记在基础语法之上继续介绍 C 语言的核心能力：</p>
-<ul>
-<li><strong>数组与字符串</strong>：一维数组、字符数组、多维数组、数组遍历和数组越界；</li>
-<li><strong>函数</strong>：函数声明、调用、参数、返回值、函数原型和作用域；</li>
-<li><strong>递归与常用函数</strong>：递归函数，以及字符串、输入输出、日期时间和数学函数；</li>
-<li><strong>指针</strong>：地址、解引用、指针运算、指针与数组、字符指针、函数指针和多级指针；</li>
-<li><strong>指针安全</strong>：空指针、野指针、指针越界和释放后使用等常见问题；</li>
-<li><strong>预处理器</strong>：宏定义、带参数的宏、文件包含和条件编译；</li>
-<li><strong>自定义数据类型</strong>：枚举、结构体、共用体和 <code>typedef</code>；</li>
-<li><strong>动态内存分配</strong>：<code>void *</code>、<code>malloc</code>、<code>calloc</code>、<code>realloc</code>、<code>free</code> 以及内存管理原则；</li>
-<li><strong>文件操作</strong>：标准输入输出、文件打开与关闭、文件读写和常用文件函数。</li>
-</ul>
-<h2 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h2><p>笔记以 Windows 环境下的 C 语言开发为主要示例，推荐使用：</p>
-<ul>
-<li><a href="https://code.visualstudio.com/">Visual Studio Code</a>：编辑 C 语言源代码；</li>
-<li><a href="https://www.mingw-w64.org/">MinGW-w64</a>：提供 GCC 编译器工具链；</li>
-<li>VS Code 的 <strong>C&#x2F;C++ Extension Pack</strong>：提供代码编辑、编译和调试支持。</li>
-</ul>
-<p>也可以根据个人习惯选择 Visual Studio、Code::Blocks、CLion 或在线 C 编译器。</p>
-<h2 id="阅读建议"><a href="#阅读建议" class="headerlink" title="阅读建议"></a>阅读建议</h2><ul>
-<li>先通读概念，再运行文档中的代码示例；</li>
-<li>为每个章节单独创建练习目录，记录编译器输出和调试过程；</li>
-<li>重点练习指针、数组、函数和动态内存之间的关系；</li>
-<li>涉及编译器、操作系统或平台差异的内容，应结合当前开发环境进行验证。</li>
-</ul>
-<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><p>笔记与文档源码见 GitHub 仓库：</p>
-<ul>
-<li><a href="https://github.com/Ashleycurry/c-systems-programming-handbook">c-systems-programming-handbook</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>编程语言</category>
-      </categories>
-      <tags>
-        <tag>内存管理</tag>
-        <tag>C</tag>
-        <tag>指针</tag>
-        <tag>文件操作</tag>
-        <tag>学习笔记</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>数字电路与计算机组成：从逻辑门到自制 CPU</title>
-    <url>/2026/05/22/digital-logic-and-computer-organization/</url>
+    <url>/xiaogao-code.github.io/2026/05/22/digital-logic-and-computer-organization/</url>
     <content><![CDATA[<p>理解计算机最好的方式，是自己造一台。这份笔记从二进制和逻辑门开始，用 Digital 仿真软件逐步设计出一台能运行汇编程序的简单计算机，最后延伸到总线、引导程序和单片机启动流程。</p>
 <span id="more"></span>
 
@@ -625,7 +625,7 @@
   </entry>
   <entry>
     <title>FreeRTOS 实时操作系统：从裸机到多任务调度</title>
-    <url>/2026/06/28/freertos-learning-notes/</url>
+    <url>/xiaogao-code.github.io/2026/06/28/freertos-learning-notes/</url>
     <content><![CDATA[<p>裸机程序写到一定程度，总会遇到”多个任务如何同时运行”的问题。这份笔记整理 FreeRTOS 的完整学习路径：从任务状态与调度器讲起，覆盖内核移植、任务管理、任务间通信，最后延伸到 Tickless 低功耗与五种堆内存管理方案。</p>
 <span id="more"></span>
 
@@ -736,8 +736,206 @@
       </tags>
   </entry>
   <entry>
+    <title>Java 工程实践手册：三阶段学习路线与案例体系</title>
+    <url>/xiaogao-code.github.io/2026/04/15/java-engineering-handbook/</url>
+    <content><![CDATA[<p>这份手册整理 Java 学习与工程实践的课程资料、源码案例和学习笔记，内容按三个阶段循序推进：阶段一为 Java 核心与 AI 开发基础；阶段二为 Java 核心与 AI 开发进阶；阶段三为 AI 赋能 Web 开发。源码案例按”一个知识点对应一个小案例”的风格编写，并配有中文注释，方便对照课件学习。</p>
+<span id="more"></span>
+
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">阶段一：Java 核心与 AI 开发基础</span><br><span class="line">    -&gt; 开发环境搭建与 IDEA 开发工具</span><br><span class="line">    -&gt; 基础语法、运算符、方法与流程控制</span><br><span class="line">    -&gt; 数组、面向对象基础与面向对象高级</span><br><span class="line">    -&gt; 常用 API、集合基础</span><br><span class="line">            |</span><br><span class="line">            v</span><br><span class="line">阶段二：Java 核心与 AI 开发进阶</span><br><span class="line">    -&gt; 集合高级（List / Set / Map 体系）</span><br><span class="line">    -&gt; Stream 流、异常、File 类与递归</span><br><span class="line">    -&gt; 常用 API、IO 流</span><br><span class="line">    -&gt; 多线程、网络编程、Java 高级技术</span><br><span class="line">            |</span><br><span class="line">            v</span><br><span class="line">阶段三：AI 赋能 Web 开发</span><br><span class="line">    -&gt; Web 基础知识、HTML + CSS、JavaScript、Vue3</span><br><span class="line">    -&gt; Maven、数据库、SpringBoot（JDBC / MyBatis）</span><br><span class="line">    -&gt; 后端 Web 实战（Tlias 智能学习辅助系统）</span><br><span class="line">    -&gt; 前端 Web 实战、项目部署（Linux）与 Docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="资料与环境"><a href="#资料与环境" class="headerlink" title="资料与环境"></a>资料与环境</h2><ul>
+<li>课件目录：3 个阶段，48 份 PPTX 与 1 份 PDF，共 49 份；</li>
+<li>编程语言：Java（JDK 21）；</li>
+<li>开发工具：IntelliJ IDEA；</li>
+<li>工程组织：按阶段划分为独立 IDEA 工程，每个章节对应一个独立模块；</li>
+<li>源码包名：<code>com.myproject.*</code>。</li>
+</ul>
+<h2 id="阶段一：Java-核心与-AI-开发基础"><a href="#阶段一：Java-核心与-AI-开发基础" class="headerlink" title="阶段一：Java 核心与 AI 开发基础"></a>阶段一：Java 核心与 AI 开发基础</h2><p>从开发环境到面向对象高级，共 15 份课件，配套 Chapter_01 ~ Chapter_06 源码案例：</p>
+<ul>
+<li><strong>Chapter_01 环境搭建</strong>：Java 背景、JDK 安装、HelloWorld 与程序执行原理、IDEA 使用；</li>
+<li><strong>Chapter_02 基础语法</strong>：注释、字面量、变量与八种基本数据类型、运算符、方法与类型转换；</li>
+<li><strong>Chapter_03 流程控制</strong>：if &#x2F; switch 分支、for &#x2F; while &#x2F; do-while 循环、break &#x2F; continue、Random 猜数字游戏；</li>
+<li><strong>Chapter_04 数组</strong>：静态与动态初始化、元素访问、遍历应用（求和、最大值、反转）、二维数组；</li>
+<li><strong>Chapter_05 面向对象基础</strong>：类与对象、封装与权限修饰符、构造方法、this、static、标准 JavaBean；</li>
+<li><strong>Chapter_06 面向对象高级</strong>：继承与方法重写、抽象类、final、Object 类与 toString 重写。</li>
+</ul>
+<h2 id="阶段二：Java-核心与-AI-开发进阶"><a href="#阶段二：Java-核心与-AI-开发进阶" class="headerlink" title="阶段二：Java 核心与 AI 开发进阶"></a>阶段二：Java 核心与 AI 开发进阶</h2><ul>
+<li><strong>集合高级</strong>：ArrayList &#x2F; LinkedList 与 HashSet &#x2F; LinkedHashSet &#x2F; TreeSet 体系；</li>
+<li><strong>Stream 流</strong>：Lambda 表达式与流式操作；</li>
+<li><strong>异常</strong>：异常体系、处理方式与自定义异常；</li>
+<li><strong>File 类</strong>：常用 API 与递归；</li>
+<li><strong>常用 API</strong>：Math、System、包装类、BigDecimal 与 Arrays；</li>
+<li><strong>IO 流</strong>：字节流与字符流；</li>
+<li><strong>多线程</strong>：线程安全与同步、线程池；</li>
+<li><strong>网络编程</strong>：网络三要素、UDP 与 TCP 通信；</li>
+<li><strong>Java 高级技术</strong>：枚举、类加载器、反射、注解与动态代理。</li>
+</ul>
+<h2 id="阶段三：AI-赋能-Web-开发"><a href="#阶段三：AI-赋能-Web-开发" class="headerlink" title="阶段三：AI 赋能 Web 开发"></a>阶段三：AI 赋能 Web 开发</h2><p>从 Web 基础到完整项目部署：</p>
+<ul>
+<li><strong>Web 基础</strong>：HTML + CSS、JavaScript、Vue3、Web 服务器与静态资源；</li>
+<li><strong>后端基础</strong>：Maven 依赖管理、数据库、JDBC &#x2F; MyBatis &#x2F; MyBatisPlus；</li>
+<li><strong>SpringBoot</strong>：登录认证、AOP、Maven 高级、SpringBoot 原理与分层架构总结；</li>
+<li><strong>后端实战</strong>：Tlias 智能学习辅助系统（部门管理与员工管理：条件分页查询、新增、修改、删除、事务与文件上传）；</li>
+<li><strong>前端实战</strong>：Vue 工程化 + ElementPlus 的 Tlias 案例；</li>
+<li><strong>部署</strong>：Linux 项目部署与 Docker 容器化。</li>
+</ul>
+<h2 id="如何运行"><a href="#如何运行" class="headerlink" title="如何运行"></a>如何运行</h2><ul>
+<li>使用 IntelliJ IDEA 打开对应阶段的工程目录（例如 <code>src/Phase_001</code>）；</li>
+<li>工程默认使用 JDK 21，若本机 JDK 版本不同，可在 <code>File → Project Structure</code> 中调整 Project SDK；</li>
+<li>每个案例类都包含 <code>main</code> 方法，可右键直接运行；</li>
+<li>所有案例仅依赖 JDK 标准库，无需额外安装依赖。</li>
+</ul>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a href="https://github.com/Ashleycurry/java-engineering-handbook">java-engineering-handbook</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>编程语言</category>
+      </categories>
+      <tags>
+        <tag>面向对象</tag>
+        <tag>Java</tag>
+        <tag>SpringBoot</tag>
+        <tag>集合</tag>
+        <tag>Web开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux 应用层开发：从文件 I/O 到 epoll 高并发</title>
+    <url>/xiaogao-code.github.io/2026/07/22/linux-application-development/</url>
+    <content><![CDATA[<p>在 Linux 上写 C 程序，是嵌入式工程师从”操作寄存器”走向”操作系统服务”的必经之路。这份笔记从 GCC 编译链接讲起，深入文件 I&#x2F;O、进程线程、进程间通信、Socket 网络编程，最后到达 epoll 高并发服务器的完整实现。</p>
+<span id="more"></span>
+
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Linux C 开发基础</span><br><span class="line">    ├── GCC、glibc、GNU C 和 POSIX</span><br><span class="line">    ├── VSCode 与 GCC 开发环境</span><br><span class="line">    ├── C 语言编译、汇编和链接</span><br><span class="line">    └── Makefile</span><br><span class="line">            ↓</span><br><span class="line">Linux 系统接口</span><br><span class="line">    ├── 标准 I/O 与文件操作</span><br><span class="line">    ├── 系统调用</span><br><span class="line">    └── 文件描述符</span><br><span class="line">            ↓</span><br><span class="line">并发与进程间通信</span><br><span class="line">    ├── 进程创建与执行</span><br><span class="line">    ├── 管道、共享内存、消息队列</span><br><span class="line">    ├── 信号</span><br><span class="line">    ├── 线程和线程同步</span><br><span class="line">    └── 线程池</span><br><span class="line">            ↓</span><br><span class="line">网络应用开发</span><br><span class="line">    ├── TCP/IP 网络模型</span><br><span class="line">    ├── TCP、UDP 和 Unix Domain Socket</span><br><span class="line">    ├── 单连接、多进程和多线程服务器</span><br><span class="line">    └── IP、DNS、ARP、MAC 和物理层</span><br><span class="line">            ↓</span><br><span class="line">服务化与高并发</span><br><span class="line">    ├── 守护进程</span><br><span class="line">    └── select、poll、epoll</span><br></pre></td></tr></table></figure>
+
+<h2 id="内容概览"><a href="#内容概览" class="headerlink" title="内容概览"></a>内容概览</h2><h3 id="编译与构建"><a href="#编译与构建" class="headerlink" title="编译与构建"></a>编译与构建</h3><p>理解 GCC、glibc、GNU C 和 POSIX 的关系，掌握 C 语言从源文件到可执行文件的完整过程（预处理 → 编译 → 汇编 → 链接），使用 Makefile 管理编译目标、依赖关系和构建命令。</p>
+<h3 id="文件-I-O"><a href="#文件-I-O" class="headerlink" title="文件 I&#x2F;O"></a>文件 I&#x2F;O</h3><p>区分面向流的标准 I&#x2F;O（<code>fopen</code>&#x2F;<code>fread</code>&#x2F;<code>fwrite</code>）与面向文件描述符的系统 I&#x2F;O（<code>open</code>&#x2F;<code>read</code>&#x2F;<code>write</code>），理解标准输入输出、文件描述符及其在进程中的引用关系。</p>
+<h3 id="进程处理"><a href="#进程处理" class="headerlink" title="进程处理"></a>进程处理</h3><ul>
+<li><code>system</code> 创建子进程、<code>fork</code> 理解父子进程执行流、<code>execve</code> 替换进程映像、<code>waitpid</code> 回收子进程；</li>
+<li>理解文件描述符引用计数、进程树和孤儿进程；</li>
+<li>进程间通信：匿名管道（Pipe）、有名管道（FIFO）、共享内存、消息队列，以及信号处理例程。</li>
+</ul>
+<h3 id="线程处理"><a href="#线程处理" class="headerlink" title="线程处理"></a>线程处理</h3><ul>
+<li>理解 Linux 线程模型与进程的关系，使用线程 API 创建和终止线程；</li>
+<li>认识竞态条件，使用互斥锁、读写锁、自旋锁、条件变量和信号量完成同步；</li>
+<li>使用 Glib 线程池组织任务执行和线程复用。</li>
+</ul>
+<p><strong>并发模型对比</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>主要特点</th>
+<th>适用方向</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>单进程单线程</td>
+<td>结构简单，资源开销小</td>
+<td>简单命令行程序</td>
+</tr>
+<tr>
+<td>多进程</td>
+<td>地址空间隔离，故障影响小</td>
+<td>独立任务和进程级隔离</td>
+</tr>
+<tr>
+<td>多线程</td>
+<td>共享地址空间，通信成本低</td>
+<td>多连接服务、共享数据处理</td>
+</tr>
+<tr>
+<td>I&#x2F;O 多路复用</td>
+<td>一个执行流管理多个 I&#x2F;O</td>
+<td>大量网络连接、事件驱动</td>
+</tr>
+</tbody></table>
+<h3 id="Socket-编程"><a href="#Socket-编程" class="headerlink" title="Socket 编程"></a>Socket 编程</h3><ul>
+<li>网络基础：OSI 七层、TCP&#x2F;IP 四层模型，数据单元与以太网通信流程；</li>
+<li>TCP：报文段格式、连接建立与释放、可靠传输、滑动窗口和拥塞控制，实现只支持单连接的版本后，再用多线程和多进程扩展；</li>
+<li>UDP 与 Unix Domain Socket 本地进程间通信；</li>
+<li>深入 IP 地址分类、DNS 查询过程、数据链路层、MAC 地址与 ARP。</li>
+</ul>
+<h3 id="守护进程与-I-O-多路复用"><a href="#守护进程与-I-O-多路复用" class="headerlink" title="守护进程与 I&#x2F;O 多路复用"></a>守护进程与 I&#x2F;O 多路复用</h3><ul>
+<li>掌握创建守护进程的基本规则：脱离终端、处理文件描述符、日志记录与优雅关闭；</li>
+<li>对比 <code>select</code>（fd 集合）、<code>poll</code>（事件数组）和 <code>epoll</code>（事件通知）的工作方式；</li>
+<li>理解 <code>epoll</code> 的水平触发（LT）与边沿触发（ET）模式，ET 模式需要配合非阻塞 I&#x2F;O 和持续读取策略。</li>
+</ul>
+<h2 id="常用-API-速查"><a href="#常用-API-速查" class="headerlink" title="常用 API 速查"></a>常用 API 速查</h2><table>
+<thead>
+<tr>
+<th>领域</th>
+<th>常用 API</th>
+<th>主要用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>文件描述符</td>
+<td><code>open</code>、<code>close</code>、<code>read</code>、<code>write</code></td>
+<td>系统调用方式访问文件</td>
+</tr>
+<tr>
+<td>进程</td>
+<td><code>system</code>、<code>fork</code>、<code>execve</code>、<code>waitpid</code></td>
+<td>创建、替换和回收进程</td>
+</tr>
+<tr>
+<td>线程</td>
+<td><code>pthread_create</code></td>
+<td>创建、控制和回收线程</td>
+</tr>
+<tr>
+<td>同步</td>
+<td>互斥锁、读写锁、条件变量、信号量</td>
+<td>保护共享资源和协调执行</td>
+</tr>
+<tr>
+<td>TCP Socket</td>
+<td><code>socket</code>、<code>bind</code>、<code>listen</code>、<code>accept</code>、<code>connect</code></td>
+<td>建立 TCP 网络通信</td>
+</tr>
+<tr>
+<td>UDP Socket</td>
+<td><code>sendto</code>、<code>recvfrom</code></td>
+<td>实现无连接通信</td>
+</tr>
+<tr>
+<td>I&#x2F;O 多路复用</td>
+<td><code>select</code>、<code>poll</code>、<code>epoll</code></td>
+<td>监听多个文件描述符</td>
+</tr>
+</tbody></table>
+<h2 id="工程注意事项"><a href="#工程注意事项" class="headerlink" title="工程注意事项"></a>工程注意事项</h2><ul>
+<li>共享内存、消息队列、管道和 Socket 使用后应及时释放或关闭资源；</li>
+<li>TCP 服务端应处理断开、短读、短写、缓冲区边界和异常连接；</li>
+<li>多线程程序需要明确共享数据、锁的所有权、等待条件和退出流程；</li>
+<li>每个系统调用都记录返回值、错误处理、资源释放和并发安全要求。</li>
+</ul>
+<h2 id="学习建议"><a href="#学习建议" class="headerlink" title="学习建议"></a>学习建议</h2><ol>
+<li>先掌握 GCC、编译链接流程和 Makefile，再学习 Linux 系统接口；</li>
+<li>按 <code>fork</code>、<code>execve</code>、<code>waitpid</code> 的顺序理解进程创建和执行；</li>
+<li>先掌握管道和共享内存，再学习消息队列、信号和更复杂的 IPC；</li>
+<li>网络部分先理解 TCP 状态和 Socket API，再对比多进程、多线程和 I&#x2F;O 多路复用服务器。</li>
+</ol>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a href="https://github.com/Ashleycurry/linux-application-development-notes">linux-application-development-notes</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Linux 与工具</category>
+      </categories>
+      <tags>
+        <tag>C语言</tag>
+        <tag>Linux</tag>
+        <tag>多线程</tag>
+        <tag>Socket</tag>
+        <tag>epoll</tag>
+        <tag>进程通信</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux、Shell 与正则表达式：文本处理三件套</title>
-    <url>/2026/07/10/linux-shell-regex/</url>
+    <url>/xiaogao-code.github.io/2026/07/10/linux-shell-regex/</url>
     <content><![CDATA[<p>嵌入式开发离不开 Linux。这份笔记整理三块内容：Linux（Ubuntu）系统管理基础、Shell 脚本编程、正则表达式语法，合起来就是日常开发中最常用的”文本处理三件套”。</p>
 <span id="more"></span>
 
@@ -886,206 +1084,307 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux 应用层开发：从文件 I/O 到 epoll 高并发</title>
-    <url>/2026/07/22/linux-application-development/</url>
-    <content><![CDATA[<p>在 Linux 上写 C 程序，是嵌入式工程师从”操作寄存器”走向”操作系统服务”的必经之路。这份笔记从 GCC 编译链接讲起，深入文件 I&#x2F;O、进程线程、进程间通信、Socket 网络编程，最后到达 epoll 高并发服务器的完整实现。</p>
+    <title>家庭收支记账软件：用整数&quot;分&quot;守护货币精度</title>
+    <url>/xiaogao-code.github.io/2026/09/15/personal-finance-manager/</url>
+    <content><![CDATA[<p>写记账软件最容易踩的坑，是用 <code>double</code> 存金额。这个家庭收支记账软件把”货币精度”当作第一设计问题：内部用 <code>int64_t</code> 保存”分”，所有运算完成后再格式化显示，顺便演示了一个 C 语言项目如何用四层架构把职责拆干净。</p>
 <span id="more"></span>
 
-<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Linux C 开发基础</span><br><span class="line">    ├── GCC、glibc、GNU C 和 POSIX</span><br><span class="line">    ├── VSCode 与 GCC 开发环境</span><br><span class="line">    ├── C 语言编译、汇编和链接</span><br><span class="line">    └── Makefile</span><br><span class="line">            ↓</span><br><span class="line">Linux 系统接口</span><br><span class="line">    ├── 标准 I/O 与文件操作</span><br><span class="line">    ├── 系统调用</span><br><span class="line">    └── 文件描述符</span><br><span class="line">            ↓</span><br><span class="line">并发与进程间通信</span><br><span class="line">    ├── 进程创建与执行</span><br><span class="line">    ├── 管道、共享内存、消息队列</span><br><span class="line">    ├── 信号</span><br><span class="line">    ├── 线程和线程同步</span><br><span class="line">    └── 线程池</span><br><span class="line">            ↓</span><br><span class="line">网络应用开发</span><br><span class="line">    ├── TCP/IP 网络模型</span><br><span class="line">    ├── TCP、UDP 和 Unix Domain Socket</span><br><span class="line">    ├── 单连接、多进程和多线程服务器</span><br><span class="line">    └── IP、DNS、ARP、MAC 和物理层</span><br><span class="line">            ↓</span><br><span class="line">服务化与高并发</span><br><span class="line">    ├── 守护进程</span><br><span class="line">    └── select、poll、epoll</span><br></pre></td></tr></table></figure>
+<h2 id="功能特性"><a href="#功能特性" class="headerlink" title="功能特性"></a>功能特性</h2><ul>
+<li>初始账户余额 1000.00；</li>
+<li>登记收入与支出，记录说明；</li>
+<li><strong>余额校验</strong>：支出超过当前余额时拒绝操作并提示余额不足；</li>
+<li>查看每笔收支金额、交易后的账户余额和说明；</li>
+<li>没有交易记录时显示空记录提示；</li>
+<li>退出前 <code>y/n</code> 确认，菜单、金额、说明全部格式校验；</li>
+<li>交易记录用动态数组管理，运行期间持续追加。</li>
+</ul>
+<h2 id="四层模块架构"><a href="#四层模块架构" class="headerlink" title="四层模块架构"></a>四层模块架构</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">personal-finance-manager/</span><br><span class="line">├── src/</span><br><span class="line">│   ├── main.c              # 程序入口</span><br><span class="line">│   ├── app/                # 应用层：流程编排</span><br><span class="line">│   ├── domain/             # 领域层：账户与业务规则</span><br><span class="line">│   ├── shared/             # 共享层：金额解析与格式化</span><br><span class="line">│   └── ui/                 # 界面层：输入读取与展示</span><br><span class="line">└── docs/                   # 需求文档</span><br></pre></td></tr></table></figure>
 
-<h2 id="内容概览"><a href="#内容概览" class="headerlink" title="内容概览"></a>内容概览</h2><h3 id="编译与构建"><a href="#编译与构建" class="headerlink" title="编译与构建"></a>编译与构建</h3><p>理解 GCC、glibc、GNU C 和 POSIX 的关系，掌握 C 语言从源文件到可执行文件的完整过程（预处理 → 编译 → 汇编 → 链接），使用 Makefile 管理编译目标、依赖关系和构建命令。</p>
-<h3 id="文件-I-O"><a href="#文件-I-O" class="headerlink" title="文件 I&#x2F;O"></a>文件 I&#x2F;O</h3><p>区分面向流的标准 I&#x2F;O（<code>fopen</code>&#x2F;<code>fread</code>&#x2F;<code>fwrite</code>）与面向文件描述符的系统 I&#x2F;O（<code>open</code>&#x2F;<code>read</code>&#x2F;<code>write</code>），理解标准输入输出、文件描述符及其在进程中的引用关系。</p>
-<h3 id="进程处理"><a href="#进程处理" class="headerlink" title="进程处理"></a>进程处理</h3><ul>
-<li><code>system</code> 创建子进程、<code>fork</code> 理解父子进程执行流、<code>execve</code> 替换进程映像、<code>waitpid</code> 回收子进程；</li>
-<li>理解文件描述符引用计数、进程树和孤儿进程；</li>
-<li>进程间通信：匿名管道（Pipe）、有名管道（FIFO）、共享内存、消息队列，以及信号处理例程。</li>
-</ul>
-<h3 id="线程处理"><a href="#线程处理" class="headerlink" title="线程处理"></a>线程处理</h3><ul>
-<li>理解 Linux 线程模型与进程的关系，使用线程 API 创建和终止线程；</li>
-<li>认识竞态条件，使用互斥锁、读写锁、自旋锁、条件变量和信号量完成同步；</li>
-<li>使用 Glib 线程池组织任务执行和线程复用。</li>
-</ul>
-<p><strong>并发模型对比</strong>：</p>
 <table>
 <thead>
 <tr>
-<th>模型</th>
-<th>主要特点</th>
-<th>适用方向</th>
+<th>模块</th>
+<th>职责</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>单进程单线程</td>
-<td>结构简单，资源开销小</td>
-<td>简单命令行程序</td>
+<td><code>src/app/</code></td>
+<td>应用流程编排，连接账户业务、输入和展示</td>
 </tr>
 <tr>
-<td>多进程</td>
-<td>地址空间隔离，故障影响小</td>
-<td>独立任务和进程级隔离</td>
+<td><code>src/domain/</code></td>
+<td>账户、交易记录和收支业务规则</td>
 </tr>
 <tr>
-<td>多线程</td>
-<td>共享地址空间，通信成本低</td>
-<td>多连接服务、共享数据处理</td>
+<td><code>src/shared/</code></td>
+<td>金额解析与格式化等通用能力</td>
 </tr>
 <tr>
-<td>I&#x2F;O 多路复用</td>
-<td>一个执行流管理多个 I&#x2F;O</td>
-<td>大量网络连接、事件驱动</td>
+<td><code>src/ui/</code></td>
+<td>控制台输入读取、校验和输出</td>
 </tr>
 </tbody></table>
-<h3 id="Socket-编程"><a href="#Socket-编程" class="headerlink" title="Socket 编程"></a>Socket 编程</h3><ul>
-<li>网络基础：OSI 七层、TCP&#x2F;IP 四层模型，数据单元与以太网通信流程；</li>
-<li>TCP：报文段格式、连接建立与释放、可靠传输、滑动窗口和拥塞控制，实现只支持单连接的版本后，再用多线程和多进程扩展；</li>
-<li>UDP 与 Unix Domain Socket 本地进程间通信；</li>
-<li>深入 IP 地址分类、DNS 查询过程、数据链路层、MAC 地址与 ARP。</li>
+<p>UI 层不直接修改账户内部状态，领域层负责账户余额与交易记录的一致性——这条边界是分层设计里最值得体会的部分。</p>
+<h2 id="金额安全：没有-double-的记账本"><a href="#金额安全：没有-double-的记账本" class="headerlink" title="金额安全：没有 double 的记账本"></a>金额安全：没有 double 的记账本</h2><p>程序没有使用 <code>double</code> 保存余额，而是用 <code>int64_t</code> 保存”分”：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">用户输入 100.50  →  内部保存 10050  →  运算后再格式化为两位小数</span><br></pre></td></tr></table></figure>
+
+<p>这样所有加减运算都是整数运算，从根本上避免了浮点误差在账目上累积。</p>
+<h2 id="工程化设计"><a href="#工程化设计" class="headerlink" title="工程化设计"></a>工程化设计</h2><ul>
+<li><strong>输入校验</strong>：菜单范围、金额格式、正数约束、小数位数、说明长度、确认输入，避免直接使用不安全的 <code>scanf</code>；</li>
+<li><strong>资源管理</strong>：交易记录动态数组容量不足时自动扩容，退出前释放账户持有的动态内存；</li>
+<li>编译开启 <code>-Wall -Wextra -Wpedantic</code>，GCC 与 Clang 均可零警告构建。</li>
 </ul>
-<h3 id="守护进程与-I-O-多路复用"><a href="#守护进程与-I-O-多路复用" class="headerlink" title="守护进程与 I&#x2F;O 多路复用"></a>守护进程与 I&#x2F;O 多路复用</h3><ul>
-<li>掌握创建守护进程的基本规则：脱离终端、处理文件描述符、日志记录与优雅关闭；</li>
-<li>对比 <code>select</code>（fd 集合）、<code>poll</code>（事件数组）和 <code>epoll</code>（事件通知）的工作方式；</li>
-<li>理解 <code>epoll</code> 的水平触发（LT）与边沿触发（ET）模式，ET 模式需要配合非阻塞 I&#x2F;O 和持续读取策略。</li>
+<h2 id="编译运行"><a href="#编译运行" class="headerlink" title="编译运行"></a>编译运行</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gcc -std=c11 -Wall -Wextra -Wpedantic -Isrc \</span><br><span class="line">    src/main.c src/app/finance_app.c \</span><br><span class="line">    src/domain/finance_account.c src/shared/money.c \</span><br><span class="line">    src/ui/console_input.c src/ui/console_view.c \</span><br><span class="line">    -o finance-manager</span><br></pre></td></tr></table></figure>
+
+<h2 id="后续扩展方向"><a href="#后续扩展方向" class="headerlink" title="后续扩展方向"></a>后续扩展方向</h2><ul>
+<li>增加文件或数据库持久化；</li>
+<li>按日期、类型和说明查询交易记录，增加月度统计；</li>
+<li>增加预算和分类管理、单元测试以及 CMake 构建流程。</li>
 </ul>
-<h2 id="常用-API-速查"><a href="#常用-API-速查" class="headerlink" title="常用 API 速查"></a>常用 API 速查</h2><table>
-<thead>
-<tr>
-<th>领域</th>
-<th>常用 API</th>
-<th>主要用途</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>文件描述符</td>
-<td><code>open</code>、<code>close</code>、<code>read</code>、<code>write</code></td>
-<td>系统调用方式访问文件</td>
-</tr>
-<tr>
-<td>进程</td>
-<td><code>system</code>、<code>fork</code>、<code>execve</code>、<code>waitpid</code></td>
-<td>创建、替换和回收进程</td>
-</tr>
-<tr>
-<td>线程</td>
-<td><code>pthread_create</code></td>
-<td>创建、控制和回收线程</td>
-</tr>
-<tr>
-<td>同步</td>
-<td>互斥锁、读写锁、条件变量、信号量</td>
-<td>保护共享资源和协调执行</td>
-</tr>
-<tr>
-<td>TCP Socket</td>
-<td><code>socket</code>、<code>bind</code>、<code>listen</code>、<code>accept</code>、<code>connect</code></td>
-<td>建立 TCP 网络通信</td>
-</tr>
-<tr>
-<td>UDP Socket</td>
-<td><code>sendto</code>、<code>recvfrom</code></td>
-<td>实现无连接通信</td>
-</tr>
-<tr>
-<td>I&#x2F;O 多路复用</td>
-<td><code>select</code>、<code>poll</code>、<code>epoll</code></td>
-<td>监听多个文件描述符</td>
-</tr>
-</tbody></table>
-<h2 id="工程注意事项"><a href="#工程注意事项" class="headerlink" title="工程注意事项"></a>工程注意事项</h2><ul>
-<li>共享内存、消息队列、管道和 Socket 使用后应及时释放或关闭资源；</li>
-<li>TCP 服务端应处理断开、短读、短写、缓冲区边界和异常连接；</li>
-<li>多线程程序需要明确共享数据、锁的所有权、等待条件和退出流程；</li>
-<li>每个系统调用都记录返回值、错误处理、资源释放和并发安全要求。</li>
-</ul>
-<h2 id="学习建议"><a href="#学习建议" class="headerlink" title="学习建议"></a>学习建议</h2><ol>
-<li>先掌握 GCC、编译链接流程和 Makefile，再学习 Linux 系统接口；</li>
-<li>按 <code>fork</code>、<code>execve</code>、<code>waitpid</code> 的顺序理解进程创建和执行；</li>
-<li>先掌握管道和共享内存，再学习消息队列、信号和更复杂的 IPC；</li>
-<li>网络部分先理解 TCP 状态和 Socket API，再对比多进程、多线程和 I&#x2F;O 多路复用服务器。</li>
-</ol>
+<p>数据目前只保存在运行期间，退出即丢失——这也是一个很好的练习起点：补上文件持久化，它就从玩具变成了真能用的工具。</p>
 <h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
-<li><a href="https://github.com/Ashleycurry/linux-application-development-notes">linux-application-development-notes</a></li>
+<li><a href="https://github.com/Ashleycurry/personal-finance-manager">personal-finance-manager</a></li>
 </ul>
 ]]></content>
       <categories>
-        <category>Linux 与工具</category>
+        <category>项目实战</category>
       </categories>
       <tags>
         <tag>C语言</tag>
-        <tag>Linux</tag>
-        <tag>多线程</tag>
-        <tag>Socket</tag>
-        <tag>epoll</tag>
-        <tag>进程通信</tag>
+        <tag>分层架构</tag>
+        <tag>动态数组</tag>
+        <tag>输入校验</tag>
+        <tag>整数运算</tag>
       </tags>
   </entry>
   <entry>
-    <title>Java 工程实践手册：三阶段学习路线与案例体系</title>
-    <url>/2026/04/15/java-engineering-handbook/</url>
-    <content><![CDATA[<p>这份手册整理 Java 学习与工程实践的课程资料、源码案例和学习笔记，内容按三个阶段循序推进：阶段一为 Java 核心与 AI 开发基础；阶段二为 Java 核心与 AI 开发进阶；阶段三为 AI 赋能 Web 开发。源码案例按”一个知识点对应一个小案例”的风格编写，并配有中文注释，方便对照课件学习。</p>
+    <title>Python 工程实践手册：13 个案例走完入门路径</title>
+    <url>/xiaogao-code.github.io/2026/04/02/python-engineering-handbook/</url>
+    <content><![CDATA[<p>Python 是自动化、数据处理和 AI 应用的通用语言。这份手册整理了从环境搭建到 NumPy 的 13 个课程主题，每个章节都对应一个可运行的案例脚本，强调”先理解基础概念，再通过小案例练习，最后形成清晰、可维护、可复用的代码习惯”。</p>
 <span id="more"></span>
 
-<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">阶段一：Java 核心与 AI 开发基础</span><br><span class="line">    -&gt; 开发环境搭建与 IDEA 开发工具</span><br><span class="line">    -&gt; 基础语法、运算符、方法与流程控制</span><br><span class="line">    -&gt; 数组、面向对象基础与面向对象高级</span><br><span class="line">    -&gt; 常用 API、集合基础</span><br><span class="line">            |</span><br><span class="line">            v</span><br><span class="line">阶段二：Java 核心与 AI 开发进阶</span><br><span class="line">    -&gt; 集合高级（List / Set / Map 体系）</span><br><span class="line">    -&gt; Stream 流、异常、File 类与递归</span><br><span class="line">    -&gt; 常用 API、IO 流</span><br><span class="line">    -&gt; 多线程、网络编程、Java 高级技术</span><br><span class="line">            |</span><br><span class="line">            v</span><br><span class="line">阶段三：AI 赋能 Web 开发</span><br><span class="line">    -&gt; Web 基础知识、HTML + CSS、JavaScript、Vue3</span><br><span class="line">    -&gt; Maven、数据库、SpringBoot（JDBC / MyBatis）</span><br><span class="line">    -&gt; 后端 Web 实战（Tlias 智能学习辅助系统）</span><br><span class="line">    -&gt; 前端 Web 实战、项目部署（Linux）与 Docker</span><br></pre></td></tr></table></figure>
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><p><code>Python 环境 -&gt; 基础语法 -&gt; 条件与循环 -&gt; 函数与模块 -&gt; 容器 -&gt; 类与文件 -&gt; 异常 -&gt; 内置函数 -&gt; 多线程 -&gt; pip -&gt; NumPy</code></p>
+<p>课程案例位于 <code>src/</code>，每个目录使用三位编号和英文名称，便于阅读和检索。</p>
+<h2 id="章节与案例"><a href="#章节与案例" class="headerlink" title="章节与案例"></a>章节与案例</h2><table>
+<thead>
+<tr>
+<th>主题</th>
+<th>学习内容</th>
+<th>案例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>001 介绍与安装</td>
+<td>语言特点、跨平台特性、运行环境检查</td>
+<td><code>python_environment.py</code></td>
+</tr>
+<tr>
+<td>002 Hello World</td>
+<td>字符串、<code>print()</code>、<code>sep</code>、<code>end</code> 和表达式</td>
+<td><code>hello_world.py</code></td>
+</tr>
+<tr>
+<td>003 基础语法</td>
+<td>注释、缩进、PEP 8、标识符、关键字和六种容器</td>
+<td><code>basic_syntax.py</code></td>
+</tr>
+<tr>
+<td>004 条件语句</td>
+<td>算术&#x2F;关系&#x2F;逻辑运算、<code>if</code>、<code>elif</code> 和 <code>else</code></td>
+<td><code>bmi_calculator.py</code></td>
+</tr>
+<tr>
+<td>005 循环语句</td>
+<td><code>while</code>、<code>for</code>、<code>break</code>、<code>continue</code> 和遍历</td>
+<td><code>loops_demo.py</code></td>
+</tr>
+<tr>
+<td>006 函数和模块</td>
+<td>位置&#x2F;默认&#x2F;可变&#x2F;关键字参数、可变性和模块导入</td>
+<td><code>functions_and_modules.py</code></td>
+</tr>
+<tr>
+<td>007 容器操作</td>
+<td>列表、元组、集合和字典的增删改查与去重</td>
+<td><code>containers_and_operations.py</code></td>
+</tr>
+<tr>
+<td>008 类和文件</td>
+<td>类与对象、继承、多态、文件读写与追加</td>
+<td><code>classes_and_objects.py</code> &#x2F; <code>file_operations.py</code></td>
+</tr>
+<tr>
+<td>009 异常处理</td>
+<td><code>try</code>、<code>except</code>、<code>else</code>、<code>finally</code> 与异常边界</td>
+<td><code>exception_handling.py</code></td>
+</tr>
+<tr>
+<td>010 内置函数</td>
+<td>数值运算、类型转换、序列处理与聚合</td>
+<td><code>built_in_functions.py</code></td>
+</tr>
+<tr>
+<td>011 多线程</td>
+<td><code>threading.Thread</code>、<code>join()</code>、共享数据与 <code>RLock</code></td>
+<td><code>threading_demo.py</code></td>
+</tr>
+<tr>
+<td>012 pip</td>
+<td>版本检查、包列表、安装和卸载命令</td>
+<td><code>pip_usage.py</code></td>
+</tr>
+<tr>
+<td>013 NumPy</td>
+<td>数组创建、索引切片、布尔筛选、形状变换与合并拆分</td>
+<td><code>numpy_basics.py</code></td>
+</tr>
+</tbody></table>
+<h2 id="运行案例"><a href="#运行案例" class="headerlink" title="运行案例"></a>运行案例</h2><p>建议使用 Python 3.9 或更高版本：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python src/002-first-hello-world-program/hello_world.py</span><br><span class="line">python src/003-python-basic-syntax/basic_syntax.py</span><br></pre></td></tr></table></figure>
 
-<h2 id="资料与环境"><a href="#资料与环境" class="headerlink" title="资料与环境"></a>资料与环境</h2><ul>
-<li>课件目录：3 个阶段，48 份 PPTX 与 1 份 PDF，共 49 份；</li>
-<li>编程语言：Java（JDK 21）；</li>
-<li>开发工具：IntelliJ IDEA；</li>
-<li>工程组织：按阶段划分为独立 IDEA 工程，每个章节对应一个独立模块；</li>
-<li>源码包名：<code>com.myproject.*</code>。</li>
+<p>运行 NumPy 案例前安装依赖：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python -m pip install numpy</span><br><span class="line">python src/013-python-numpy-basics/numpy_basics.py</span><br></pre></td></tr></table></figure>
+
+<p>除 NumPy 案例外，主课程案例主要使用 Python 标准库。</p>
+<h2 id="工程化约定"><a href="#工程化约定" class="headerlink" title="工程化约定"></a>工程化约定</h2><ul>
+<li>每个案例都可以作为独立脚本运行，使用 <code>if __name__ == &quot;__main__&quot;:</code> 作为入口；</li>
+<li>函数和类使用中文文档字符串，说明职责、参数、返回值和可预期异常；</li>
+<li>优先使用清晰的命名、明确的边界校验和标准库能力；</li>
+<li>文件资源使用上下文管理器，线程共享数据使用锁保护；</li>
+<li>示例保持单一主题，避免为了展示功能而引入无关复杂度。</li>
 </ul>
-<h2 id="阶段一：Java-核心与-AI-开发基础"><a href="#阶段一：Java-核心与-AI-开发基础" class="headerlink" title="阶段一：Java 核心与 AI 开发基础"></a>阶段一：Java 核心与 AI 开发基础</h2><p>从开发环境到面向对象高级，共 15 份课件，配套 Chapter_01 ~ Chapter_06 源码案例：</p>
-<ul>
-<li><strong>Chapter_01 环境搭建</strong>：Java 背景、JDK 安装、HelloWorld 与程序执行原理、IDEA 使用；</li>
-<li><strong>Chapter_02 基础语法</strong>：注释、字面量、变量与八种基本数据类型、运算符、方法与类型转换；</li>
-<li><strong>Chapter_03 流程控制</strong>：if &#x2F; switch 分支、for &#x2F; while &#x2F; do-while 循环、break &#x2F; continue、Random 猜数字游戏；</li>
-<li><strong>Chapter_04 数组</strong>：静态与动态初始化、元素访问、遍历应用（求和、最大值、反转）、二维数组；</li>
-<li><strong>Chapter_05 面向对象基础</strong>：类与对象、封装与权限修饰符、构造方法、this、static、标准 JavaBean；</li>
-<li><strong>Chapter_06 面向对象高级</strong>：继承与方法重写、抽象类、final、Object 类与 toString 重写。</li>
-</ul>
-<h2 id="阶段二：Java-核心与-AI-开发进阶"><a href="#阶段二：Java-核心与-AI-开发进阶" class="headerlink" title="阶段二：Java 核心与 AI 开发进阶"></a>阶段二：Java 核心与 AI 开发进阶</h2><ul>
-<li><strong>集合高级</strong>：ArrayList &#x2F; LinkedList 与 HashSet &#x2F; LinkedHashSet &#x2F; TreeSet 体系；</li>
-<li><strong>Stream 流</strong>：Lambda 表达式与流式操作；</li>
-<li><strong>异常</strong>：异常体系、处理方式与自定义异常；</li>
-<li><strong>File 类</strong>：常用 API 与递归；</li>
-<li><strong>常用 API</strong>：Math、System、包装类、BigDecimal 与 Arrays；</li>
-<li><strong>IO 流</strong>：字节流与字符流；</li>
-<li><strong>多线程</strong>：线程安全与同步、线程池；</li>
-<li><strong>网络编程</strong>：网络三要素、UDP 与 TCP 通信；</li>
-<li><strong>Java 高级技术</strong>：枚举、类加载器、反射、注解与动态代理。</li>
-</ul>
-<h2 id="阶段三：AI-赋能-Web-开发"><a href="#阶段三：AI-赋能-Web-开发" class="headerlink" title="阶段三：AI 赋能 Web 开发"></a>阶段三：AI 赋能 Web 开发</h2><p>从 Web 基础到完整项目部署：</p>
-<ul>
-<li><strong>Web 基础</strong>：HTML + CSS、JavaScript、Vue3、Web 服务器与静态资源；</li>
-<li><strong>后端基础</strong>：Maven 依赖管理、数据库、JDBC &#x2F; MyBatis &#x2F; MyBatisPlus；</li>
-<li><strong>SpringBoot</strong>：登录认证、AOP、Maven 高级、SpringBoot 原理与分层架构总结；</li>
-<li><strong>后端实战</strong>：Tlias 智能学习辅助系统（部门管理与员工管理：条件分页查询、新增、修改、删除、事务与文件上传）；</li>
-<li><strong>前端实战</strong>：Vue 工程化 + ElementPlus 的 Tlias 案例；</li>
-<li><strong>部署</strong>：Linux 项目部署与 Docker 容器化。</li>
-</ul>
-<h2 id="如何运行"><a href="#如何运行" class="headerlink" title="如何运行"></a>如何运行</h2><ul>
-<li>使用 IntelliJ IDEA 打开对应阶段的工程目录（例如 <code>src/Phase_001</code>）；</li>
-<li>工程默认使用 JDK 21，若本机 JDK 版本不同，可在 <code>File → Project Structure</code> 中调整 Project SDK；</li>
-<li>每个案例类都包含 <code>main</code> 方法，可右键直接运行；</li>
-<li>所有案例仅依赖 JDK 标准库，无需额外安装依赖。</li>
-</ul>
+<h2 id="补充篇：参考书学习笔记"><a href="#补充篇：参考书学习笔记" class="headerlink" title="补充篇：参考书学习笔记"></a>补充篇：参考书学习笔记</h2><p>手册还整理了《Python 编程入门与实践（微视频版）》中课件没有系统覆盖的知识点，包括：开发工具与帮助系统、变量与表达式细节、常用算法思维、函数进阶（Lambda&#x2F;闭包&#x2F;递归）、文件与目录进阶、面向对象设计进阶、GUI 编程（Tkinter）、多进程编程、数据库与 SQL、图像处理（Pillow）和网络编程边界意识。</p>
 <h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
-<li><a href="https://github.com/Ashleycurry/java-engineering-handbook">java-engineering-handbook</a></li>
+<li><a href="https://github.com/Ashleycurry/python-engineering-handbook">python-engineering-handbook</a></li>
 </ul>
 ]]></content>
       <categories>
         <category>编程语言</category>
       </categories>
       <tags>
-        <tag>面向对象</tag>
-        <tag>Java</tag>
-        <tag>SpringBoot</tag>
-        <tag>集合</tag>
-        <tag>Web开发</tag>
+        <tag>文件操作</tag>
+        <tag>学习笔记</tag>
+        <tag>多线程</tag>
+        <tag>Python</tag>
+        <tag>NumPy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ROS 机器人开发入门：话题、服务与 TF 坐标变换</title>
+    <url>/xiaogao-code.github.io/2026/08/03/ros-robotics-notes/</url>
+    <content><![CDATA[<p>机器人软件的核心是”很多个程序如何协作”，ROS 给出了标准答案。这份笔记按照入门课程的 14 讲整理：从 ROS 基础概念与工作空间开始，深入话题、服务两大通信机制，最后到达参数服务器、Launch 文件和 TF 坐标变换，配套可运行的 Turtlesim 示例源码。</p>
+<span id="more"></span>
+
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">ROS 基础</span><br><span class="line">    ├── ROS 的定位、组成和通信思想</span><br><span class="line">    ├── ROS 环境安装与工作空间配置</span><br><span class="line">    └── ROS 常用术语与命令</span><br><span class="line">            ↓</span><br><span class="line">catkin 工程</span><br><span class="line">    ├── 创建工作空间</span><br><span class="line">    ├── 创建功能包</span><br><span class="line">    ├── 编译与环境加载</span><br><span class="line">    └── package.xml 与 CMakeLists.txt</span><br><span class="line">            ↓</span><br><span class="line">ROS 通信</span><br><span class="line">    ├── Topic 发布与订阅</span><br><span class="line">    ├── Service 客户端与服务端</span><br><span class="line">    ├── 自定义消息</span><br><span class="line">    └── 自定义服务</span><br><span class="line">            ↓</span><br><span class="line">系统能力</span><br><span class="line">    ├── 参数服务器</span><br><span class="line">    ├── Launch 启动文件</span><br><span class="line">    ├── TF 坐标变换</span><br><span class="line">    └── RViz 等可视化工具</span><br></pre></td></tr></table></figure>
+
+<h2 id="内容概览"><a href="#内容概览" class="headerlink" title="内容概览"></a>内容概览</h2><h3 id="基础篇（001-004-讲）"><a href="#基础篇（001-004-讲）" class="headerlink" title="基础篇（001-004 讲）"></a>基础篇（001-004 讲）</h3><ul>
+<li>理解 ROS 的定位：硬件抽象、节点间通信与机器人软件生态；</li>
+<li>搭建环境，创建工作空间与功能包，掌握 <code>catkin_make</code> 编译与环境加载流程；</li>
+<li>熟悉节点、话题、服务、参数、消息五个基本概念，以及 <code>rosnode</code>、<code>rostopic</code>、<code>rosservice</code> 等常用命令。</li>
+</ul>
+<h3 id="通信篇（005-010-讲）"><a href="#通信篇（005-010-讲）" class="headerlink" title="通信篇（005-010 讲）"></a>通信篇（005-010 讲）</h3><ul>
+<li><strong>话题通信</strong>：使用 <code>rospy.Publisher</code> 向 <code>/turtle1/cmd_vel</code> 发布 <code>geometry_msgs/Twist</code> 控制海龟运动，用 <code>rospy.Subscriber</code> 订阅 <code>/turtle1/pose</code> 输出位姿；</li>
+<li><strong>自定义消息</strong>：定义 <code>Person.msg</code>（姓名、年龄、性别）并生成接口；</li>
+<li><strong>服务通信</strong>：编写服务端与客户端，调用 Turtlesim 的 <code>/spawn</code> 服务创建海龟，实现 <code>/show_person</code> 自定义服务。</li>
+</ul>
+<h3 id="系统能力篇（011-014-讲）"><a href="#系统能力篇（011-014-讲）" class="headerlink" title="系统能力篇（011-014 讲）"></a>系统能力篇（011-014 讲）</h3><ul>
+<li><strong>参数服务器</strong>：读取和设置 <code>/turtlesim/background_r/g/b</code>，调用 <code>/clear</code> 服务刷新背景；</li>
+<li><strong>Launch 文件</strong>：用一个 Launch 文件同时启动 Turtlesim 和键盘控制节点，组织多节点与参数；</li>
+<li><strong>TF 坐标变换</strong>：广播 <code>world</code> 到海龟坐标系的变换，监听 <code>turtle1</code>、<code>turtle2</code> 的坐标关系，计算速度指令实现跟随控制；</li>
+<li><strong>可视化工具</strong>：用 <code>rqt_graph</code> 观察节点与话题连接，用 RViz 查看 TF 和机器人状态。</li>
+</ul>
+<h2 id="三个示例功能包"><a href="#三个示例功能包" class="headerlink" title="三个示例功能包"></a>三个示例功能包</h2><table>
+<thead>
+<tr>
+<th>功能包</th>
+<th>作用</th>
+<th>主要依赖</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>beginner_hiwonder</code></td>
+<td>基础 Topic、Service、自定义消息和服务示例</td>
+<td><code>rospy</code>、<code>std_msgs</code>、<code>message_generation</code></td>
+</tr>
+<tr>
+<td><code>parameter_hiwonder</code></td>
+<td>参数服务器的读取、设置和服务调用</td>
+<td><code>rospy</code>、<code>std_msgs</code></td>
+</tr>
+<tr>
+<td><code>tf_hiwonder</code></td>
+<td>Turtlesim 场景中的 TF 广播、监听和跟随</td>
+<td><code>rospy</code>、<code>tf</code>、<code>turtlesim</code></td>
+</tr>
+</tbody></table>
+<h2 id="常用命令速查"><a href="#常用命令速查" class="headerlink" title="常用命令速查"></a>常用命令速查</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>roscore</code></td>
+<td>启动 ROS Master 和基础运行环境</td>
+</tr>
+<tr>
+<td><code>rosnode list</code> &#x2F; <code>info</code></td>
+<td>查看节点信息</td>
+</tr>
+<tr>
+<td><code>rostopic list</code> &#x2F; <code>echo</code></td>
+<td>查看话题和消息内容</td>
+</tr>
+<tr>
+<td><code>rosservice list</code> &#x2F; <code>call</code></td>
+<td>查看和调用服务</td>
+</tr>
+<tr>
+<td><code>rosparam get</code> &#x2F; <code>set</code></td>
+<td>读写参数服务器</td>
+</tr>
+<tr>
+<td><code>rosrun</code> &#x2F; <code>roslaunch</code></td>
+<td>运行单个节点 &#x2F; 按 Launch 文件启动</td>
+</tr>
+<tr>
+<td><code>rqt_graph</code> &#x2F; <code>rviz</code></td>
+<td>可视化通信关系和传感器数据</td>
+</tr>
+</tbody></table>
+<h2 id="工程注意事项"><a href="#工程注意事项" class="headerlink" title="工程注意事项"></a>工程注意事项</h2><ul>
+<li>节点、话题、服务和参数名称需要保持一致，名称错误会导致通信失败；</li>
+<li>自定义消息或服务修改后，需要重新执行 <code>catkin_make</code> 并重新加载 <code>devel/setup.bash</code>；</li>
+<li>启动客户端前确认服务端已注册，启动订阅器前确认发布器正在运行；</li>
+<li>TF 示例依赖正确的坐标系名称和时间戳，坐标异常时应优先检查 TF 树和节点日志。</li>
+</ul>
+<h2 id="学习建议"><a href="#学习建议" class="headerlink" title="学习建议"></a>学习建议</h2><ol>
+<li>先运行标准消息的发布器和订阅器，再阅读自定义消息 <code>Person.msg</code>；</li>
+<li>对比 Topic 的持续发布模式与 Service 的请求响应模式；</li>
+<li>使用参数服务器修改 Turtlesim 配置，理解节点与参数服务器的关系；</li>
+<li>每个示例都记录节点名称、话题名称、服务名称、消息类型和启动顺序。</li>
+</ol>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a href="https://github.com/Ashleycurry/ros-robotics-learning-notes">ros-robotics-learning-notes</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>机器人</category>
+      </categories>
+      <tags>
+        <tag>ROS</tag>
+        <tag>catkin</tag>
+        <tag>rospy</tag>
+        <tag>Topic</tag>
+        <tag>Service</tag>
+        <tag>TF</tag>
+        <tag>Turtlesim</tag>
       </tags>
   </entry>
   <entry>
     <title>OpenCV 计算机视觉：从像素到特征匹配的十二课</title>
-    <url>/2026/08/27/opencv-computer-vision/</url>
+    <url>/xiaogao-code.github.io/2026/08/27/opencv-computer-vision/</url>
     <content><![CDATA[<p>计算机视觉的第一课，是学会”看”像素。这份笔记配套 12 份课件与逐章可运行的 Python 源码，从图片视频加载开始，经颜色空间、几何变换、滤波、边缘检测、形态学、阈值与轮廓，最终到达 ORB 特征匹配与 Harris 角点检测。</p>
 <span id="more"></span>
 
@@ -1231,8 +1530,8 @@
         <category>计算机视觉</category>
       </categories>
       <tags>
-        <tag>OpenCV</tag>
         <tag>Python</tag>
+        <tag>OpenCV</tag>
         <tag>图像处理</tag>
         <tag>Canny</tag>
         <tag>形态学</tag>
@@ -1241,307 +1540,111 @@
       </tags>
   </entry>
   <entry>
-    <title>Python 工程实践手册：13 个案例走完入门路径</title>
-    <url>/2026/04/02/python-engineering-handbook/</url>
-    <content><![CDATA[<p>Python 是自动化、数据处理和 AI 应用的通用语言。这份手册整理了从环境搭建到 NumPy 的 13 个课程主题，每个章节都对应一个可运行的案例脚本，强调”先理解基础概念，再通过小案例练习，最后形成清晰、可维护、可复用的代码习惯”。</p>
+    <title>原理图与 PCB 设计：从嘉立创 EDA 入门到实战案例</title>
+    <url>/xiaogao-code.github.io/2026/06/03/schematic-and-pcb-design/</url>
+    <content><![CDATA[<p>从原理图到一块能用的 PCB，中间隔着一条完整的工程流程。这份笔记整理嘉立创 EDA 的使用、原理图设计、PCB 布局布线、自定义符号与封装，以及焊接技能，并附案例练习。</p>
 <span id="more"></span>
 
-<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><p><code>Python 环境 -&gt; 基础语法 -&gt; 条件与循环 -&gt; 函数与模块 -&gt; 容器 -&gt; 类与文件 -&gt; 异常 -&gt; 内置函数 -&gt; 多线程 -&gt; pip -&gt; NumPy</code></p>
-<p>课程案例位于 <code>src/</code>，每个目录使用三位编号和英文名称，便于阅读和检索。</p>
-<h2 id="章节与案例"><a href="#章节与案例" class="headerlink" title="章节与案例"></a>章节与案例</h2><table>
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">EDA 与项目基础</span><br><span class="line">    ├── EDA 软件和 PCB 行业工具</span><br><span class="line">    ├── 嘉立创 EDA 环境</span><br><span class="line">    ├── 绘制单位和工程管理</span><br><span class="line">    └── 原理图到 PCB 的完整流程</span><br><span class="line">            ↓</span><br><span class="line">原理图设计</span><br><span class="line">    ├── 搜索与放置元器件</span><br><span class="line">    ├── 电源、接地和网络连接</span><br><span class="line">    ├── 元器件名称、位号和方向</span><br><span class="line">    └── DRC 检查</span><br><span class="line">            ↓</span><br><span class="line">PCB 设计</span><br><span class="line">    ├── 从原理图生成 PCB</span><br><span class="line">    ├── 板框与元器件布局</span><br><span class="line">    ├── 布线、铺铜和网络标识</span><br><span class="line">    ├── 丝印调整与 DRC</span><br><span class="line">    └── 3D 仿真和生产资料导出</span><br><span class="line">            ↓</span><br><span class="line">进阶设计</span><br><span class="line">    ├── 多层板、盲埋孔和泪滴</span><br><span class="line">    ├── 文件导入与导出</span><br><span class="line">    ├── 自定义符号和封装</span><br><span class="line">    └── 封装尺寸与器件绑定</span><br><span class="line">            ↓</span><br><span class="line">案例与焊接</span><br><span class="line">    ├── 可调电阻、独立按键</span><br><span class="line">    ├── 74HC138 译码器</span><br><span class="line">    ├── 74HC245 信号放大器</span><br><span class="line">    ├── LM358 PWM 方波</span><br><span class="line">    └── 电烙铁、焊锡和返修工具</span><br></pre></td></tr></table></figure>
+
+<h2 id="内容概览"><a href="#内容概览" class="headerlink" title="内容概览"></a>内容概览</h2><h3 id="第一章：嘉立创-EDA-快速入门"><a href="#第一章：嘉立创-EDA-快速入门" class="headerlink" title="第一章：嘉立创 EDA 快速入门"></a>第一章：嘉立创 EDA 快速入门</h3><ul>
+<li>理解 EDA（Electronic Design Automation）的基本作用；</li>
+<li>以按键点灯为例学习元器件搜索、放置、连线、属性调整和位号管理；</li>
+<li>从原理图生成 PCB，完成板框、布局、布线、网络标识、铺铜和丝印；</li>
+<li>使用 DRC 检查连接错误，查看 PCB 三维仿真效果，了解下单和生产资料准备。</li>
+</ul>
+<h3 id="第二章：PCB-板制作基础"><a href="#第二章：PCB-板制作基础" class="headerlink" title="第二章：PCB 板制作基础"></a>第二章：PCB 板制作基础</h3><p><strong>布局基本原则</strong>：</p>
+<ul>
+<li>电气连接紧密的器件进行模块化布局；</li>
+<li>接口器件靠近板边并明确方向、电压等级和正负极；</li>
+<li>高压、低压、大电流、高频和热源器件合理分区；</li>
+<li>去耦电容和滤波电容靠近电源入口或电源转换器件。</li>
+</ul>
+<p><strong>布线基本原则</strong>：</p>
+<ul>
+<li>根据电流、频率、板厂工艺和信号完整性要求设置线宽线距；</li>
+<li>避免使用小于 90 度的走线拐角；</li>
+<li>高速和高频信号线注意间距与干扰控制。</li>
+</ul>
+<h3 id="第三章：EDA-使用技巧"><a href="#第三章：EDA-使用技巧" class="headerlink" title="第三章：EDA 使用技巧"></a>第三章：EDA 使用技巧</h3><p>批量扇出添加网络标签、排查铺铜后仍存在的飞线、导入外部图片和 Logo、配置多层板与盲埋孔、使用泪滴增强导线与焊盘连接的可靠性，以及工程文件的导入导出。</p>
+<h3 id="第四章：自定义符号及器件封装"><a href="#第四章：自定义符号及器件封装" class="headerlink" title="第四章：自定义符号及器件封装"></a>第四章：自定义符号及器件封装</h3><ul>
+<li>在标准模式和专业模式下创建自定义原理图符号；</li>
+<li>手工绘制 0805 电容封装，使用封装向导生成 CH340N 封装；</li>
+<li>进行封装尺寸检查，将原理图符号与个人封装绑定；</li>
+<li>了解 DIP、QFP、SOP、QFN、BGA 等常见芯片封装。</li>
+</ul>
+<h3 id="第五章：案例与焊接"><a href="#第五章：案例与焊接" class="headerlink" title="第五章：案例与焊接"></a>第五章：案例与焊接</h3><ul>
+<li>可调电阻控制 LED 亮度、独立按键控制 LED 亮灭；</li>
+<li>使用 74HC138 实现 3-8 译码器电路、74HC245 增强驱动能力、LM358 产生 PWM 方波；</li>
+<li>焊接技能：电烙铁使用、有铅&#x2F;无铅焊锡与助焊剂、蓝丁胶固定、放大镜检查、吸锡器拆焊返修。</li>
+</ul>
+<h2 id="PCB-设计流程速查"><a href="#PCB-设计流程速查" class="headerlink" title="PCB 设计流程速查"></a>PCB 设计流程速查</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">需求分析 → 元器件选型 → 建立或确认符号与封装 → 绘制原理图</span><br><span class="line">  → 原理图 DRC → 生成 PCB → 板框和器件布局 → 布线与铺铜</span><br><span class="line">  → 丝印和网络标识 → PCB DRC 与目测检查 → 3D 检查和生产资料导出</span><br><span class="line">  → PCB 制作、焊接、调试与测试</span><br></pre></td></tr></table></figure>
+
+<h2 id="常用工程检查点"><a href="#常用工程检查点" class="headerlink" title="常用工程检查点"></a>常用工程检查点</h2><table>
 <thead>
 <tr>
-<th>主题</th>
-<th>学习内容</th>
-<th>案例</th>
+<th>阶段</th>
+<th>重点检查内容</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>001 介绍与安装</td>
-<td>语言特点、跨平台特性、运行环境检查</td>
-<td><code>python_environment.py</code></td>
+<td>元器件选型</td>
+<td>参数、封装、引脚定义、供货和替代型号</td>
 </tr>
 <tr>
-<td>002 Hello World</td>
-<td>字符串、<code>print()</code>、<code>sep</code>、<code>end</code> 和表达式</td>
-<td><code>hello_world.py</code></td>
+<td>原理图</td>
+<td>电源、地、网络名称、引脚连接、位号和未连接引脚</td>
 </tr>
 <tr>
-<td>003 基础语法</td>
-<td>注释、缩进、PEP 8、标识符、关键字和六种容器</td>
-<td><code>basic_syntax.py</code></td>
+<td>原理图 DRC</td>
+<td>悬空引脚、短路、未连接网络和规则警告</td>
 </tr>
 <tr>
-<td>004 条件语句</td>
-<td>算术&#x2F;关系&#x2F;逻辑运算、<code>if</code>、<code>elif</code> 和 <code>else</code></td>
-<td><code>bmi_calculator.py</code></td>
+<td>PCB 布局</td>
+<td>模块分区、接口方向、高压间距、散热和去耦位置</td>
 </tr>
 <tr>
-<td>005 循环语句</td>
-<td><code>while</code>、<code>for</code>、<code>break</code>、<code>continue</code> 和遍历</td>
-<td><code>loops_demo.py</code></td>
+<td>PCB 布线</td>
+<td>线宽、线距、转角、回流路径、干扰和大电流承载能力</td>
 </tr>
 <tr>
-<td>006 函数和模块</td>
-<td>位置&#x2F;默认&#x2F;可变&#x2F;关键字参数、可变性和模块导入</td>
-<td><code>functions_and_modules.py</code></td>
+<td>PCB DRC</td>
+<td>间距、短路、未连接网络、板框和设计规则</td>
 </tr>
 <tr>
-<td>007 容器操作</td>
-<td>列表、元组、集合和字典的增删改查与去重</td>
-<td><code>containers_and_operations.py</code></td>
+<td>生产准备</td>
+<td>板层、板框、丝印、封装、Gerber、BOM 和装配要求</td>
 </tr>
 <tr>
-<td>008 类和文件</td>
-<td>类与对象、继承、多态、文件读写与追加</td>
-<td><code>classes_and_objects.py</code> &#x2F; <code>file_operations.py</code></td>
-</tr>
-<tr>
-<td>009 异常处理</td>
-<td><code>try</code>、<code>except</code>、<code>else</code>、<code>finally</code> 与异常边界</td>
-<td><code>exception_handling.py</code></td>
-</tr>
-<tr>
-<td>010 内置函数</td>
-<td>数值运算、类型转换、序列处理与聚合</td>
-<td><code>built_in_functions.py</code></td>
-</tr>
-<tr>
-<td>011 多线程</td>
-<td><code>threading.Thread</code>、<code>join()</code>、共享数据与 <code>RLock</code></td>
-<td><code>threading_demo.py</code></td>
-</tr>
-<tr>
-<td>012 pip</td>
-<td>版本检查、包列表、安装和卸载命令</td>
-<td><code>pip_usage.py</code></td>
-</tr>
-<tr>
-<td>013 NumPy</td>
-<td>数组创建、索引切片、布尔筛选、形状变换与合并拆分</td>
-<td><code>numpy_basics.py</code></td>
+<td>焊接调试</td>
+<td>极性、焊点、虚焊、连锡、供电电压和通电顺序</td>
 </tr>
 </tbody></table>
-<h2 id="运行案例"><a href="#运行案例" class="headerlink" title="运行案例"></a>运行案例</h2><p>建议使用 Python 3.9 或更高版本：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python src/002-first-hello-world-program/hello_world.py</span><br><span class="line">python src/003-python-basic-syntax/basic_syntax.py</span><br></pre></td></tr></table></figure>
-
-<p>运行 NumPy 案例前安装依赖：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python -m pip install numpy</span><br><span class="line">python src/013-python-numpy-basics/numpy_basics.py</span><br></pre></td></tr></table></figure>
-
-<p>除 NumPy 案例外，主课程案例主要使用 Python 标准库。</p>
-<h2 id="工程化约定"><a href="#工程化约定" class="headerlink" title="工程化约定"></a>工程化约定</h2><ul>
-<li>每个案例都可以作为独立脚本运行，使用 <code>if __name__ == &quot;__main__&quot;:</code> 作为入口；</li>
-<li>函数和类使用中文文档字符串，说明职责、参数、返回值和可预期异常；</li>
-<li>优先使用清晰的命名、明确的边界校验和标准库能力；</li>
-<li>文件资源使用上下文管理器，线程共享数据使用锁保护；</li>
-<li>示例保持单一主题，避免为了展示功能而引入无关复杂度。</li>
-</ul>
-<h2 id="补充篇：参考书学习笔记"><a href="#补充篇：参考书学习笔记" class="headerlink" title="补充篇：参考书学习笔记"></a>补充篇：参考书学习笔记</h2><p>手册还整理了《Python 编程入门与实践（微视频版）》中课件没有系统覆盖的知识点，包括：开发工具与帮助系统、变量与表达式细节、常用算法思维、函数进阶（Lambda&#x2F;闭包&#x2F;递归）、文件与目录进阶、面向对象设计进阶、GUI 编程（Tkinter）、多进程编程、数据库与 SQL、图像处理（Pillow）和网络编程边界意识。</p>
-<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
-<li><a href="https://github.com/Ashleycurry/python-engineering-handbook">python-engineering-handbook</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>编程语言</category>
-      </categories>
-      <tags>
-        <tag>文件操作</tag>
-        <tag>学习笔记</tag>
-        <tag>多线程</tag>
-        <tag>Python</tag>
-        <tag>NumPy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>家庭收支记账软件：用整数&quot;分&quot;守护货币精度</title>
-    <url>/2026/09/15/personal-finance-manager/</url>
-    <content><![CDATA[<p>写记账软件最容易踩的坑，是用 <code>double</code> 存金额。这个家庭收支记账软件把”货币精度”当作第一设计问题：内部用 <code>int64_t</code> 保存”分”，所有运算完成后再格式化显示，顺便演示了一个 C 语言项目如何用四层架构把职责拆干净。</p>
-<span id="more"></span>
-
-<h2 id="功能特性"><a href="#功能特性" class="headerlink" title="功能特性"></a>功能特性</h2><ul>
-<li>初始账户余额 1000.00；</li>
-<li>登记收入与支出，记录说明；</li>
-<li><strong>余额校验</strong>：支出超过当前余额时拒绝操作并提示余额不足；</li>
-<li>查看每笔收支金额、交易后的账户余额和说明；</li>
-<li>没有交易记录时显示空记录提示；</li>
-<li>退出前 <code>y/n</code> 确认，菜单、金额、说明全部格式校验；</li>
-<li>交易记录用动态数组管理，运行期间持续追加。</li>
-</ul>
-<h2 id="四层模块架构"><a href="#四层模块架构" class="headerlink" title="四层模块架构"></a>四层模块架构</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">personal-finance-manager/</span><br><span class="line">├── src/</span><br><span class="line">│   ├── main.c              # 程序入口</span><br><span class="line">│   ├── app/                # 应用层：流程编排</span><br><span class="line">│   ├── domain/             # 领域层：账户与业务规则</span><br><span class="line">│   ├── shared/             # 共享层：金额解析与格式化</span><br><span class="line">│   └── ui/                 # 界面层：输入读取与展示</span><br><span class="line">└── docs/                   # 需求文档</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th>模块</th>
-<th>职责</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>src/app/</code></td>
-<td>应用流程编排，连接账户业务、输入和展示</td>
-</tr>
-<tr>
-<td><code>src/domain/</code></td>
-<td>账户、交易记录和收支业务规则</td>
-</tr>
-<tr>
-<td><code>src/shared/</code></td>
-<td>金额解析与格式化等通用能力</td>
-</tr>
-<tr>
-<td><code>src/ui/</code></td>
-<td>控制台输入读取、校验和输出</td>
-</tr>
-</tbody></table>
-<p>UI 层不直接修改账户内部状态，领域层负责账户余额与交易记录的一致性——这条边界是分层设计里最值得体会的部分。</p>
-<h2 id="金额安全：没有-double-的记账本"><a href="#金额安全：没有-double-的记账本" class="headerlink" title="金额安全：没有 double 的记账本"></a>金额安全：没有 double 的记账本</h2><p>程序没有使用 <code>double</code> 保存余额，而是用 <code>int64_t</code> 保存”分”：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">用户输入 100.50  →  内部保存 10050  →  运算后再格式化为两位小数</span><br></pre></td></tr></table></figure>
-
-<p>这样所有加减运算都是整数运算，从根本上避免了浮点误差在账目上累积。</p>
-<h2 id="工程化设计"><a href="#工程化设计" class="headerlink" title="工程化设计"></a>工程化设计</h2><ul>
-<li><strong>输入校验</strong>：菜单范围、金额格式、正数约束、小数位数、说明长度、确认输入，避免直接使用不安全的 <code>scanf</code>；</li>
-<li><strong>资源管理</strong>：交易记录动态数组容量不足时自动扩容，退出前释放账户持有的动态内存；</li>
-<li>编译开启 <code>-Wall -Wextra -Wpedantic</code>，GCC 与 Clang 均可零警告构建。</li>
-</ul>
-<h2 id="编译运行"><a href="#编译运行" class="headerlink" title="编译运行"></a>编译运行</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gcc -std=c11 -Wall -Wextra -Wpedantic -Isrc \</span><br><span class="line">    src/main.c src/app/finance_app.c \</span><br><span class="line">    src/domain/finance_account.c src/shared/money.c \</span><br><span class="line">    src/ui/console_input.c src/ui/console_view.c \</span><br><span class="line">    -o finance-manager</span><br></pre></td></tr></table></figure>
-
-<h2 id="后续扩展方向"><a href="#后续扩展方向" class="headerlink" title="后续扩展方向"></a>后续扩展方向</h2><ul>
-<li>增加文件或数据库持久化；</li>
-<li>按日期、类型和说明查询交易记录，增加月度统计；</li>
-<li>增加预算和分类管理、单元测试以及 CMake 构建流程。</li>
-</ul>
-<p>数据目前只保存在运行期间，退出即丢失——这也是一个很好的练习起点：补上文件持久化，它就从玩具变成了真能用的工具。</p>
-<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
-<li><a href="https://github.com/Ashleycurry/personal-finance-manager">personal-finance-manager</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>项目实战</category>
-      </categories>
-      <tags>
-        <tag>C语言</tag>
-        <tag>分层架构</tag>
-        <tag>动态数组</tag>
-        <tag>输入校验</tag>
-        <tag>整数运算</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ROS 机器人开发入门：话题、服务与 TF 坐标变换</title>
-    <url>/2026/08/03/ros-robotics-notes/</url>
-    <content><![CDATA[<p>机器人软件的核心是”很多个程序如何协作”，ROS 给出了标准答案。这份笔记按照入门课程的 14 讲整理：从 ROS 基础概念与工作空间开始，深入话题、服务两大通信机制，最后到达参数服务器、Launch 文件和 TF 坐标变换，配套可运行的 Turtlesim 示例源码。</p>
-<span id="more"></span>
-
-<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">ROS 基础</span><br><span class="line">    ├── ROS 的定位、组成和通信思想</span><br><span class="line">    ├── ROS 环境安装与工作空间配置</span><br><span class="line">    └── ROS 常用术语与命令</span><br><span class="line">            ↓</span><br><span class="line">catkin 工程</span><br><span class="line">    ├── 创建工作空间</span><br><span class="line">    ├── 创建功能包</span><br><span class="line">    ├── 编译与环境加载</span><br><span class="line">    └── package.xml 与 CMakeLists.txt</span><br><span class="line">            ↓</span><br><span class="line">ROS 通信</span><br><span class="line">    ├── Topic 发布与订阅</span><br><span class="line">    ├── Service 客户端与服务端</span><br><span class="line">    ├── 自定义消息</span><br><span class="line">    └── 自定义服务</span><br><span class="line">            ↓</span><br><span class="line">系统能力</span><br><span class="line">    ├── 参数服务器</span><br><span class="line">    ├── Launch 启动文件</span><br><span class="line">    ├── TF 坐标变换</span><br><span class="line">    └── RViz 等可视化工具</span><br></pre></td></tr></table></figure>
-
-<h2 id="内容概览"><a href="#内容概览" class="headerlink" title="内容概览"></a>内容概览</h2><h3 id="基础篇（001-004-讲）"><a href="#基础篇（001-004-讲）" class="headerlink" title="基础篇（001-004 讲）"></a>基础篇（001-004 讲）</h3><ul>
-<li>理解 ROS 的定位：硬件抽象、节点间通信与机器人软件生态；</li>
-<li>搭建环境，创建工作空间与功能包，掌握 <code>catkin_make</code> 编译与环境加载流程；</li>
-<li>熟悉节点、话题、服务、参数、消息五个基本概念，以及 <code>rosnode</code>、<code>rostopic</code>、<code>rosservice</code> 等常用命令。</li>
-</ul>
-<h3 id="通信篇（005-010-讲）"><a href="#通信篇（005-010-讲）" class="headerlink" title="通信篇（005-010 讲）"></a>通信篇（005-010 讲）</h3><ul>
-<li><strong>话题通信</strong>：使用 <code>rospy.Publisher</code> 向 <code>/turtle1/cmd_vel</code> 发布 <code>geometry_msgs/Twist</code> 控制海龟运动，用 <code>rospy.Subscriber</code> 订阅 <code>/turtle1/pose</code> 输出位姿；</li>
-<li><strong>自定义消息</strong>：定义 <code>Person.msg</code>（姓名、年龄、性别）并生成接口；</li>
-<li><strong>服务通信</strong>：编写服务端与客户端，调用 Turtlesim 的 <code>/spawn</code> 服务创建海龟，实现 <code>/show_person</code> 自定义服务。</li>
-</ul>
-<h3 id="系统能力篇（011-014-讲）"><a href="#系统能力篇（011-014-讲）" class="headerlink" title="系统能力篇（011-014 讲）"></a>系统能力篇（011-014 讲）</h3><ul>
-<li><strong>参数服务器</strong>：读取和设置 <code>/turtlesim/background_r/g/b</code>，调用 <code>/clear</code> 服务刷新背景；</li>
-<li><strong>Launch 文件</strong>：用一个 Launch 文件同时启动 Turtlesim 和键盘控制节点，组织多节点与参数；</li>
-<li><strong>TF 坐标变换</strong>：广播 <code>world</code> 到海龟坐标系的变换，监听 <code>turtle1</code>、<code>turtle2</code> 的坐标关系，计算速度指令实现跟随控制；</li>
-<li><strong>可视化工具</strong>：用 <code>rqt_graph</code> 观察节点与话题连接，用 RViz 查看 TF 和机器人状态。</li>
-</ul>
-<h2 id="三个示例功能包"><a href="#三个示例功能包" class="headerlink" title="三个示例功能包"></a>三个示例功能包</h2><table>
-<thead>
-<tr>
-<th>功能包</th>
-<th>作用</th>
-<th>主要依赖</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>beginner_hiwonder</code></td>
-<td>基础 Topic、Service、自定义消息和服务示例</td>
-<td><code>rospy</code>、<code>std_msgs</code>、<code>message_generation</code></td>
-</tr>
-<tr>
-<td><code>parameter_hiwonder</code></td>
-<td>参数服务器的读取、设置和服务调用</td>
-<td><code>rospy</code>、<code>std_msgs</code></td>
-</tr>
-<tr>
-<td><code>tf_hiwonder</code></td>
-<td>Turtlesim 场景中的 TF 广播、监听和跟随</td>
-<td><code>rospy</code>、<code>tf</code>、<code>turtlesim</code></td>
-</tr>
-</tbody></table>
-<h2 id="常用命令速查"><a href="#常用命令速查" class="headerlink" title="常用命令速查"></a>常用命令速查</h2><table>
-<thead>
-<tr>
-<th>命令</th>
-<th>用途</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>roscore</code></td>
-<td>启动 ROS Master 和基础运行环境</td>
-</tr>
-<tr>
-<td><code>rosnode list</code> &#x2F; <code>info</code></td>
-<td>查看节点信息</td>
-</tr>
-<tr>
-<td><code>rostopic list</code> &#x2F; <code>echo</code></td>
-<td>查看话题和消息内容</td>
-</tr>
-<tr>
-<td><code>rosservice list</code> &#x2F; <code>call</code></td>
-<td>查看和调用服务</td>
-</tr>
-<tr>
-<td><code>rosparam get</code> &#x2F; <code>set</code></td>
-<td>读写参数服务器</td>
-</tr>
-<tr>
-<td><code>rosrun</code> &#x2F; <code>roslaunch</code></td>
-<td>运行单个节点 &#x2F; 按 Launch 文件启动</td>
-</tr>
-<tr>
-<td><code>rqt_graph</code> &#x2F; <code>rviz</code></td>
-<td>可视化通信关系和传感器数据</td>
-</tr>
-</tbody></table>
-<h2 id="工程注意事项"><a href="#工程注意事项" class="headerlink" title="工程注意事项"></a>工程注意事项</h2><ul>
-<li>节点、话题、服务和参数名称需要保持一致，名称错误会导致通信失败；</li>
-<li>自定义消息或服务修改后，需要重新执行 <code>catkin_make</code> 并重新加载 <code>devel/setup.bash</code>；</li>
-<li>启动客户端前确认服务端已注册，启动订阅器前确认发布器正在运行；</li>
-<li>TF 示例依赖正确的坐标系名称和时间戳，坐标异常时应优先检查 TF 树和节点日志。</li>
-</ul>
 <h2 id="学习建议"><a href="#学习建议" class="headerlink" title="学习建议"></a>学习建议</h2><ol>
-<li>先运行标准消息的发布器和订阅器，再阅读自定义消息 <code>Person.msg</code>；</li>
-<li>对比 Topic 的持续发布模式与 Service 的请求响应模式；</li>
-<li>使用参数服务器修改 Turtlesim 配置，理解节点与参数服务器的关系；</li>
-<li>每个示例都记录节点名称、话题名称、服务名称、消息类型和启动顺序。</li>
+<li>先完成按键点灯案例，熟悉原理图到 PCB 的完整闭环；</li>
+<li>每次绘制原理图后先完成 DRC，再开始 PCB 布局和布线；</li>
+<li>选型时同时查看数据手册、封装尺寸、引脚定义和实际采购信息；</li>
+<li>布局时先划分电源、接口、控制、时钟和信号模块，再处理模块间连接；</li>
+<li>焊接前确认元器件方向、极性、封装和焊盘对应关系。</li>
 </ol>
 <h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
-<li><a href="https://github.com/Ashleycurry/ros-robotics-learning-notes">ros-robotics-learning-notes</a></li>
+<li><a href="https://github.com/Ashleycurry/schematic-and-pcb-design">schematic-and-pcb-design</a></li>
 </ul>
 ]]></content>
       <categories>
-        <category>机器人</category>
+        <category>硬件设计</category>
       </categories>
       <tags>
-        <tag>ROS</tag>
-        <tag>catkin</tag>
-        <tag>rospy</tag>
-        <tag>Topic</tag>
-        <tag>Service</tag>
-        <tag>TF</tag>
-        <tag>Turtlesim</tag>
+        <tag>PCB</tag>
+        <tag>EDA</tag>
+        <tag>原理图</tag>
+        <tag>封装</tag>
+        <tag>焊接</tag>
       </tags>
   </entry>
   <entry>
     <title>ROS 2 Humble 学习记录：现代机器人开发工具链</title>
-    <url>/2026/08/15/ros2-robotics-notes/</url>
+    <url>/xiaogao-code.github.io/2026/08/15/ros2-robotics-notes/</url>
     <content><![CDATA[<p>ROS 2 是机器人开发的新一代基础设施，解决了 ROS 1 在实时性、安全性和多机通信上的诸多局限。这份 165 页的学习记录从节点与功能包讲起，覆盖完整通信机制与工具链，最后延伸到 URDF 建模与 Gazebo 仿真。</p>
 <span id="more"></span>
 
@@ -1655,7 +1758,7 @@
   </entry>
   <entry>
     <title>STM32 单片机开发笔记：从寄存器到物联网通信</title>
-    <url>/2026/06/15/stm32-mcu-development-notes/</url>
+    <url>/xiaogao-code.github.io/2026/06/15/stm32-mcu-development-notes/</url>
     <content><![CDATA[<p>STM32 是嵌入式开发的主战场。这份笔记覆盖基础外设、通信协议、存储器、低功耗、实时系统和工程开发流程，从寄存器与 HAL 库双视角出发，一路延伸到 CAN、以太网、Wi-Fi、蓝牙和 LoRa 等物联网通信。</p>
 <span id="more"></span>
 
@@ -1737,111 +1840,127 @@
       </tags>
   </entry>
   <entry>
-    <title>原理图与 PCB 设计：从嘉立创 EDA 入门到实战案例</title>
-    <url>/2026/06/03/schematic-and-pcb-design/</url>
-    <content><![CDATA[<p>从原理图到一块能用的 PCB，中间隔着一条完整的工程流程。这份笔记整理嘉立创 EDA 的使用、原理图设计、PCB 布局布线、自定义符号与封装，以及焊接技能，并附案例练习。</p>
+    <title>STM32F407 智能定时用电控制器：四状态机 + 1ms 分时调度</title>
+    <url>/xiaogao-code.github.io/2026/09/29/stm32f407-smart-timer-controller/</url>
+    <content><![CDATA[<p>倒计时控制继电器通断负载，听起来简单，做扎实却不容易。这个项目基于 STM32F407VE，用一套 1ms 分时任务调度把倒计时、数码管扫描、按键消抖、串口解析、蜂鸣器节奏和温度保护全部塞进裸机主循环，从未使用中断——时序可推演、行为可预测。</p>
 <span id="more"></span>
 
-<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">EDA 与项目基础</span><br><span class="line">    ├── EDA 软件和 PCB 行业工具</span><br><span class="line">    ├── 嘉立创 EDA 环境</span><br><span class="line">    ├── 绘制单位和工程管理</span><br><span class="line">    └── 原理图到 PCB 的完整流程</span><br><span class="line">            ↓</span><br><span class="line">原理图设计</span><br><span class="line">    ├── 搜索与放置元器件</span><br><span class="line">    ├── 电源、接地和网络连接</span><br><span class="line">    ├── 元器件名称、位号和方向</span><br><span class="line">    └── DRC 检查</span><br><span class="line">            ↓</span><br><span class="line">PCB 设计</span><br><span class="line">    ├── 从原理图生成 PCB</span><br><span class="line">    ├── 板框与元器件布局</span><br><span class="line">    ├── 布线、铺铜和网络标识</span><br><span class="line">    ├── 丝印调整与 DRC</span><br><span class="line">    └── 3D 仿真和生产资料导出</span><br><span class="line">            ↓</span><br><span class="line">进阶设计</span><br><span class="line">    ├── 多层板、盲埋孔和泪滴</span><br><span class="line">    ├── 文件导入与导出</span><br><span class="line">    ├── 自定义符号和封装</span><br><span class="line">    └── 封装尺寸与器件绑定</span><br><span class="line">            ↓</span><br><span class="line">案例与焊接</span><br><span class="line">    ├── 可调电阻、独立按键</span><br><span class="line">    ├── 74HC138 译码器</span><br><span class="line">    ├── 74HC245 信号放大器</span><br><span class="line">    ├── LM358 PWM 方波</span><br><span class="line">    └── 电烙铁、焊锡和返修工具</span><br></pre></td></tr></table></figure>
+<h2 id="功能全景"><a href="#功能全景" class="headerlink" title="功能全景"></a>功能全景</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">按键 + 串口双通道设置 → 四位数码管 MM.SS 实时显示 → 启动后继电器吸合</span><br><span class="line">→ 每秒短鸣 + LED 快闪 → 倒计时归零报警（蜂鸣器周期鸣叫）→ 一键停止/复位</span><br></pre></td></tr></table></figure>
 
-<h2 id="内容概览"><a href="#内容概览" class="headerlink" title="内容概览"></a>内容概览</h2><h3 id="第一章：嘉立创-EDA-快速入门"><a href="#第一章：嘉立创-EDA-快速入门" class="headerlink" title="第一章：嘉立创 EDA 快速入门"></a>第一章：嘉立创 EDA 快速入门</h3><ul>
-<li>理解 EDA（Electronic Design Automation）的基本作用；</li>
-<li>以按键点灯为例学习元器件搜索、放置、连线、属性调整和位号管理；</li>
-<li>从原理图生成 PCB，完成板框、布局、布线、网络标识、铺铜和丝印；</li>
-<li>使用 DRC 检查连接错误，查看 PCB 三维仿真效果，了解下单和生产资料准备。</li>
-</ul>
-<h3 id="第二章：PCB-板制作基础"><a href="#第二章：PCB-板制作基础" class="headerlink" title="第二章：PCB 板制作基础"></a>第二章：PCB 板制作基础</h3><p><strong>布局基本原则</strong>：</p>
-<ul>
-<li>电气连接紧密的器件进行模块化布局；</li>
-<li>接口器件靠近板边并明确方向、电压等级和正负极；</li>
-<li>高压、低压、大电流、高频和热源器件合理分区；</li>
-<li>去耦电容和滤波电容靠近电源入口或电源转换器件。</li>
-</ul>
-<p><strong>布线基本原则</strong>：</p>
-<ul>
-<li>根据电流、频率、板厂工艺和信号完整性要求设置线宽线距；</li>
-<li>避免使用小于 90 度的走线拐角；</li>
-<li>高速和高频信号线注意间距与干扰控制。</li>
-</ul>
-<h3 id="第三章：EDA-使用技巧"><a href="#第三章：EDA-使用技巧" class="headerlink" title="第三章：EDA 使用技巧"></a>第三章：EDA 使用技巧</h3><p>批量扇出添加网络标签、排查铺铜后仍存在的飞线、导入外部图片和 Logo、配置多层板与盲埋孔、使用泪滴增强导线与焊盘连接的可靠性，以及工程文件的导入导出。</p>
-<h3 id="第四章：自定义符号及器件封装"><a href="#第四章：自定义符号及器件封装" class="headerlink" title="第四章：自定义符号及器件封装"></a>第四章：自定义符号及器件封装</h3><ul>
-<li>在标准模式和专业模式下创建自定义原理图符号；</li>
-<li>手工绘制 0805 电容封装，使用封装向导生成 CH340N 封装；</li>
-<li>进行封装尺寸检查，将原理图符号与个人封装绑定；</li>
-<li>了解 DIP、QFP、SOP、QFN、BGA 等常见芯片封装。</li>
-</ul>
-<h3 id="第五章：案例与焊接"><a href="#第五章：案例与焊接" class="headerlink" title="第五章：案例与焊接"></a>第五章：案例与焊接</h3><ul>
-<li>可调电阻控制 LED 亮度、独立按键控制 LED 亮灭；</li>
-<li>使用 74HC138 实现 3-8 译码器电路、74HC245 增强驱动能力、LM358 产生 PWM 方波；</li>
-<li>焊接技能：电烙铁使用、有铅&#x2F;无铅焊锡与助焊剂、蓝丁胶固定、放大镜检查、吸锡器拆焊返修。</li>
-</ul>
-<h2 id="PCB-设计流程速查"><a href="#PCB-设计流程速查" class="headerlink" title="PCB 设计流程速查"></a>PCB 设计流程速查</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">需求分析 → 元器件选型 → 建立或确认符号与封装 → 绘制原理图</span><br><span class="line">  → 原理图 DRC → 生成 PCB → 板框和器件布局 → 布线与铺铜</span><br><span class="line">  → 丝印和网络标识 → PCB DRC 与目测检查 → 3D 检查和生产资料导出</span><br><span class="line">  → PCB 制作、焊接、调试与测试</span><br></pre></td></tr></table></figure>
-
-<h2 id="常用工程检查点"><a href="#常用工程检查点" class="headerlink" title="常用工程检查点"></a>常用工程检查点</h2><table>
+<h2 id="四状态机设计"><a href="#四状态机设计" class="headerlink" title="四状态机设计"></a>四状态机设计</h2><table>
 <thead>
 <tr>
-<th>阶段</th>
-<th>重点检查内容</th>
+<th>状态</th>
+<th>行为</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>元器件选型</td>
-<td>参数、封装、引脚定义、供货和替代型号</td>
+<td>设置</td>
+<td>可调整时间；继电器断开 &#x2F; LED 熄灭 &#x2F; 蜂鸣器静音</td>
 </tr>
 <tr>
-<td>原理图</td>
-<td>电源、地、网络名称、引脚连接、位号和未连接引脚</td>
+<td>运行</td>
+<td>每秒倒计时递减；继电器吸合 &#x2F; LED 快闪 &#x2F; 每秒短鸣</td>
 </tr>
 <tr>
-<td>原理图 DRC</td>
-<td>悬空引脚、短路、未连接网络和规则警告</td>
+<td>暂停</td>
+<td>倒计时冻结；继电器断开 &#x2F; LED 熄灭 &#x2F; 蜂鸣器静音</td>
 </tr>
 <tr>
-<td>PCB 布局</td>
-<td>模块分区、接口方向、高压间距、散热和去耦位置</td>
-</tr>
-<tr>
-<td>PCB 布线</td>
-<td>线宽、线距、转角、回流路径、干扰和大电流承载能力</td>
-</tr>
-<tr>
-<td>PCB DRC</td>
-<td>间距、短路、未连接网络、板框和设计规则</td>
-</tr>
-<tr>
-<td>生产准备</td>
-<td>板层、板框、丝印、封装、Gerber、BOM 和装配要求</td>
-</tr>
-<tr>
-<td>焊接调试</td>
-<td>极性、焊点、虚焊、连锡、供电电压和通电顺序</td>
+<td>报警</td>
+<td>时间到；继电器断开 &#x2F; LED 闪烁 &#x2F; 周期鸣叫，K4&#x2F;K5&#x2F;<code>B</code> 停止</td>
 </tr>
 </tbody></table>
-<h2 id="学习建议"><a href="#学习建议" class="headerlink" title="学习建议"></a>学习建议</h2><ol>
-<li>先完成按键点灯案例，熟悉原理图到 PCB 的完整闭环；</li>
-<li>每次绘制原理图后先完成 DRC，再开始 PCB 布局和布线；</li>
-<li>选型时同时查看数据手册、封装尺寸、引脚定义和实际采购信息；</li>
-<li>布局时先划分电源、接口、控制、时钟和信号模块，再处理模块间连接；</li>
-<li>焊接前确认元器件方向、极性、封装和焊盘对应关系。</li>
-</ol>
+<p>状态边界清晰：仅 run 递减且继电器吸合，set&#x2F;pause 每周期强制复位输出，alarm 仅响应停止键——把状态误操作在逻辑层面清零。上电默认进入设置状态、默认 60 秒，倒计时归零自动断开继电器，防止负载超时运行。</p>
+<h2 id="1ms-分时调度"><a href="#1ms-分时调度" class="headerlink" title="1ms 分时调度"></a>1ms 分时调度</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">app_timer_1ms_task()                                [SysTick 每 1ms 触发]</span><br><span class="line">  ├── system_ms++                                   系统毫秒计数</span><br><span class="line">  ├── 每 100ms → temperature_control_safe_task()    温度保护复查</span><br><span class="line">  ├── display_scan()                                数码管扫描一位（4ms 一轮）</span><br><span class="line">  ├── key_scan() → key_process()                    按键采样（20ms 消抖）</span><br><span class="line">  ├── usart_receive_check() → usart_process()       串口轮询与命令解析</span><br><span class="line">  ├── 每 1000ms → run 状态倒计时递减</span><br><span class="line">  ├── run_beep_task() / alarm_beep_task()           蜂鸣器节奏调度</span><br><span class="line">  ├── LED 翻转调度（run 40ms / alarm 120ms）</span><br><span class="line">  └── display_update_buffer()                       刷新显示缓存</span><br></pre></td></tr></table></figure>
+
+<p>单一 1ms 心跳分频出 100ms 和 1000ms 多级节拍，全程无阻塞延时。</p>
+<h2 id="关键技术点"><a href="#关键技术点" class="headerlink" title="关键技术点"></a>关键技术点</h2><h3 id="寄存器级串口驱动"><a href="#寄存器级串口驱动" class="headerlink" title="寄存器级串口驱动"></a>寄存器级串口驱动</h3><p>USART1（PA9&#x2F;PA10，AF7）直接操作 MODER&#x2F;OTYPER&#x2F;AFR&#x2F;BRR 寄存器完成初始化；波特率用分数分频公式计算，fraction 带四舍五入与满 16 进位修正，84MHz → 9600bps 精确得到 <code>BRR = 0x222E</code>；收发查询 TXE&#x2F;RXNE 标志，不占中断资源。</p>
+<h3 id="硬件-PWM-蜂鸣器"><a href="#硬件-PWM-蜂鸣器" class="headerlink" title="硬件 PWM 蜂鸣器"></a>硬件 PWM 蜂鸣器</h3><p>TIM4_CH1（PD12）1MHz 时基 + PWM1 模式：频率 &#x3D; 1MHz&#x2F;ARR 控制音调（100Hz~10kHz 越界钳位），占空比控制音量。变调时对比较值做防溢出钳位，切换平滑。</p>
+<h3 id="数码管动态扫描"><a href="#数码管动态扫描" class="headerlink" title="数码管动态扫描"></a>数码管动态扫描</h3><p>共阴极四位管：PB8<del>PB15 段选、PC0</del>PC3 位选，1ms 点亮一位、4ms 刷新一轮。扫描流程”先消隐后输出”，杜绝换位瞬间的”鬼影”。</p>
+<h3 id="20ms-按键消抖"><a href="#20ms-按键消抖" class="headerlink" title="20ms 按键消抖"></a>20ms 按键消抖</h3><p>5 键逐 1ms 采样，电平连续稳定 20 个周期才确认；仅在稳定键值”变化”时上报一次（边沿触发），长按零重复。</p>
+<h3 id="时间边界防溢出"><a href="#时间边界防溢出" class="headerlink" title="时间边界防溢出"></a>时间边界防溢出</h3><p>+1min 上限 98:00、+10s 上限 99:49、-10s 下限 00:10 的钳位设计，杜绝 uint16 溢出与两位数显示越界。</p>
+<h3 id="温度失效保护"><a href="#温度失效保护" class="headerlink" title="温度失效保护"></a>温度失效保护</h3><p>TIM3_CH1&#x2F;PB4 温度闭环输出强制关闭：停计数 → 关通道 → CCR1 清零 → 引脚拉低。上电立即执行，运行中每 100ms 复查，保证任何状态下都不会误动作。</p>
+<h2 id="串口命令协议（9600-8N1）"><a href="#串口命令协议（9600-8N1）" class="headerlink" title="串口命令协议（9600 8N1）"></a>串口命令协议（9600 8N1）</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>S</code></td>
+<td>启动 &#x2F; 暂停（与 K3 同一入口）</td>
+</tr>
+<tr>
+<td><code>R</code></td>
+<td>复位</td>
+</tr>
+<tr>
+<td><code>Q</code></td>
+<td>查询状态：<code>time=01:30 set, relay off, temp safe</code></td>
+</tr>
+<tr>
+<td><code>M</code> &#x2F; <code>T</code> &#x2F; <code>A</code></td>
+<td>+1 分钟 &#x2F; +10 秒 &#x2F; -10 秒</td>
+</tr>
+<tr>
+<td><code>B</code></td>
+<td>停止报警</td>
+</tr>
+<tr>
+<td><code>Dmmss</code></td>
+<td>设置时间，如 <code>D0130</code> &#x3D; 01:30</td>
+</tr>
+</tbody></table>
+<p>串口命令复用按键处理函数，按键与串口行为完全一致，消除双通路逻辑分叉。非法输入（秒 ≥ 60、零时长、运行中设置）逐项拒绝并回执原因。</p>
+<h2 id="蜂鸣器与-LED-提示编码"><a href="#蜂鸣器与-LED-提示编码" class="headerlink" title="蜂鸣器与 LED 提示编码"></a>蜂鸣器与 LED 提示编码</h2><table>
+<thead>
+<tr>
+<th>事件</th>
+<th>蜂鸣器</th>
+<th>LED</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>启动 &#x2F; 每秒递减</td>
+<td>短鸣 120ms @ 2700Hz</td>
+<td>40ms 周期翻转</td>
+</tr>
+<tr>
+<td>倒计时归零报警</td>
+<td>120ms 鸣 &#x2F; 120ms 停 @ 4200Hz</td>
+<td>120ms 周期翻转</td>
+</tr>
+<tr>
+<td>设置 &#x2F; 暂停</td>
+<td>静音</td>
+<td>熄灭</td>
+</tr>
+</tbody></table>
+<p>零硬件成本，靠节奏编码提升状态可读性。</p>
+<h2 id="工程分层"><a href="#工程分层" class="headerlink" title="工程分层"></a>工程分层</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">APL 应用入口层     main.c（初始化 → 1ms 调度循环）</span><br><span class="line">HAL 硬件抽象层     board_config.h（引脚集中定义）</span><br><span class="line">                   ├─ app_timer.c   四状态机 / 倒计时 / 按键与串口处理</span><br><span class="line">                   ├─ tim.c         1MHz 时基 + __weak 回调框架</span><br><span class="line">                   ├─ bsp_output.c  LED / 蜂鸣器 / 继电器</span><br><span class="line">                   ├─ bsp_display.c 数码管动态扫描</span><br><span class="line">                   ├─ bsp_key.c     按键扫描与消抖</span><br><span class="line">                   ├─ bsp_usart.c   寄存器级收发</span><br><span class="line">                   └─ temp_safe.c   温度失效保护</span><br><span class="line">SPL / CMSIS        ST 官方库（CMSIS V4.2 + SPL V1.5.0）</span><br></pre></td></tr></table></figure>
+
+<p>全工程无中断、无 DMA、无 RTOS，引脚集中定义、Doxygen 全量注释，是裸机任务调度与嵌入式工程化实践的好参考。</p>
 <h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
-<li><a href="https://github.com/Ashleycurry/schematic-and-pcb-design">schematic-and-pcb-design</a></li>
+<li><a href="https://github.com/Ashleycurry/stm32f407-smart-timer-power-controller">stm32f407-smart-timer-power-controller</a></li>
 </ul>
 ]]></content>
       <categories>
-        <category>硬件设计</category>
+        <category>嵌入式开发</category>
       </categories>
       <tags>
-        <tag>PCB</tag>
-        <tag>EDA</tag>
-        <tag>原理图</tag>
-        <tag>封装</tag>
-        <tag>焊接</tag>
+        <tag>STM32F407</tag>
+        <tag>状态机</tag>
+        <tag>裸机调度</tag>
+        <tag>数码管</tag>
+        <tag>PWM蜂鸣器</tag>
+        <tag>寄存器开发</tag>
       </tags>
   </entry>
   <entry>
     <title>STM32 灰度循迹小车：8 路传感器 + PID + 舵机转向</title>
-    <url>/2026/09/22/stm32-grayscale-trace-car/</url>
+    <url>/xiaogao-code.github.io/2026/09/22/stm32-grayscale-trace-car/</url>
     <content><![CDATA[<p>一条黑线、一台小车、一套完整闭环。这个项目用一颗 72MHz 的 STM32F103C8T6，把 8 路灰度传感器、加权位置误差、抗饱和 PID、舵机转向和双后轮调速串成了一条 200Hz 的控制链路，是嵌入式入门到进阶的完整实战参考。</p>
 <span id="more"></span>
 
@@ -1974,127 +2093,8 @@
       </tags>
   </entry>
   <entry>
-    <title>STM32F407 智能定时用电控制器：四状态机 + 1ms 分时调度</title>
-    <url>/2026/09/29/stm32f407-smart-timer-controller/</url>
-    <content><![CDATA[<p>倒计时控制继电器通断负载，听起来简单，做扎实却不容易。这个项目基于 STM32F407VE，用一套 1ms 分时任务调度把倒计时、数码管扫描、按键消抖、串口解析、蜂鸣器节奏和温度保护全部塞进裸机主循环，从未使用中断——时序可推演、行为可预测。</p>
-<span id="more"></span>
-
-<h2 id="功能全景"><a href="#功能全景" class="headerlink" title="功能全景"></a>功能全景</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">按键 + 串口双通道设置 → 四位数码管 MM.SS 实时显示 → 启动后继电器吸合</span><br><span class="line">→ 每秒短鸣 + LED 快闪 → 倒计时归零报警（蜂鸣器周期鸣叫）→ 一键停止/复位</span><br></pre></td></tr></table></figure>
-
-<h2 id="四状态机设计"><a href="#四状态机设计" class="headerlink" title="四状态机设计"></a>四状态机设计</h2><table>
-<thead>
-<tr>
-<th>状态</th>
-<th>行为</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>设置</td>
-<td>可调整时间；继电器断开 &#x2F; LED 熄灭 &#x2F; 蜂鸣器静音</td>
-</tr>
-<tr>
-<td>运行</td>
-<td>每秒倒计时递减；继电器吸合 &#x2F; LED 快闪 &#x2F; 每秒短鸣</td>
-</tr>
-<tr>
-<td>暂停</td>
-<td>倒计时冻结；继电器断开 &#x2F; LED 熄灭 &#x2F; 蜂鸣器静音</td>
-</tr>
-<tr>
-<td>报警</td>
-<td>时间到；继电器断开 &#x2F; LED 闪烁 &#x2F; 周期鸣叫，K4&#x2F;K5&#x2F;<code>B</code> 停止</td>
-</tr>
-</tbody></table>
-<p>状态边界清晰：仅 run 递减且继电器吸合，set&#x2F;pause 每周期强制复位输出，alarm 仅响应停止键——把状态误操作在逻辑层面清零。上电默认进入设置状态、默认 60 秒，倒计时归零自动断开继电器，防止负载超时运行。</p>
-<h2 id="1ms-分时调度"><a href="#1ms-分时调度" class="headerlink" title="1ms 分时调度"></a>1ms 分时调度</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">app_timer_1ms_task()                                [SysTick 每 1ms 触发]</span><br><span class="line">  ├── system_ms++                                   系统毫秒计数</span><br><span class="line">  ├── 每 100ms → temperature_control_safe_task()    温度保护复查</span><br><span class="line">  ├── display_scan()                                数码管扫描一位（4ms 一轮）</span><br><span class="line">  ├── key_scan() → key_process()                    按键采样（20ms 消抖）</span><br><span class="line">  ├── usart_receive_check() → usart_process()       串口轮询与命令解析</span><br><span class="line">  ├── 每 1000ms → run 状态倒计时递减</span><br><span class="line">  ├── run_beep_task() / alarm_beep_task()           蜂鸣器节奏调度</span><br><span class="line">  ├── LED 翻转调度（run 40ms / alarm 120ms）</span><br><span class="line">  └── display_update_buffer()                       刷新显示缓存</span><br></pre></td></tr></table></figure>
-
-<p>单一 1ms 心跳分频出 100ms 和 1000ms 多级节拍，全程无阻塞延时。</p>
-<h2 id="关键技术点"><a href="#关键技术点" class="headerlink" title="关键技术点"></a>关键技术点</h2><h3 id="寄存器级串口驱动"><a href="#寄存器级串口驱动" class="headerlink" title="寄存器级串口驱动"></a>寄存器级串口驱动</h3><p>USART1（PA9&#x2F;PA10，AF7）直接操作 MODER&#x2F;OTYPER&#x2F;AFR&#x2F;BRR 寄存器完成初始化；波特率用分数分频公式计算，fraction 带四舍五入与满 16 进位修正，84MHz → 9600bps 精确得到 <code>BRR = 0x222E</code>；收发查询 TXE&#x2F;RXNE 标志，不占中断资源。</p>
-<h3 id="硬件-PWM-蜂鸣器"><a href="#硬件-PWM-蜂鸣器" class="headerlink" title="硬件 PWM 蜂鸣器"></a>硬件 PWM 蜂鸣器</h3><p>TIM4_CH1（PD12）1MHz 时基 + PWM1 模式：频率 &#x3D; 1MHz&#x2F;ARR 控制音调（100Hz~10kHz 越界钳位），占空比控制音量。变调时对比较值做防溢出钳位，切换平滑。</p>
-<h3 id="数码管动态扫描"><a href="#数码管动态扫描" class="headerlink" title="数码管动态扫描"></a>数码管动态扫描</h3><p>共阴极四位管：PB8<del>PB15 段选、PC0</del>PC3 位选，1ms 点亮一位、4ms 刷新一轮。扫描流程”先消隐后输出”，杜绝换位瞬间的”鬼影”。</p>
-<h3 id="20ms-按键消抖"><a href="#20ms-按键消抖" class="headerlink" title="20ms 按键消抖"></a>20ms 按键消抖</h3><p>5 键逐 1ms 采样，电平连续稳定 20 个周期才确认；仅在稳定键值”变化”时上报一次（边沿触发），长按零重复。</p>
-<h3 id="时间边界防溢出"><a href="#时间边界防溢出" class="headerlink" title="时间边界防溢出"></a>时间边界防溢出</h3><p>+1min 上限 98:00、+10s 上限 99:49、-10s 下限 00:10 的钳位设计，杜绝 uint16 溢出与两位数显示越界。</p>
-<h3 id="温度失效保护"><a href="#温度失效保护" class="headerlink" title="温度失效保护"></a>温度失效保护</h3><p>TIM3_CH1&#x2F;PB4 温度闭环输出强制关闭：停计数 → 关通道 → CCR1 清零 → 引脚拉低。上电立即执行，运行中每 100ms 复查，保证任何状态下都不会误动作。</p>
-<h2 id="串口命令协议（9600-8N1）"><a href="#串口命令协议（9600-8N1）" class="headerlink" title="串口命令协议（9600 8N1）"></a>串口命令协议（9600 8N1）</h2><table>
-<thead>
-<tr>
-<th>命令</th>
-<th>功能</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>S</code></td>
-<td>启动 &#x2F; 暂停（与 K3 同一入口）</td>
-</tr>
-<tr>
-<td><code>R</code></td>
-<td>复位</td>
-</tr>
-<tr>
-<td><code>Q</code></td>
-<td>查询状态：<code>time=01:30 set, relay off, temp safe</code></td>
-</tr>
-<tr>
-<td><code>M</code> &#x2F; <code>T</code> &#x2F; <code>A</code></td>
-<td>+1 分钟 &#x2F; +10 秒 &#x2F; -10 秒</td>
-</tr>
-<tr>
-<td><code>B</code></td>
-<td>停止报警</td>
-</tr>
-<tr>
-<td><code>Dmmss</code></td>
-<td>设置时间，如 <code>D0130</code> &#x3D; 01:30</td>
-</tr>
-</tbody></table>
-<p>串口命令复用按键处理函数，按键与串口行为完全一致，消除双通路逻辑分叉。非法输入（秒 ≥ 60、零时长、运行中设置）逐项拒绝并回执原因。</p>
-<h2 id="蜂鸣器与-LED-提示编码"><a href="#蜂鸣器与-LED-提示编码" class="headerlink" title="蜂鸣器与 LED 提示编码"></a>蜂鸣器与 LED 提示编码</h2><table>
-<thead>
-<tr>
-<th>事件</th>
-<th>蜂鸣器</th>
-<th>LED</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>启动 &#x2F; 每秒递减</td>
-<td>短鸣 120ms @ 2700Hz</td>
-<td>40ms 周期翻转</td>
-</tr>
-<tr>
-<td>倒计时归零报警</td>
-<td>120ms 鸣 &#x2F; 120ms 停 @ 4200Hz</td>
-<td>120ms 周期翻转</td>
-</tr>
-<tr>
-<td>设置 &#x2F; 暂停</td>
-<td>静音</td>
-<td>熄灭</td>
-</tr>
-</tbody></table>
-<p>零硬件成本，靠节奏编码提升状态可读性。</p>
-<h2 id="工程分层"><a href="#工程分层" class="headerlink" title="工程分层"></a>工程分层</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">APL 应用入口层     main.c（初始化 → 1ms 调度循环）</span><br><span class="line">HAL 硬件抽象层     board_config.h（引脚集中定义）</span><br><span class="line">                   ├─ app_timer.c   四状态机 / 倒计时 / 按键与串口处理</span><br><span class="line">                   ├─ tim.c         1MHz 时基 + __weak 回调框架</span><br><span class="line">                   ├─ bsp_output.c  LED / 蜂鸣器 / 继电器</span><br><span class="line">                   ├─ bsp_display.c 数码管动态扫描</span><br><span class="line">                   ├─ bsp_key.c     按键扫描与消抖</span><br><span class="line">                   ├─ bsp_usart.c   寄存器级收发</span><br><span class="line">                   └─ temp_safe.c   温度失效保护</span><br><span class="line">SPL / CMSIS        ST 官方库（CMSIS V4.2 + SPL V1.5.0）</span><br></pre></td></tr></table></figure>
-
-<p>全工程无中断、无 DMA、无 RTOS，引脚集中定义、Doxygen 全量注释，是裸机任务调度与嵌入式工程化实践的好参考。</p>
-<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
-<li><a href="https://github.com/Ashleycurry/stm32f407-smart-timer-power-controller">stm32f407-smart-timer-power-controller</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>嵌入式开发</category>
-      </categories>
-      <tags>
-        <tag>STM32F407</tag>
-        <tag>状态机</tag>
-        <tag>裸机调度</tag>
-        <tag>数码管</tag>
-        <tag>PWM蜂鸣器</tag>
-        <tag>寄存器开发</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>双轴步进电机同步运动控制：Sync_CalcParams 与 AVR446 梯形加减速</title>
-    <url>/2026/10/10/sync-calc-params-motion-control/</url>
+    <url>/xiaogao-code.github.io/2026/10/10/sync-calc-params-motion-control/</url>
     <content><![CDATA[<p>两轴各走各的梯形曲线，步数不同就会不同时停。这个项目用一个漂亮的数学观察解决了同步问题：只要两轴的 <code>speed/accel</code>、<code>speed/decel</code> 相同，三段运动时间就完全一致——于是把从轴参数按步数比例统一缩放即可。全整数运算，无浮点、无查表。</p>
 <span id="more"></span>
 
