@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>STM32F407 智能定时用电控制器：四状态机 + 1ms 分时调度 | XiaoGao 的代码笔记</title>
+<meta name="description" content="STM32F407 智能定时用电控制器实战——四状态机互斥保护、SysTick 1ms 分时任务调度、寄存器级 USART 驱动、数码管动态扫描、20ms 按键消抖与温度失效保护。">
+<meta name="keywords" content="嵌入式,STM32,FreeRTOS,ROS,OpenCV,机器人,Linux,C语言,Python">
+<meta name="author" content="XiaoGao">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f9fd">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1628">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://xiaogao-code.github.io/2026/09/29/stm32f407-smart-timer-controller/">
+<meta name="description" content="STM32F407 智能定时用电控制器实战——四状态机互斥保护、SysTick 1ms 分时任务调度、寄存器级 USART 驱动、数码管动态扫描、20ms 按键消抖与温度失效保护。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32F407 智能定时用电控制器：四状态机 + 1ms 分时调度">
+<meta property="og:url" content="https://xiaogao-code.github.io/2026/09/29/stm32f407-smart-timer-controller/index.html">
+<meta property="og:site_name" content="XiaoGao 的代码笔记">
+<meta property="og:description" content="STM32F407 智能定时用电控制器实战——四状态机互斥保护、SysTick 1ms 分时任务调度、寄存器级 USART 驱动、数码管动态扫描、20ms 按键消抖与温度失效保护。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-29T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-14T11:05:00.000Z">
+<meta property="article:author" content="XiaoGao">
+<meta property="article:tag" content="PWM蜂鸣器">
+<meta property="article:tag" content="STM32F407">
+<meta property="article:tag" content="寄存器开发">
+<meta property="article:tag" content="数码管">
+<meta property="article:tag" content="状态机">
+<meta property="article:tag" content="裸机调度">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('bs-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+    document.documentElement.classList.add('js');
+    addEventListener('pagereveal', function (e) {
+      if (e.viewTransition) { e.viewTransition.ready.catch(function () {}); e.viewTransition.finished.catch(function () {}); }
+    });
+  })();
+</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400..900&family=Noto+Sans+SC:wght@900&display=swap">
+
+<link rel="stylesheet" href="/css/bisect.css">
+<link rel="alternate" type="application/atom+xml" title="XiaoGao 的代码笔记" href="/atom.xml">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.xml"}}]},"eagerness":"moderate"}]}
+</script>
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="is-post">
+<a class="bs-skip" href="#main">跳到正文</a>
+<svg class="bs-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <!-- 列表里的图片统一压成深空—分界蓝—冰白三色调 -->
+  <filter id="bs-duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues=".059 .090 .957"/>
+      <feFuncG type="table" tableValues=".090 .278 .976"/>
+      <feFuncB type="table" tableValues=".165 .902 .992"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+
+<header class="bs-header" data-header>
+  <a class="bs-brand" href="/" aria-label="XiaoGao 的代码笔记 首页">
+    <span class="bs-mark" aria-hidden="true"></span>
+    <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+  </a>
+  <nav class="bs-nav" id="bs-nav" aria-label="主导航">
+    <ul>
+      
+      <li>
+        <a href="/" aria-current="page">
+          <span class="bs-nav__no">01</span>
+          <span class="bs-nav__zh">文章</span>
+          <span class="bs-nav__en">Posts</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives/">
+          <span class="bs-nav__no">02</span>
+          <span class="bs-nav__zh">归档</span>
+          <span class="bs-nav__en">Archive</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/">
+          <span class="bs-nav__no">03</span>
+          <span class="bs-nav__zh">分类</span>
+          <span class="bs-nav__en">Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/">
+          <span class="bs-nav__no">04</span>
+          <span class="bs-nav__zh">标签</span>
+          <span class="bs-nav__en">Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about/">
+          <span class="bs-nav__no">05</span>
+          <span class="bs-nav__zh">关于</span>
+          <span class="bs-nav__en">About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">
+          <span class="bs-nav__no">06</span>
+          <span class="bs-nav__zh">GitHub</span>
+          <span class="bs-nav__en">Code ↗</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+  <div class="bs-tools">
+    <button class="bs-tool bs-tool--search" type="button" data-search-open aria-label="搜索">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <kbd>⌘K</kbd>
+    </button>
+    <button class="bs-tool bs-tool--theme" type="button" data-theme-toggle aria-label="切换深浅色">
+      <span class="bs-halfdot" aria-hidden="true"></span>
+    </button>
+    <button class="bs-tool bs-tool--menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="bs-nav">
+      <span class="bs-burger" aria-hidden="true"></span><span class="bs-sr">菜单</span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<article class="bs-post" data-font="sans">
+  <header class="bs-phead">
+    <div class="bs-phead__text">
+      <p class="bs-kicker">NO.19 · <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">嵌入式开发</a></p>
+      <h1 class="bs-phead__title">STM32F407 智能定时用电控制器：四状态机 + 1ms 分时调度</h1>
+      <p class="bs-phead__desc">STM32F407 智能定时用电控制器实战——四状态机互斥保护、SysTick 1ms 分时任务调度、寄存器级 USART 驱动、数码管动态扫描、20ms 按键消抖与温度失效保护。</p>
+      <dl class="bs-phead__meta">
+        <div><dt>发布 DATE</dt><dd><time datetime="2026-09-29T02:00:00.000Z">2026.09.29</time></dd></div>
+        <div><dt>字数 WORDS</dt><dd>1,171</dd></div>
+        <div><dt>阅读 READ</dt><dd>3 分钟</dd></div>
+      </dl>
+    </div>
+    <figure class="bs-phead__cover" aria-hidden="true">
+      <svg class="bs-gen" viewBox="0 0 1200 800" preserveAspectRatio="xMinYMid slice" role="img" aria-label="STM32F407 智能定时用电控制器：四状态机 + 1ms 分时调度">
+<defs><clipPath id="gnffnv4"><rect x="532.2" y="0" width="667.8" height="800"/></clipPath></defs>
+<rect class="bs-gen__w" width="1200" height="800"/>
+<text class="bs-gen__glyph bs-gen__b" x="358.8" y="688">S</text>
+<g clip-path="url(#gnffnv4)"><rect class="bs-gen__b" width="1200" height="800"/><path d="M0 22H1200M0 44H1200M0 66H1200M0 88H1200M0 110H1200M0 132H1200M0 154H1200M0 176H1200M0 198H1200M0 220H1200M0 242H1200M0 264H1200M0 286H1200M0 308H1200M0 330H1200M0 352H1200M0 374H1200M0 396H1200M0 418H1200M0 440H1200M0 462H1200M0 484H1200M0 506H1200M0 528H1200M0 550H1200M0 572H1200M0 594H1200M0 616H1200M0 638H1200M0 660H1200M0 682H1200M0 704H1200M0 726H1200M0 748H1200M0 770H1200M0 792H1200" class="bs-gen__e" stroke-width="1.5" fill="none" opacity=".35"/><text class="bs-gen__glyph bs-gen__w" x="358.8" y="688">S</text></g>
+<text class="bs-gen__label" x="40" y="64">NO.19 / 2026</text>
+</svg>
+    </figure>
+  </header>
+
+  <div class="bs-post__layout">
+    <aside class="bs-rail" aria-label="阅读进度与目录">
+      <div class="bs-rail__inner">
+        <a class="bs-progress" href="#top" data-to-top aria-label="回到顶部"><span class="bs-progress__fill"></span></a>
+        
+        <p class="bs-rail__label">目录 · CONTENTS</p>
+        <ol class="bs-toc"><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%8A%9F%E8%83%BD%E5%85%A8%E6%99%AF"><span class="bs-toc-number">1.</span> <span class="bs-toc-text">功能全景</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%9B%9B%E7%8A%B6%E6%80%81%E6%9C%BA%E8%AE%BE%E8%AE%A1"><span class="bs-toc-number">2.</span> <span class="bs-toc-text">四状态机设计</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#1ms-%E5%88%86%E6%97%B6%E8%B0%83%E5%BA%A6"><span class="bs-toc-number">3.</span> <span class="bs-toc-text">1ms 分时调度</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF%E7%82%B9"><span class="bs-toc-number">4.</span> <span class="bs-toc-text">关键技术点</span></a><ol class="bs-toc-child"><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E7%BA%A7%E4%B8%B2%E5%8F%A3%E9%A9%B1%E5%8A%A8"><span class="bs-toc-number">4.1.</span> <span class="bs-toc-text">寄存器级串口驱动</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E7%A1%AC%E4%BB%B6-PWM-%E8%9C%82%E9%B8%A3%E5%99%A8"><span class="bs-toc-number">4.2.</span> <span class="bs-toc-text">硬件 PWM 蜂鸣器</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E6%95%B0%E7%A0%81%E7%AE%A1%E5%8A%A8%E6%80%81%E6%89%AB%E6%8F%8F"><span class="bs-toc-number">4.3.</span> <span class="bs-toc-text">数码管动态扫描</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#20ms-%E6%8C%89%E9%94%AE%E6%B6%88%E6%8A%96"><span class="bs-toc-number">4.4.</span> <span class="bs-toc-text">20ms 按键消抖</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E6%97%B6%E9%97%B4%E8%BE%B9%E7%95%8C%E9%98%B2%E6%BA%A2%E5%87%BA"><span class="bs-toc-number">4.5.</span> <span class="bs-toc-text">时间边界防溢出</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E6%B8%A9%E5%BA%A6%E5%A4%B1%E6%95%88%E4%BF%9D%E6%8A%A4"><span class="bs-toc-number">4.6.</span> <span class="bs-toc-text">温度失效保护</span></a></li></ol></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%B8%B2%E5%8F%A3%E5%91%BD%E4%BB%A4%E5%8D%8F%E8%AE%AE%EF%BC%889600-8N1%EF%BC%89"><span class="bs-toc-number">5.</span> <span class="bs-toc-text">串口命令协议（9600 8N1）</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E8%9C%82%E9%B8%A3%E5%99%A8%E4%B8%8E-LED-%E6%8F%90%E7%A4%BA%E7%BC%96%E7%A0%81"><span class="bs-toc-number">6.</span> <span class="bs-toc-text">蜂鸣器与 LED 提示编码</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%B7%A5%E7%A8%8B%E5%88%86%E5%B1%82"><span class="bs-toc-number">7.</span> <span class="bs-toc-text">工程分层</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%BB%93%E5%BA%93"><span class="bs-toc-number">8.</span> <span class="bs-toc-text">仓库</span></a></li></ol>
+        
+      </div>
+    </aside>
+    <div class="bs-prose" data-prose>
+      <p>倒计时控制继电器通断负载，听起来简单，做扎实却不容易。这个项目基于 STM32F407VE，用一套 1ms 分时任务调度把倒计时、数码管扫描、按键消抖、串口解析、蜂鸣器节奏和温度保护全部塞进裸机主循环，从未使用中断——时序可推演、行为可预测。</p>
+<span id="more"></span>
+
+<h2 id="功能全景"><a href="#功能全景" class="headerlink" title="功能全景"></a>功能全景</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">按键 + 串口双通道设置 → 四位数码管 MM.SS 实时显示 → 启动后继电器吸合</span><br><span class="line">→ 每秒短鸣 + LED 快闪 → 倒计时归零报警（蜂鸣器周期鸣叫）→ 一键停止/复位</span><br></pre></td></tr></table></figure>
+
+<h2 id="四状态机设计"><a href="#四状态机设计" class="headerlink" title="四状态机设计"></a>四状态机设计</h2><table>
+<thead>
+<tr>
+<th>状态</th>
+<th>行为</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>设置</td>
+<td>可调整时间；继电器断开 &#x2F; LED 熄灭 &#x2F; 蜂鸣器静音</td>
+</tr>
+<tr>
+<td>运行</td>
+<td>每秒倒计时递减；继电器吸合 &#x2F; LED 快闪 &#x2F; 每秒短鸣</td>
+</tr>
+<tr>
+<td>暂停</td>
+<td>倒计时冻结；继电器断开 &#x2F; LED 熄灭 &#x2F; 蜂鸣器静音</td>
+</tr>
+<tr>
+<td>报警</td>
+<td>时间到；继电器断开 &#x2F; LED 闪烁 &#x2F; 周期鸣叫，K4&#x2F;K5&#x2F;<code>B</code> 停止</td>
+</tr>
+</tbody></table>
+<p>状态边界清晰：仅 run 递减且继电器吸合，set&#x2F;pause 每周期强制复位输出，alarm 仅响应停止键——把状态误操作在逻辑层面清零。上电默认进入设置状态、默认 60 秒，倒计时归零自动断开继电器，防止负载超时运行。</p>
+<h2 id="1ms-分时调度"><a href="#1ms-分时调度" class="headerlink" title="1ms 分时调度"></a>1ms 分时调度</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">app_timer_1ms_task()                                [SysTick 每 1ms 触发]</span><br><span class="line">  ├── system_ms++                                   系统毫秒计数</span><br><span class="line">  ├── 每 100ms → temperature_control_safe_task()    温度保护复查</span><br><span class="line">  ├── display_scan()                                数码管扫描一位（4ms 一轮）</span><br><span class="line">  ├── key_scan() → key_process()                    按键采样（20ms 消抖）</span><br><span class="line">  ├── usart_receive_check() → usart_process()       串口轮询与命令解析</span><br><span class="line">  ├── 每 1000ms → run 状态倒计时递减</span><br><span class="line">  ├── run_beep_task() / alarm_beep_task()           蜂鸣器节奏调度</span><br><span class="line">  ├── LED 翻转调度（run 40ms / alarm 120ms）</span><br><span class="line">  └── display_update_buffer()                       刷新显示缓存</span><br></pre></td></tr></table></figure>
+
+<p>单一 1ms 心跳分频出 100ms 和 1000ms 多级节拍，全程无阻塞延时。</p>
+<h2 id="关键技术点"><a href="#关键技术点" class="headerlink" title="关键技术点"></a>关键技术点</h2><h3 id="寄存器级串口驱动"><a href="#寄存器级串口驱动" class="headerlink" title="寄存器级串口驱动"></a>寄存器级串口驱动</h3><p>USART1（PA9&#x2F;PA10，AF7）直接操作 MODER&#x2F;OTYPER&#x2F;AFR&#x2F;BRR 寄存器完成初始化；波特率用分数分频公式计算，fraction 带四舍五入与满 16 进位修正，84MHz → 9600bps 精确得到 <code>BRR = 0x222E</code>；收发查询 TXE&#x2F;RXNE 标志，不占中断资源。</p>
+<h3 id="硬件-PWM-蜂鸣器"><a href="#硬件-PWM-蜂鸣器" class="headerlink" title="硬件 PWM 蜂鸣器"></a>硬件 PWM 蜂鸣器</h3><p>TIM4_CH1（PD12）1MHz 时基 + PWM1 模式：频率 &#x3D; 1MHz&#x2F;ARR 控制音调（100Hz~10kHz 越界钳位），占空比控制音量。变调时对比较值做防溢出钳位，切换平滑。</p>
+<h3 id="数码管动态扫描"><a href="#数码管动态扫描" class="headerlink" title="数码管动态扫描"></a>数码管动态扫描</h3><p>共阴极四位管：PB8<del>PB15 段选、PC0</del>PC3 位选，1ms 点亮一位、4ms 刷新一轮。扫描流程”先消隐后输出”，杜绝换位瞬间的”鬼影”。</p>
+<h3 id="20ms-按键消抖"><a href="#20ms-按键消抖" class="headerlink" title="20ms 按键消抖"></a>20ms 按键消抖</h3><p>5 键逐 1ms 采样，电平连续稳定 20 个周期才确认；仅在稳定键值”变化”时上报一次（边沿触发），长按零重复。</p>
+<h3 id="时间边界防溢出"><a href="#时间边界防溢出" class="headerlink" title="时间边界防溢出"></a>时间边界防溢出</h3><p>+1min 上限 98:00、+10s 上限 99:49、-10s 下限 00:10 的钳位设计，杜绝 uint16 溢出与两位数显示越界。</p>
+<h3 id="温度失效保护"><a href="#温度失效保护" class="headerlink" title="温度失效保护"></a>温度失效保护</h3><p>TIM3_CH1&#x2F;PB4 温度闭环输出强制关闭：停计数 → 关通道 → CCR1 清零 → 引脚拉低。上电立即执行，运行中每 100ms 复查，保证任何状态下都不会误动作。</p>
+<h2 id="串口命令协议（9600-8N1）"><a href="#串口命令协议（9600-8N1）" class="headerlink" title="串口命令协议（9600 8N1）"></a>串口命令协议（9600 8N1）</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>S</code></td>
+<td>启动 &#x2F; 暂停（与 K3 同一入口）</td>
+</tr>
+<tr>
+<td><code>R</code></td>
+<td>复位</td>
+</tr>
+<tr>
+<td><code>Q</code></td>
+<td>查询状态：<code>time=01:30 set, relay off, temp safe</code></td>
+</tr>
+<tr>
+<td><code>M</code> &#x2F; <code>T</code> &#x2F; <code>A</code></td>
+<td>+1 分钟 &#x2F; +10 秒 &#x2F; -10 秒</td>
+</tr>
+<tr>
+<td><code>B</code></td>
+<td>停止报警</td>
+</tr>
+<tr>
+<td><code>Dmmss</code></td>
+<td>设置时间，如 <code>D0130</code> &#x3D; 01:30</td>
+</tr>
+</tbody></table>
+<p>串口命令复用按键处理函数，按键与串口行为完全一致，消除双通路逻辑分叉。非法输入（秒 ≥ 60、零时长、运行中设置）逐项拒绝并回执原因。</p>
+<h2 id="蜂鸣器与-LED-提示编码"><a href="#蜂鸣器与-LED-提示编码" class="headerlink" title="蜂鸣器与 LED 提示编码"></a>蜂鸣器与 LED 提示编码</h2><table>
+<thead>
+<tr>
+<th>事件</th>
+<th>蜂鸣器</th>
+<th>LED</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>启动 &#x2F; 每秒递减</td>
+<td>短鸣 120ms @ 2700Hz</td>
+<td>40ms 周期翻转</td>
+</tr>
+<tr>
+<td>倒计时归零报警</td>
+<td>120ms 鸣 &#x2F; 120ms 停 @ 4200Hz</td>
+<td>120ms 周期翻转</td>
+</tr>
+<tr>
+<td>设置 &#x2F; 暂停</td>
+<td>静音</td>
+<td>熄灭</td>
+</tr>
+</tbody></table>
+<p>零硬件成本，靠节奏编码提升状态可读性。</p>
+<h2 id="工程分层"><a href="#工程分层" class="headerlink" title="工程分层"></a>工程分层</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">APL 应用入口层     main.c（初始化 → 1ms 调度循环）</span><br><span class="line">HAL 硬件抽象层     board_config.h（引脚集中定义）</span><br><span class="line">                   ├─ app_timer.c   四状态机 / 倒计时 / 按键与串口处理</span><br><span class="line">                   ├─ tim.c         1MHz 时基 + __weak 回调框架</span><br><span class="line">                   ├─ bsp_output.c  LED / 蜂鸣器 / 继电器</span><br><span class="line">                   ├─ bsp_display.c 数码管动态扫描</span><br><span class="line">                   ├─ bsp_key.c     按键扫描与消抖</span><br><span class="line">                   ├─ bsp_usart.c   寄存器级收发</span><br><span class="line">                   └─ temp_safe.c   温度失效保护</span><br><span class="line">SPL / CMSIS        ST 官方库（CMSIS V4.2 + SPL V1.5.0）</span><br></pre></td></tr></table></figure>
+
+<p>全工程无中断、无 DMA、无 RTOS，引脚集中定义、Doxygen 全量注释，是裸机任务调度与嵌入式工程化实践的好参考。</p>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ashleycurry/stm32f407-smart-timer-power-controller">stm32f407-smart-timer-power-controller</a></li>
+</ul>
+
+    </div>
+  </div>
+
+  <footer class="bs-pfoot">
+    
+    <ul class="bs-tags" aria-label="标签">
+      <li><a href="/tags/STM32F407/">#STM32F407</a></li><li><a href="/tags/%E7%8A%B6%E6%80%81%E6%9C%BA/">#状态机</a></li><li><a href="/tags/%E8%A3%B8%E6%9C%BA%E8%B0%83%E5%BA%A6/">#裸机调度</a></li><li><a href="/tags/%E6%95%B0%E7%A0%81%E7%AE%A1/">#数码管</a></li><li><a href="/tags/PWM%E8%9C%82%E9%B8%A3%E5%99%A8/">#PWM蜂鸣器</a></li><li><a href="/tags/%E5%AF%84%E5%AD%98%E5%99%A8%E5%BC%80%E5%8F%91/">#寄存器开发</a></li>
+    </ul>
+    
+    <div class="bs-pfoot__grid">
+      
+      <p class="bs-license">
+        <span class="bs-kicker">LICENSE</span>
+        本文作者 XiaoGao，采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可。
+        转载请注明出处：<a href="https://xiaogao-code.github.io/2026/09/29/stm32f407-smart-timer-controller/">https:&#x2F;&#x2F;xiaogao-code.github.io&#x2F;2026&#x2F;09&#x2F;29&#x2F;stm32f407-smart-timer-controller&#x2F;</a>
+      </p>
+      
+      
+      
+    </div>
+  </footer>
+
+  <nav class="bs-pnav" aria-label="分页">
+    
+    <a class="bs-pnav__item bs-pnav__item--newer" href="/2026/10/10/sync-calc-params-motion-control/" rel="prev">
+      <span class="bs-kicker">← 较新 NEWER</span><span class="bs-pnav__t">双轴步进电机同步运动控制：Sync_CalcParams 与 AVR446 梯形加减速</span>
+    </a>
+    
+    
+    <a class="bs-pnav__item bs-pnav__item--older" href="/2026/09/22/stm32-grayscale-trace-car/" rel="next">
+      <span class="bs-kicker">较早 OLDER →</span><span class="bs-pnav__t">STM32 灰度循迹小车：8 路传感器 + PID + 舵机转向</span>
+    </a>
+    
+  </nav>
+
+  
+</article>
+</main>
+
+<footer class="bs-footer">
+  <div class="bs-footer__white">
+    <a class="bs-brand bs-brand--footer" href="/">
+      <span class="bs-mark" aria-hidden="true"></span>
+      <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+    </a>
+    <p class="bs-footer__desc">嵌入式软件 / 机器人 / 计算机视觉 / LLM 应用的学习与实践笔记</p>
+    <ul class="bs-footer__social">
+      
+      <li><a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">GitHub</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+    </ul>
+    <p class="bs-footer__meta">
+      © 2026 XiaoGao
+       · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+      · 由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 与 <a href="https://github.com/LiuXiu233/hexo-theme-bisect" target="_blank" rel="noopener">Bisect</a> 主题驱动
+    </p>
+  </div>
+  <div class="bs-footer__blue">
+    
+<p class="bs-slogan bs-slogan--footer">
+  <span class="bs-slogan__zh">从寄存器到推理，把设备、数据与智能连起来。</span>
+  <span class="bs-slogan__en">Build close to the machine. Bring intelligence to the edge.</span>
+</p>
+
+
+    
+    <div class="bs-footer__actions">
+      
+      <a class="bs-btn bs-btn--line" href="#top" data-to-top>回到顶部 ↑</a>
+    </div>
+  </div>
+</footer>
+<script id="bs-config" type="application/json">{"root":"/","search":"/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
+
+<dialog class="bs-search" id="bs-search" aria-label="搜索文章或输入命令">
+  <form class="bs-search__bar" method="dialog" role="search">
+    <span class="bs-search__prompt" aria-hidden="true">&gt;</span>
+    <label class="bs-sr" for="bs-search-input">搜索文章或输入命令</label>
+    <input id="bs-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="搜索标题、正文、标签……  输入 &gt; 查看命令">
+    <button class="bs-search__close" type="submit" aria-label="关闭">esc</button>
+  </form>
+  <ol class="bs-search__list" id="bs-search-list" role="listbox" aria-label="结果"></ol>
+  <p class="bs-search__hint"><span>↑↓ 选择</span><span>↵ 打开</span><span>&gt;theme · &gt;random · &gt;top · &gt;archive</span></p>
+</dialog>
+
+<script type="module" src="/js/bisect.js"></script>
+</body>
+</html>

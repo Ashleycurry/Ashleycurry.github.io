@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OpenCV 计算机视觉：从像素到特征匹配的十二课 | XiaoGao 的代码笔记</title>
+<meta name="description" content="OpenCV 计算机视觉入门笔记，12 份课件配套可运行源码，覆盖图像 I/O、绘制、颜色空间、几何变换、滤波平滑、Canny 边缘检测、形态学、阈值分割、轮廓特征、ORB 特征匹配与 Harris 角点检测。">
+<meta name="keywords" content="嵌入式,STM32,FreeRTOS,ROS,OpenCV,机器人,Linux,C语言,Python">
+<meta name="author" content="XiaoGao">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f9fd">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1628">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://xiaogao-code.github.io/2026/08/27/opencv-computer-vision/">
+<meta name="description" content="OpenCV 计算机视觉入门笔记，12 份课件配套可运行源码，覆盖图像 I&#x2F;O、绘制、颜色空间、几何变换、滤波平滑、Canny 边缘检测、形态学、阈值分割、轮廓特征、ORB 特征匹配与 Harris 角点检测。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCV 计算机视觉：从像素到特征匹配的十二课">
+<meta property="og:url" content="https://xiaogao-code.github.io/2026/08/27/opencv-computer-vision/index.html">
+<meta property="og:site_name" content="XiaoGao 的代码笔记">
+<meta property="og:description" content="OpenCV 计算机视觉入门笔记，12 份课件配套可运行源码，覆盖图像 I&#x2F;O、绘制、颜色空间、几何变换、滤波平滑、Canny 边缘检测、形态学、阈值分割、轮廓特征、ORB 特征匹配与 Harris 角点检测。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-27T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-14T11:04:18.000Z">
+<meta property="article:author" content="XiaoGao">
+<meta property="article:tag" content="Canny">
+<meta property="article:tag" content="ORB">
+<meta property="article:tag" content="OpenCV">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="图像处理">
+<meta property="article:tag" content="形态学">
+<meta property="article:tag" content="轮廓">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('bs-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+    document.documentElement.classList.add('js');
+    addEventListener('pagereveal', function (e) {
+      if (e.viewTransition) { e.viewTransition.ready.catch(function () {}); e.viewTransition.finished.catch(function () {}); }
+    });
+  })();
+</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400..900&family=Noto+Sans+SC:wght@900&display=swap">
+
+<link rel="stylesheet" href="/css/bisect.css">
+<link rel="alternate" type="application/atom+xml" title="XiaoGao 的代码笔记" href="/atom.xml">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.xml"}}]},"eagerness":"moderate"}]}
+</script>
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="is-post">
+<a class="bs-skip" href="#main">跳到正文</a>
+<svg class="bs-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <!-- 列表里的图片统一压成深空—分界蓝—冰白三色调 -->
+  <filter id="bs-duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues=".059 .090 .957"/>
+      <feFuncG type="table" tableValues=".090 .278 .976"/>
+      <feFuncB type="table" tableValues=".165 .902 .992"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+
+<header class="bs-header" data-header>
+  <a class="bs-brand" href="/" aria-label="XiaoGao 的代码笔记 首页">
+    <span class="bs-mark" aria-hidden="true"></span>
+    <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+  </a>
+  <nav class="bs-nav" id="bs-nav" aria-label="主导航">
+    <ul>
+      
+      <li>
+        <a href="/" aria-current="page">
+          <span class="bs-nav__no">01</span>
+          <span class="bs-nav__zh">文章</span>
+          <span class="bs-nav__en">Posts</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives/">
+          <span class="bs-nav__no">02</span>
+          <span class="bs-nav__zh">归档</span>
+          <span class="bs-nav__en">Archive</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/">
+          <span class="bs-nav__no">03</span>
+          <span class="bs-nav__zh">分类</span>
+          <span class="bs-nav__en">Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/">
+          <span class="bs-nav__no">04</span>
+          <span class="bs-nav__zh">标签</span>
+          <span class="bs-nav__en">Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about/">
+          <span class="bs-nav__no">05</span>
+          <span class="bs-nav__zh">关于</span>
+          <span class="bs-nav__en">About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">
+          <span class="bs-nav__no">06</span>
+          <span class="bs-nav__zh">GitHub</span>
+          <span class="bs-nav__en">Code ↗</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+  <div class="bs-tools">
+    <button class="bs-tool bs-tool--search" type="button" data-search-open aria-label="搜索">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <kbd>⌘K</kbd>
+    </button>
+    <button class="bs-tool bs-tool--theme" type="button" data-theme-toggle aria-label="切换深浅色">
+      <span class="bs-halfdot" aria-hidden="true"></span>
+    </button>
+    <button class="bs-tool bs-tool--menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="bs-nav">
+      <span class="bs-burger" aria-hidden="true"></span><span class="bs-sr">菜单</span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<article class="bs-post" data-font="sans">
+  <header class="bs-phead">
+    <div class="bs-phead__text">
+      <p class="bs-kicker">NO.15 · <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">计算机视觉</a></p>
+      <h1 class="bs-phead__title">OpenCV 计算机视觉：从像素到特征匹配的十二课</h1>
+      <p class="bs-phead__desc">OpenCV 计算机视觉入门笔记，12 份课件配套可运行源码，覆盖图像 I/O、绘制、颜色空间、几何变换、滤波平滑、Canny 边缘检测、形态学、阈值分割、轮廓特征、ORB 特征匹配与 Harris 角点检测。</p>
+      <dl class="bs-phead__meta">
+        <div><dt>发布 DATE</dt><dd><time datetime="2026-08-27T02:00:00.000Z">2026.08.27</time></dd></div>
+        <div><dt>字数 WORDS</dt><dd>866</dd></div>
+        <div><dt>阅读 READ</dt><dd>2 分钟</dd></div>
+      </dl>
+    </div>
+    <figure class="bs-phead__cover" aria-hidden="true">
+      <svg class="bs-gen" viewBox="0 0 1200 800" preserveAspectRatio="xMinYMid slice" role="img" aria-label="OpenCV 计算机视觉：从像素到特征匹配的十二课">
+<defs><clipPath id="gpcbvic"><rect x="597.2" y="0" width="602.8" height="800"/></clipPath></defs>
+<rect class="bs-gen__w" width="1200" height="800"/>
+<text class="bs-gen__glyph bs-gen__b" x="275.5" y="688">O</text>
+<g clip-path="url(#gpcbvic)"><rect class="bs-gen__b" width="1200" height="800"/><path d="M0 18H1200M0 36H1200M0 54H1200M0 72H1200M0 90H1200M0 108H1200M0 126H1200M0 144H1200M0 162H1200M0 180H1200M0 198H1200M0 216H1200M0 234H1200M0 252H1200M0 270H1200M0 288H1200M0 306H1200M0 324H1200M0 342H1200M0 360H1200M0 378H1200M0 396H1200M0 414H1200M0 432H1200M0 450H1200M0 468H1200M0 486H1200M0 504H1200M0 522H1200M0 540H1200M0 558H1200M0 576H1200M0 594H1200M0 612H1200M0 630H1200M0 648H1200M0 666H1200M0 684H1200M0 702H1200M0 720H1200M0 738H1200M0 756H1200M0 774H1200M0 792H1200" class="bs-gen__e" stroke-width="1.5" fill="none" opacity=".35"/><text class="bs-gen__glyph bs-gen__w" x="275.5" y="688">O</text></g>
+<text class="bs-gen__label" x="40" y="64">NO.15 / 2026</text>
+</svg>
+    </figure>
+  </header>
+
+  <div class="bs-post__layout">
+    <aside class="bs-rail" aria-label="阅读进度与目录">
+      <div class="bs-rail__inner">
+        <a class="bs-progress" href="#top" data-to-top aria-label="回到顶部"><span class="bs-progress__fill"></span></a>
+        
+        <p class="bs-rail__label">目录 · CONTENTS</p>
+        <ol class="bs-toc"><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF"><span class="bs-toc-number">1.</span> <span class="bs-toc-text">学习路线</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E7%AB%A0%E8%8A%82%E4%B8%8E%E6%BA%90%E7%A0%81"><span class="bs-toc-number">2.</span> <span class="bs-toc-text">章节与源码</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%87%A0%E4%B8%AA%E9%AB%98%E9%A2%91%E5%AE%9E%E6%88%98%E7%82%B9"><span class="bs-toc-number">3.</span> <span class="bs-toc-text">几个高频实战点</span></a><ol class="bs-toc-child"><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2%EF%BC%88%E7%AC%AC-005-%E8%AF%BE%EF%BC%8C35-%E9%A1%B5%E9%87%8D%E7%82%B9%E7%AB%A0%E8%8A%82%EF%BC%89"><span class="bs-toc-number">3.1.</span> <span class="bs-toc-text">几何变换（第 005 课，35 页重点章节）</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E5%BD%A2%E6%80%81%E5%AD%A6%E8%BF%90%E7%AE%97%E9%80%9F%E6%9F%A5%EF%BC%88%E7%AC%AC-008-%E8%AF%BE%EF%BC%89"><span class="bs-toc-number">3.2.</span> <span class="bs-toc-text">形态学运算速查（第 008 课）</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E7%89%B9%E5%BE%81%E5%8C%B9%E9%85%8D%EF%BC%88%E7%AC%AC-011-%E8%AF%BE%EF%BC%89"><span class="bs-toc-number">3.3.</span> <span class="bs-toc-text">特征匹配（第 011 课）</span></a></li></ol></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E7%8E%AF%E5%A2%83%E4%B8%8E%E8%BF%90%E8%A1%8C"><span class="bs-toc-number">4.</span> <span class="bs-toc-text">环境与运行</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#OpenCV-%E4%BD%BF%E7%94%A8%E8%A6%81%E7%82%B9"><span class="bs-toc-number">5.</span> <span class="bs-toc-text">OpenCV 使用要点</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%BB%93%E5%BA%93"><span class="bs-toc-number">6.</span> <span class="bs-toc-text">仓库</span></a></li></ol>
+        
+      </div>
+    </aside>
+    <div class="bs-prose" data-prose>
+      <p>计算机视觉的第一课，是学会”看”像素。这份笔记配套 12 份课件与逐章可运行的 Python 源码，从图片视频加载开始，经颜色空间、几何变换、滤波、边缘检测、形态学、阈值与轮廓，最终到达 ORB 特征匹配与 Harris 角点检测。</p>
+<span id="more"></span>
+
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">输入与显示</span><br><span class="line">    ├── 图片读取、视频读取、摄像头访问</span><br><span class="line">    └── OpenCV 窗口、键盘事件和资源释放</span><br><span class="line">            ↓</span><br><span class="line">图像基础</span><br><span class="line">    ├── 几何图形与文字绘制</span><br><span class="line">    ├── 像素访问、图像属性和通道操作</span><br><span class="line">    └── BGR、GRAY、HSV、Lab、YCrCb</span><br><span class="line">            ↓</span><br><span class="line">图像处理</span><br><span class="line">    ├── 缩放、平移、旋转、透视变换和重映射</span><br><span class="line">    ├── 均值、高斯和中值滤波</span><br><span class="line">    ├── Canny 边缘检测</span><br><span class="line">    └── 腐蚀、膨胀、开闭运算和顶帽/黑帽</span><br><span class="line">            ↓</span><br><span class="line">目标分析</span><br><span class="line">    ├── 全局、自适应和 Otsu 阈值</span><br><span class="line">    ├── 轮廓、矩、凸包和外接矩形</span><br><span class="line">    ├── ORB 特征、BF/FLANN 匹配</span><br><span class="line">    └── Harris 角点检测</span><br></pre></td></tr></table></figure>
+
+<h2 id="章节与源码"><a href="#章节与源码" class="headerlink" title="章节与源码"></a>章节与源码</h2><table>
+<thead>
+<tr>
+<th>编号</th>
+<th>主题</th>
+<th>源码目录</th>
+<th>主要内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>001</td>
+<td>图片&amp;视频加载及展示</td>
+<td><code>001-image-video-io</code></td>
+<td><code>cv.imread</code> 读图、<code>cv.VideoCapture</code> 摄像头帧处理</td>
+</tr>
+<tr>
+<td>002</td>
+<td>图像的绘制方法</td>
+<td><code>002-image-drawing</code></td>
+<td>直线、矩形、圆、多边形和文本绘制</td>
+</tr>
+<tr>
+<td>003</td>
+<td>图像的基础操作</td>
+<td><code>003-basic-image-operations</code></td>
+<td>像素访问、<code>shape/size/dtype</code>、通道拆分合并</td>
+</tr>
+<tr>
+<td>004</td>
+<td>颜色空间转换</td>
+<td><code>004-color-space-conversion</code></td>
+<td>GRAY、Lab、YCrCb、HSV 转换</td>
+</tr>
+<tr>
+<td>005</td>
+<td>几何变换</td>
+<td><code>005-geometric-transformation</code></td>
+<td>缩放、平移、旋转、透视变换、重映射</td>
+</tr>
+<tr>
+<td>006</td>
+<td>图像平滑</td>
+<td><code>006-image-smoothing</code></td>
+<td>均值、高斯、中值滤波对比</td>
+</tr>
+<tr>
+<td>007</td>
+<td>边缘检测</td>
+<td><code>007-edge-detection</code></td>
+<td>Canny 算法提取边缘</td>
+</tr>
+<tr>
+<td>008</td>
+<td>形态学处理</td>
+<td><code>008-morphological-operations</code></td>
+<td>腐蚀、膨胀、开闭运算、顶帽和黑帽</td>
+</tr>
+<tr>
+<td>009</td>
+<td>阈值处理</td>
+<td><code>009-thresholding</code></td>
+<td>全局阈值、自适应阈值、Otsu</td>
+</tr>
+<tr>
+<td>010</td>
+<td>轮廓及特征</td>
+<td><code>010-contours-and-features</code></td>
+<td>矩、多边形逼近、凸包、外接矩形</td>
+</tr>
+<tr>
+<td>011</td>
+<td>特征匹配</td>
+<td><code>011-feature-matching</code></td>
+<td>ORB 特征、BF 暴力匹配、FLANN 匹配</td>
+</tr>
+<tr>
+<td>012</td>
+<td>角点检测</td>
+<td><code>012-corner-detection</code></td>
+<td>Harris 角点检测与标记</td>
+</tr>
+</tbody></table>
+<h2 id="几个高频实战点"><a href="#几个高频实战点" class="headerlink" title="几个高频实战点"></a>几个高频实战点</h2><h3 id="几何变换（第-005-课，35-页重点章节）"><a href="#几何变换（第-005-课，35-页重点章节）" class="headerlink" title="几何变换（第 005 课，35 页重点章节）"></a>几何变换（第 005 课，35 页重点章节）</h3><ul>
+<li><code>cv.resize</code> 缩放、仿射矩阵平移、围绕中心旋转；</li>
+<li>透视变换：用四组对应点计算变换矩阵，实现”文档展平”类效果；</li>
+<li>重映射 <code>cv.remap</code>：用坐标映射实现翻转、压缩等自定义变换。</li>
+</ul>
+<h3 id="形态学运算速查（第-008-课）"><a href="#形态学运算速查（第-008-课）" class="headerlink" title="形态学运算速查（第 008 课）"></a>形态学运算速查（第 008 课）</h3><table>
+<thead>
+<tr>
+<th>运算</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>腐蚀</td>
+<td>消除小亮点，收缩前景</td>
+</tr>
+<tr>
+<td>膨胀</td>
+<td>填充小孔洞，扩张前景</td>
+</tr>
+<tr>
+<td>开运算</td>
+<td>先腐蚀后膨胀，去噪分离物体</td>
+</tr>
+<tr>
+<td>闭运算</td>
+<td>先膨胀后腐蚀，填充内部孔洞</td>
+</tr>
+<tr>
+<td>顶帽</td>
+<td>原图减开运算，突出亮细节</td>
+</tr>
+<tr>
+<td>黑帽</td>
+<td>闭运算减原图，突出暗细节</td>
+</tr>
+</tbody></table>
+<h3 id="特征匹配（第-011-课）"><a href="#特征匹配（第-011-课）" class="headerlink" title="特征匹配（第 011 课）"></a>特征匹配（第 011 课）</h3><p>ORB 提取关键点与描述符，配合汉明距离与交叉检查完成暴力匹配（BFMatcher），或用 FLANN 的 LSH 索引执行 KNN 最近邻匹配。</p>
+<h2 id="环境与运行"><a href="#环境与运行" class="headerlink" title="环境与运行"></a>环境与运行</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python -m venv .venv</span><br><span class="line">.\.venv\Scripts\Activate.ps1   <span class="comment"># Windows PowerShell</span></span><br><span class="line">python -m pip install opencv-python numpy matplotlib</span><br></pre></td></tr></table></figure>
+
+<p>图片路径大多是相对当前工作目录解析的，运行脚本前先进入对应章节目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> src/001-image-video-io</span><br><span class="line">python image_read.py</span><br></pre></td></tr></table></figure>
+
+<h2 id="OpenCV-使用要点"><a href="#OpenCV-使用要点" class="headerlink" title="OpenCV 使用要点"></a>OpenCV 使用要点</h2><ul>
+<li>OpenCV 默认 BGR 通道顺序，Matplotlib 按 RGB 解释，跨库显示时要注意颜色顺序；</li>
+<li><code>cv.imread</code> 读取失败返回空对象，应先确认路径和文件名；</li>
+<li>图像数组按 <code>[行, 列]</code> 即 <code>[y, x]</code> 访问，不要与笛卡尔坐标混淆；</li>
+<li>阈值、边缘和轮廓处理通常需要先灰度化、滤波或二值化；</li>
+<li>摄像头、GUI 窗口属于运行资源，脚本退出前应及时释放。</li>
+</ul>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ashleycurry/opencv-computer-vision-notes">opencv-computer-vision-notes</a></li>
+</ul>
+
+    </div>
+  </div>
+
+  <footer class="bs-pfoot">
+    
+    <ul class="bs-tags" aria-label="标签">
+      <li><a href="/tags/OpenCV/">#OpenCV</a></li><li><a href="/tags/Python/">#Python</a></li><li><a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">#图像处理</a></li><li><a href="/tags/Canny/">#Canny</a></li><li><a href="/tags/%E5%BD%A2%E6%80%81%E5%AD%A6/">#形态学</a></li><li><a href="/tags/%E8%BD%AE%E5%BB%93/">#轮廓</a></li><li><a href="/tags/ORB/">#ORB</a></li>
+    </ul>
+    
+    <div class="bs-pfoot__grid">
+      
+      <p class="bs-license">
+        <span class="bs-kicker">LICENSE</span>
+        本文作者 XiaoGao，采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可。
+        转载请注明出处：<a href="https://xiaogao-code.github.io/2026/08/27/opencv-computer-vision/">https:&#x2F;&#x2F;xiaogao-code.github.io&#x2F;2026&#x2F;08&#x2F;27&#x2F;opencv-computer-vision&#x2F;</a>
+      </p>
+      
+      
+      
+    </div>
+  </footer>
+
+  <nav class="bs-pnav" aria-label="分页">
+    
+    <a class="bs-pnav__item bs-pnav__item--newer" href="/2026/09/08/customer-management-system/" rel="prev">
+      <span class="bs-kicker">← 较新 NEWER</span><span class="bs-pnav__t">客户信息管理系统：C11 分层架构的控制台实战</span>
+    </a>
+    
+    
+    <a class="bs-pnav__item bs-pnav__item--older" href="/2026/08/15/ros2-robotics-notes/" rel="next">
+      <span class="bs-kicker">较早 OLDER →</span><span class="bs-pnav__t">ROS 2 Humble 学习记录：现代机器人开发工具链</span>
+    </a>
+    
+  </nav>
+
+  
+</article>
+</main>
+
+<footer class="bs-footer">
+  <div class="bs-footer__white">
+    <a class="bs-brand bs-brand--footer" href="/">
+      <span class="bs-mark" aria-hidden="true"></span>
+      <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+    </a>
+    <p class="bs-footer__desc">嵌入式软件 / 机器人 / 计算机视觉 / LLM 应用的学习与实践笔记</p>
+    <ul class="bs-footer__social">
+      
+      <li><a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">GitHub</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+    </ul>
+    <p class="bs-footer__meta">
+      © 2026 XiaoGao
+       · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+      · 由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 与 <a href="https://github.com/LiuXiu233/hexo-theme-bisect" target="_blank" rel="noopener">Bisect</a> 主题驱动
+    </p>
+  </div>
+  <div class="bs-footer__blue">
+    
+<p class="bs-slogan bs-slogan--footer">
+  <span class="bs-slogan__zh">从寄存器到推理，把设备、数据与智能连起来。</span>
+  <span class="bs-slogan__en">Build close to the machine. Bring intelligence to the edge.</span>
+</p>
+
+
+    
+    <div class="bs-footer__actions">
+      
+      <a class="bs-btn bs-btn--line" href="#top" data-to-top>回到顶部 ↑</a>
+    </div>
+  </div>
+</footer>
+<script id="bs-config" type="application/json">{"root":"/","search":"/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
+
+<dialog class="bs-search" id="bs-search" aria-label="搜索文章或输入命令">
+  <form class="bs-search__bar" method="dialog" role="search">
+    <span class="bs-search__prompt" aria-hidden="true">&gt;</span>
+    <label class="bs-sr" for="bs-search-input">搜索文章或输入命令</label>
+    <input id="bs-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="搜索标题、正文、标签……  输入 &gt; 查看命令">
+    <button class="bs-search__close" type="submit" aria-label="关闭">esc</button>
+  </form>
+  <ol class="bs-search__list" id="bs-search-list" role="listbox" aria-label="结果"></ol>
+  <p class="bs-search__hint"><span>↑↓ 选择</span><span>↵ 打开</span><span>&gt;theme · &gt;random · &gt;top · &gt;archive</span></p>
+</dialog>
+
+<script type="module" src="/js/bisect.js"></script>
+</body>
+</html>

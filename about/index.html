@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>关于 | XiaoGao 的代码笔记</title>
+<meta name="description" content="关于 XiaoGao：嵌入式软件与 LLM 应用开发者，以及这个博客的由来。">
+<meta name="keywords" content="嵌入式,STM32,FreeRTOS,ROS,OpenCV,机器人,Linux,C语言,Python">
+<meta name="author" content="XiaoGao">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f9fd">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1628">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://xiaogao-code.github.io/about/">
+<meta name="description" content="关于 XiaoGao：嵌入式软件与 LLM 应用开发者，以及这个博客的由来。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="关于">
+<meta property="og:url" content="https://xiaogao-code.github.io/about/index.html">
+<meta property="og:site_name" content="XiaoGao 的代码笔记">
+<meta property="og:description" content="关于 XiaoGao：嵌入式软件与 LLM 应用开发者，以及这个博客的由来。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-03-01T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-14T11:05:52.000Z">
+<meta property="article:author" content="XiaoGao">
+<meta property="article:tag" content="嵌入式,STM32,FreeRTOS,ROS,OpenCV,机器人,Linux,C语言,Python">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('bs-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+    document.documentElement.classList.add('js');
+    addEventListener('pagereveal', function (e) {
+      if (e.viewTransition) { e.viewTransition.ready.catch(function () {}); e.viewTransition.finished.catch(function () {}); }
+    });
+  })();
+</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400..900&family=Noto+Sans+SC:wght@900&display=swap">
+
+<link rel="stylesheet" href="/css/bisect.css">
+<link rel="alternate" type="application/atom+xml" title="XiaoGao 的代码笔记" href="/atom.xml">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.xml"}}]},"eagerness":"moderate"}]}
+</script>
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="is-page">
+<a class="bs-skip" href="#main">跳到正文</a>
+<svg class="bs-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <!-- 列表里的图片统一压成深空—分界蓝—冰白三色调 -->
+  <filter id="bs-duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues=".059 .090 .957"/>
+      <feFuncG type="table" tableValues=".090 .278 .976"/>
+      <feFuncB type="table" tableValues=".165 .902 .992"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+
+<header class="bs-header" data-header>
+  <a class="bs-brand" href="/" aria-label="XiaoGao 的代码笔记 首页">
+    <span class="bs-mark" aria-hidden="true"></span>
+    <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+  </a>
+  <nav class="bs-nav" id="bs-nav" aria-label="主导航">
+    <ul>
+      
+      <li>
+        <a href="/">
+          <span class="bs-nav__no">01</span>
+          <span class="bs-nav__zh">文章</span>
+          <span class="bs-nav__en">Posts</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives/">
+          <span class="bs-nav__no">02</span>
+          <span class="bs-nav__zh">归档</span>
+          <span class="bs-nav__en">Archive</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/">
+          <span class="bs-nav__no">03</span>
+          <span class="bs-nav__zh">分类</span>
+          <span class="bs-nav__en">Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/">
+          <span class="bs-nav__no">04</span>
+          <span class="bs-nav__zh">标签</span>
+          <span class="bs-nav__en">Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about/" aria-current="page">
+          <span class="bs-nav__no">05</span>
+          <span class="bs-nav__zh">关于</span>
+          <span class="bs-nav__en">About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">
+          <span class="bs-nav__no">06</span>
+          <span class="bs-nav__zh">GitHub</span>
+          <span class="bs-nav__en">Code ↗</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+  <div class="bs-tools">
+    <button class="bs-tool bs-tool--search" type="button" data-search-open aria-label="搜索">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <kbd>⌘K</kbd>
+    </button>
+    <button class="bs-tool bs-tool--theme" type="button" data-theme-toggle aria-label="切换深浅色">
+      <span class="bs-halfdot" aria-hidden="true"></span>
+    </button>
+    <button class="bs-tool bs-tool--menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="bs-nav">
+      <span class="bs-burger" aria-hidden="true"></span><span class="bs-sr">菜单</span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  
+  <header class="bs-pagehead">
+  <div class="bs-pagehead__white">
+    <p class="bs-kicker">PAGE · 页面</p>
+    <h1 class="bs-pagehead__title">关于</h1>
+    <p class="bs-pagehead__lead">关于 XiaoGao：嵌入式软件与 LLM 应用开发者，以及这个博客的由来。</p>
+  </div>
+  <div class="bs-pagehead__blue" aria-hidden="true">
+    <span class="bs-pagehead__en">ABOUT</span>
+    
+  </div>
+</header>
+
+  <div class="bs-page">
+    <div class="bs-prose" data-prose><h2 id="你好，我是-XiaoGao"><a href="#你好，我是-XiaoGao" class="headerlink" title="你好，我是 XiaoGao"></a>你好，我是 XiaoGao</h2><p>一名<strong>嵌入式软件与 LLM 应用开发者</strong>，在嵌入式和智能应用的交叉地带工作：一边贴着硬件写可预测的代码，一边把模型、工具和数据接进真实的工作流。</p>
+<p>我的工程方向很朴素：</p>
+<ul>
+<li><strong>贴近机器构建</strong>：用可预测、资源可控的软件构建底层系统；</li>
+<li><strong>让知识可用</strong>：把文档和知识变成真正有用的检索增强体验；</li>
+<li><strong>连接智能与现实</strong>：把模型、工具、API 与实际工作流连起来；</li>
+<li><strong>保持系统清晰</strong>：用干净的接口和文档，让系统的每个部分都可理解。</li>
+</ul>
+<h2 id="这个博客"><a href="#这个博客" class="headerlink" title="这个博客"></a>这个博客</h2><p>「XiaoGao 的代码笔记」是我所有学习笔记与项目记录的归档站。</p>
+<p>从 2026 年春天开始，我把学习路上积累的资料系统整理成了 GitHub 仓库，内容覆盖：</p>
+<table>
+<thead>
+<tr>
+<th>方向</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>编程语言</td>
+<td>C &#x2F; C++ &#x2F; Python &#x2F; Java 的学习笔记与工程手册</td>
+</tr>
+<tr>
+<td>硬件设计</td>
+<td>模拟电路、数字电路与计算机组成、原理图与 PCB 设计</td>
+</tr>
+<tr>
+<td>嵌入式开发</td>
+<td>STM32 单片机全外设、FreeRTOS 实时操作系统、实战工程项目</td>
+</tr>
+<tr>
+<td>Linux 与工具</td>
+<td>Linux 系统管理、Shell 脚本、正则表达式、Linux 应用层开发</td>
+</tr>
+<tr>
+<td>机器人</td>
+<td>ROS &#x2F; ROS 2 入门、步进电机同步运动控制</td>
+</tr>
+<tr>
+<td>计算机视觉</td>
+<td>OpenCV 图像处理从入门到特征匹配</td>
+</tr>
+<tr>
+<td>项目实战</td>
+<td>客户管理系统、家庭记账软件等 C 语言工程实践</td>
+</tr>
+</tbody></table>
+<p>博客里的每一篇文章，都对应一个公开的 GitHub 仓库，包含完整的课件、源码和文档。学习笔记记录知识，项目实战记录踩过的坑——两样都是给未来的自己留的索引。</p>
+<h2 id="技术栈"><a href="#技术栈" class="headerlink" title="技术栈"></a>技术栈</h2><p><strong>嵌入式软件</strong>：C &#x2F; C++ &#x2F; ARM Cortex-M &#x2F; RISC-V、FreeRTOS &#x2F; Zephyr &#x2F; Embedded Linux，GPIO、UART、I2C、SPI、ADC、PWM、CAN 等外设驱动，TCP&#x2F;IP、MQTT、Wi-Fi、BLE 设备互联。</p>
+<p><strong>LLM 与 RAG 应用</strong>：Python &#x2F; FastAPI &#x2F; Pydantic，文档摄取与切分、向量检索与重排序、提示词设计与工具调用、检索质量评估。</p>
+<h2 id="工程原则"><a href="#工程原则" class="headerlink" title="工程原则"></a>工程原则</h2><ul>
+<li>让所有权和失效模式显式化；</li>
+<li>偏好职责清晰的小模块；</li>
+<li>把校验、可观测性和文档当作产品特性；</li>
+<li>度量检索质量，而不是相信一个演示；</li>
+<li>为有用的行为优化，而不只是为惊艳的输出。</li>
+</ul>
+<h2 id="联系我"><a href="#联系我" class="headerlink" title="联系我"></a>联系我</h2><p>所有笔记和项目的源码都在 GitHub：<a target="_blank" rel="noopener" href="https://github.com/Ashleycurry">github.com&#x2F;Ashleycurry</a></p>
+<blockquote>
+<p>Build close to the machine. Bring intelligence to the edge.</p>
+</blockquote>
+</div>
+  </div>
+
+</main>
+
+<footer class="bs-footer">
+  <div class="bs-footer__white">
+    <a class="bs-brand bs-brand--footer" href="/">
+      <span class="bs-mark" aria-hidden="true"></span>
+      <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+    </a>
+    <p class="bs-footer__desc">嵌入式软件 / 机器人 / 计算机视觉 / LLM 应用的学习与实践笔记</p>
+    <ul class="bs-footer__social">
+      
+      <li><a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">GitHub</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+    </ul>
+    <p class="bs-footer__meta">
+      © 2026 XiaoGao
+       · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+      · 由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 与 <a href="https://github.com/LiuXiu233/hexo-theme-bisect" target="_blank" rel="noopener">Bisect</a> 主题驱动
+    </p>
+  </div>
+  <div class="bs-footer__blue">
+    
+<p class="bs-slogan bs-slogan--footer">
+  <span class="bs-slogan__zh">从寄存器到推理，把设备、数据与智能连起来。</span>
+  <span class="bs-slogan__en">Build close to the machine. Bring intelligence to the edge.</span>
+</p>
+
+
+    
+    <div class="bs-footer__actions">
+      
+      <a class="bs-btn bs-btn--line" href="#top" data-to-top>回到顶部 ↑</a>
+    </div>
+  </div>
+</footer>
+<script id="bs-config" type="application/json">{"root":"/","search":"/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
+
+<dialog class="bs-search" id="bs-search" aria-label="搜索文章或输入命令">
+  <form class="bs-search__bar" method="dialog" role="search">
+    <span class="bs-search__prompt" aria-hidden="true">&gt;</span>
+    <label class="bs-sr" for="bs-search-input">搜索文章或输入命令</label>
+    <input id="bs-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="搜索标题、正文、标签……  输入 &gt; 查看命令">
+    <button class="bs-search__close" type="submit" aria-label="关闭">esc</button>
+  </form>
+  <ol class="bs-search__list" id="bs-search-list" role="listbox" aria-label="结果"></ol>
+  <p class="bs-search__hint"><span>↑↓ 选择</span><span>↵ 打开</span><span>&gt;theme · &gt;random · &gt;top · &gt;archive</span></p>
+</dialog>
+
+<script type="module" src="/js/bisect.js"></script>
+</body>
+</html>

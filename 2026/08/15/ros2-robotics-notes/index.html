@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ROS 2 Humble 学习记录：现代机器人开发工具链 | XiaoGao 的代码笔记</title>
+<meta name="description" content="ROS 2 Humble 学习笔记，覆盖节点与功能包、话题、服务、参数、Launch、TF、rqt/RViz2/ros2 bag 工具链，以及 URDF 建模与 Gazebo 仿真的入门路径。">
+<meta name="keywords" content="嵌入式,STM32,FreeRTOS,ROS,OpenCV,机器人,Linux,C语言,Python">
+<meta name="author" content="XiaoGao">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f9fd">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1628">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://xiaogao-code.github.io/2026/08/15/ros2-robotics-notes/">
+<meta name="description" content="ROS 2 Humble 学习笔记，覆盖节点与功能包、话题、服务、参数、Launch、TF、rqt&#x2F;RViz2&#x2F;ros2 bag 工具链，以及 URDF 建模与 Gazebo 仿真的入门路径。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ROS 2 Humble 学习记录：现代机器人开发工具链">
+<meta property="og:url" content="https://xiaogao-code.github.io/2026/08/15/ros2-robotics-notes/index.html">
+<meta property="og:site_name" content="XiaoGao 的代码笔记">
+<meta property="og:description" content="ROS 2 Humble 学习笔记，覆盖节点与功能包、话题、服务、参数、Launch、TF、rqt&#x2F;RViz2&#x2F;ros2 bag 工具链，以及 URDF 建模与 Gazebo 仿真的入门路径。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-15T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-14T11:04:08.000Z">
+<meta property="article:author" content="XiaoGao">
+<meta property="article:tag" content="Gazebo">
+<meta property="article:tag" content="Humble">
+<meta property="article:tag" content="ROS2">
+<meta property="article:tag" content="TF">
+<meta property="article:tag" content="URDF">
+<meta property="article:tag" content="colcon">
+<meta property="article:tag" content="rclcpp">
+<meta property="article:tag" content="rclpy">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('bs-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+    document.documentElement.classList.add('js');
+    addEventListener('pagereveal', function (e) {
+      if (e.viewTransition) { e.viewTransition.ready.catch(function () {}); e.viewTransition.finished.catch(function () {}); }
+    });
+  })();
+</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400..900&family=Noto+Sans+SC:wght@900&display=swap">
+
+<link rel="stylesheet" href="/css/bisect.css">
+<link rel="alternate" type="application/atom+xml" title="XiaoGao 的代码笔记" href="/atom.xml">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.xml"}}]},"eagerness":"moderate"}]}
+</script>
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="is-post">
+<a class="bs-skip" href="#main">跳到正文</a>
+<svg class="bs-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <!-- 列表里的图片统一压成深空—分界蓝—冰白三色调 -->
+  <filter id="bs-duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues=".059 .090 .957"/>
+      <feFuncG type="table" tableValues=".090 .278 .976"/>
+      <feFuncB type="table" tableValues=".165 .902 .992"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+
+<header class="bs-header" data-header>
+  <a class="bs-brand" href="/" aria-label="XiaoGao 的代码笔记 首页">
+    <span class="bs-mark" aria-hidden="true"></span>
+    <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+  </a>
+  <nav class="bs-nav" id="bs-nav" aria-label="主导航">
+    <ul>
+      
+      <li>
+        <a href="/" aria-current="page">
+          <span class="bs-nav__no">01</span>
+          <span class="bs-nav__zh">文章</span>
+          <span class="bs-nav__en">Posts</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives/">
+          <span class="bs-nav__no">02</span>
+          <span class="bs-nav__zh">归档</span>
+          <span class="bs-nav__en">Archive</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/">
+          <span class="bs-nav__no">03</span>
+          <span class="bs-nav__zh">分类</span>
+          <span class="bs-nav__en">Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/">
+          <span class="bs-nav__no">04</span>
+          <span class="bs-nav__zh">标签</span>
+          <span class="bs-nav__en">Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about/">
+          <span class="bs-nav__no">05</span>
+          <span class="bs-nav__zh">关于</span>
+          <span class="bs-nav__en">About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">
+          <span class="bs-nav__no">06</span>
+          <span class="bs-nav__zh">GitHub</span>
+          <span class="bs-nav__en">Code ↗</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+  <div class="bs-tools">
+    <button class="bs-tool bs-tool--search" type="button" data-search-open aria-label="搜索">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <kbd>⌘K</kbd>
+    </button>
+    <button class="bs-tool bs-tool--theme" type="button" data-theme-toggle aria-label="切换深浅色">
+      <span class="bs-halfdot" aria-hidden="true"></span>
+    </button>
+    <button class="bs-tool bs-tool--menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="bs-nav">
+      <span class="bs-burger" aria-hidden="true"></span><span class="bs-sr">菜单</span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<article class="bs-post" data-font="sans">
+  <header class="bs-phead">
+    <div class="bs-phead__text">
+      <p class="bs-kicker">NO.14 · <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/">机器人</a></p>
+      <h1 class="bs-phead__title">ROS 2 Humble 学习记录：现代机器人开发工具链</h1>
+      <p class="bs-phead__desc">ROS 2 Humble 学习笔记，覆盖节点与功能包、话题、服务、参数、Launch、TF、rqt/RViz2/ros2 bag 工具链，以及 URDF 建模与 Gazebo 仿真的入门路径。</p>
+      <dl class="bs-phead__meta">
+        <div><dt>发布 DATE</dt><dd><time datetime="2026-08-15T02:00:00.000Z">2026.08.15</time></dd></div>
+        <div><dt>字数 WORDS</dt><dd>1,106</dd></div>
+        <div><dt>阅读 READ</dt><dd>3 分钟</dd></div>
+      </dl>
+    </div>
+    <figure class="bs-phead__cover" aria-hidden="true">
+      <svg class="bs-gen" viewBox="0 0 1200 800" preserveAspectRatio="xMinYMid slice" role="img" aria-label="ROS 2 Humble 学习记录：现代机器人开发工具链">
+<defs><clipPath id="g-l5vh5t"><circle cx="880.5" cy="387.3" r="385.2"/></clipPath></defs>
+<rect class="bs-gen__w" width="1200" height="800"/>
+<text class="bs-gen__glyph bs-gen__b" x="110.2" y="688">R</text>
+<g clip-path="url(#g-l5vh5t)"><rect class="bs-gen__b" width="1200" height="800"/><path d="M22.5 22.5h.01M67.5 22.5h.01M112.5 22.5h.01M157.5 22.5h.01M202.5 22.5h.01M247.5 22.5h.01M292.5 22.5h.01M337.5 22.5h.01M382.5 22.5h.01M427.5 22.5h.01M472.5 22.5h.01M517.5 22.5h.01M562.5 22.5h.01M607.5 22.5h.01M652.5 22.5h.01M697.5 22.5h.01M742.5 22.5h.01M787.5 22.5h.01M832.5 22.5h.01M877.5 22.5h.01M922.5 22.5h.01M967.5 22.5h.01M1012.5 22.5h.01M1057.5 22.5h.01M1102.5 22.5h.01M1147.5 22.5h.01M1192.5 22.5h.01M22.5 67.5h.01M67.5 67.5h.01M112.5 67.5h.01M157.5 67.5h.01M202.5 67.5h.01M247.5 67.5h.01M292.5 67.5h.01M337.5 67.5h.01M382.5 67.5h.01M427.5 67.5h.01M472.5 67.5h.01M517.5 67.5h.01M562.5 67.5h.01M607.5 67.5h.01M652.5 67.5h.01M697.5 67.5h.01M742.5 67.5h.01M787.5 67.5h.01M832.5 67.5h.01M877.5 67.5h.01M922.5 67.5h.01M967.5 67.5h.01M1012.5 67.5h.01M1057.5 67.5h.01M1102.5 67.5h.01M1147.5 67.5h.01M1192.5 67.5h.01M22.5 112.5h.01M67.5 112.5h.01M112.5 112.5h.01M157.5 112.5h.01M202.5 112.5h.01M247.5 112.5h.01M292.5 112.5h.01M337.5 112.5h.01M382.5 112.5h.01M427.5 112.5h.01M472.5 112.5h.01M517.5 112.5h.01M562.5 112.5h.01M607.5 112.5h.01M652.5 112.5h.01M697.5 112.5h.01M742.5 112.5h.01M787.5 112.5h.01M832.5 112.5h.01M877.5 112.5h.01M922.5 112.5h.01M967.5 112.5h.01M1012.5 112.5h.01M1057.5 112.5h.01M1102.5 112.5h.01M1147.5 112.5h.01M1192.5 112.5h.01M22.5 157.5h.01M67.5 157.5h.01M112.5 157.5h.01M157.5 157.5h.01M202.5 157.5h.01M247.5 157.5h.01M292.5 157.5h.01M337.5 157.5h.01M382.5 157.5h.01M427.5 157.5h.01M472.5 157.5h.01M517.5 157.5h.01M562.5 157.5h.01M607.5 157.5h.01M652.5 157.5h.01M697.5 157.5h.01M742.5 157.5h.01M787.5 157.5h.01M832.5 157.5h.01M877.5 157.5h.01M922.5 157.5h.01M967.5 157.5h.01M1012.5 157.5h.01M1057.5 157.5h.01M1102.5 157.5h.01M1147.5 157.5h.01M1192.5 157.5h.01M22.5 202.5h.01M67.5 202.5h.01M112.5 202.5h.01M157.5 202.5h.01M202.5 202.5h.01M247.5 202.5h.01M292.5 202.5h.01M337.5 202.5h.01M382.5 202.5h.01M427.5 202.5h.01M472.5 202.5h.01M517.5 202.5h.01M562.5 202.5h.01M607.5 202.5h.01M652.5 202.5h.01M697.5 202.5h.01M742.5 202.5h.01M787.5 202.5h.01M832.5 202.5h.01M877.5 202.5h.01M922.5 202.5h.01M967.5 202.5h.01M1012.5 202.5h.01M1057.5 202.5h.01M1102.5 202.5h.01M1147.5 202.5h.01M1192.5 202.5h.01M22.5 247.5h.01M67.5 247.5h.01M112.5 247.5h.01M157.5 247.5h.01M202.5 247.5h.01M247.5 247.5h.01M292.5 247.5h.01M337.5 247.5h.01M382.5 247.5h.01M427.5 247.5h.01M472.5 247.5h.01M517.5 247.5h.01M562.5 247.5h.01M607.5 247.5h.01M652.5 247.5h.01M697.5 247.5h.01M742.5 247.5h.01M787.5 247.5h.01M832.5 247.5h.01M877.5 247.5h.01M922.5 247.5h.01M967.5 247.5h.01M1012.5 247.5h.01M1057.5 247.5h.01M1102.5 247.5h.01M1147.5 247.5h.01M1192.5 247.5h.01M22.5 292.5h.01M67.5 292.5h.01M112.5 292.5h.01M157.5 292.5h.01M202.5 292.5h.01M247.5 292.5h.01M292.5 292.5h.01M337.5 292.5h.01M382.5 292.5h.01M427.5 292.5h.01M472.5 292.5h.01M517.5 292.5h.01M562.5 292.5h.01M607.5 292.5h.01M652.5 292.5h.01M697.5 292.5h.01M742.5 292.5h.01M787.5 292.5h.01M832.5 292.5h.01M877.5 292.5h.01M922.5 292.5h.01M967.5 292.5h.01M1012.5 292.5h.01M1057.5 292.5h.01M1102.5 292.5h.01M1147.5 292.5h.01M1192.5 292.5h.01M22.5 337.5h.01M67.5 337.5h.01M112.5 337.5h.01M157.5 337.5h.01M202.5 337.5h.01M247.5 337.5h.01M292.5 337.5h.01M337.5 337.5h.01M382.5 337.5h.01M427.5 337.5h.01M472.5 337.5h.01M517.5 337.5h.01M562.5 337.5h.01M607.5 337.5h.01M652.5 337.5h.01M697.5 337.5h.01M742.5 337.5h.01M787.5 337.5h.01M832.5 337.5h.01M877.5 337.5h.01M922.5 337.5h.01M967.5 337.5h.01M1012.5 337.5h.01M1057.5 337.5h.01M1102.5 337.5h.01M1147.5 337.5h.01M1192.5 337.5h.01M22.5 382.5h.01M67.5 382.5h.01M112.5 382.5h.01M157.5 382.5h.01M202.5 382.5h.01M247.5 382.5h.01M292.5 382.5h.01M337.5 382.5h.01M382.5 382.5h.01M427.5 382.5h.01M472.5 382.5h.01M517.5 382.5h.01M562.5 382.5h.01M607.5 382.5h.01M652.5 382.5h.01M697.5 382.5h.01M742.5 382.5h.01M787.5 382.5h.01M832.5 382.5h.01M877.5 382.5h.01M922.5 382.5h.01M967.5 382.5h.01M1012.5 382.5h.01M1057.5 382.5h.01M1102.5 382.5h.01M1147.5 382.5h.01M1192.5 382.5h.01M22.5 427.5h.01M67.5 427.5h.01M112.5 427.5h.01M157.5 427.5h.01M202.5 427.5h.01M247.5 427.5h.01M292.5 427.5h.01M337.5 427.5h.01M382.5 427.5h.01M427.5 427.5h.01M472.5 427.5h.01M517.5 427.5h.01M562.5 427.5h.01M607.5 427.5h.01M652.5 427.5h.01M697.5 427.5h.01M742.5 427.5h.01M787.5 427.5h.01M832.5 427.5h.01M877.5 427.5h.01M922.5 427.5h.01M967.5 427.5h.01M1012.5 427.5h.01M1057.5 427.5h.01M1102.5 427.5h.01M1147.5 427.5h.01M1192.5 427.5h.01M22.5 472.5h.01M67.5 472.5h.01M112.5 472.5h.01M157.5 472.5h.01M202.5 472.5h.01M247.5 472.5h.01M292.5 472.5h.01M337.5 472.5h.01M382.5 472.5h.01M427.5 472.5h.01M472.5 472.5h.01M517.5 472.5h.01M562.5 472.5h.01M607.5 472.5h.01M652.5 472.5h.01M697.5 472.5h.01M742.5 472.5h.01M787.5 472.5h.01M832.5 472.5h.01M877.5 472.5h.01M922.5 472.5h.01M967.5 472.5h.01M1012.5 472.5h.01M1057.5 472.5h.01M1102.5 472.5h.01M1147.5 472.5h.01M1192.5 472.5h.01M22.5 517.5h.01M67.5 517.5h.01M112.5 517.5h.01M157.5 517.5h.01M202.5 517.5h.01M247.5 517.5h.01M292.5 517.5h.01M337.5 517.5h.01M382.5 517.5h.01M427.5 517.5h.01M472.5 517.5h.01M517.5 517.5h.01M562.5 517.5h.01M607.5 517.5h.01M652.5 517.5h.01M697.5 517.5h.01M742.5 517.5h.01M787.5 517.5h.01M832.5 517.5h.01M877.5 517.5h.01M922.5 517.5h.01M967.5 517.5h.01M1012.5 517.5h.01M1057.5 517.5h.01M1102.5 517.5h.01M1147.5 517.5h.01M1192.5 517.5h.01M22.5 562.5h.01M67.5 562.5h.01M112.5 562.5h.01M157.5 562.5h.01M202.5 562.5h.01M247.5 562.5h.01M292.5 562.5h.01M337.5 562.5h.01M382.5 562.5h.01M427.5 562.5h.01M472.5 562.5h.01M517.5 562.5h.01M562.5 562.5h.01M607.5 562.5h.01M652.5 562.5h.01M697.5 562.5h.01M742.5 562.5h.01M787.5 562.5h.01M832.5 562.5h.01M877.5 562.5h.01M922.5 562.5h.01M967.5 562.5h.01M1012.5 562.5h.01M1057.5 562.5h.01M1102.5 562.5h.01M1147.5 562.5h.01M1192.5 562.5h.01M22.5 607.5h.01M67.5 607.5h.01M112.5 607.5h.01M157.5 607.5h.01M202.5 607.5h.01M247.5 607.5h.01M292.5 607.5h.01M337.5 607.5h.01M382.5 607.5h.01M427.5 607.5h.01M472.5 607.5h.01M517.5 607.5h.01M562.5 607.5h.01M607.5 607.5h.01M652.5 607.5h.01M697.5 607.5h.01M742.5 607.5h.01M787.5 607.5h.01M832.5 607.5h.01M877.5 607.5h.01M922.5 607.5h.01M967.5 607.5h.01M1012.5 607.5h.01M1057.5 607.5h.01M1102.5 607.5h.01M1147.5 607.5h.01M1192.5 607.5h.01M22.5 652.5h.01M67.5 652.5h.01M112.5 652.5h.01M157.5 652.5h.01M202.5 652.5h.01M247.5 652.5h.01M292.5 652.5h.01M337.5 652.5h.01M382.5 652.5h.01M427.5 652.5h.01M472.5 652.5h.01M517.5 652.5h.01M562.5 652.5h.01M607.5 652.5h.01M652.5 652.5h.01M697.5 652.5h.01M742.5 652.5h.01M787.5 652.5h.01M832.5 652.5h.01M877.5 652.5h.01M922.5 652.5h.01M967.5 652.5h.01M1012.5 652.5h.01M1057.5 652.5h.01M1102.5 652.5h.01M1147.5 652.5h.01M1192.5 652.5h.01M22.5 697.5h.01M67.5 697.5h.01M112.5 697.5h.01M157.5 697.5h.01M202.5 697.5h.01M247.5 697.5h.01M292.5 697.5h.01M337.5 697.5h.01M382.5 697.5h.01M427.5 697.5h.01M472.5 697.5h.01M517.5 697.5h.01M562.5 697.5h.01M607.5 697.5h.01M652.5 697.5h.01M697.5 697.5h.01M742.5 697.5h.01M787.5 697.5h.01M832.5 697.5h.01M877.5 697.5h.01M922.5 697.5h.01M967.5 697.5h.01M1012.5 697.5h.01M1057.5 697.5h.01M1102.5 697.5h.01M1147.5 697.5h.01M1192.5 697.5h.01M22.5 742.5h.01M67.5 742.5h.01M112.5 742.5h.01M157.5 742.5h.01M202.5 742.5h.01M247.5 742.5h.01M292.5 742.5h.01M337.5 742.5h.01M382.5 742.5h.01M427.5 742.5h.01M472.5 742.5h.01M517.5 742.5h.01M562.5 742.5h.01M607.5 742.5h.01M652.5 742.5h.01M697.5 742.5h.01M742.5 742.5h.01M787.5 742.5h.01M832.5 742.5h.01M877.5 742.5h.01M922.5 742.5h.01M967.5 742.5h.01M1012.5 742.5h.01M1057.5 742.5h.01M1102.5 742.5h.01M1147.5 742.5h.01M1192.5 742.5h.01M22.5 787.5h.01M67.5 787.5h.01M112.5 787.5h.01M157.5 787.5h.01M202.5 787.5h.01M247.5 787.5h.01M292.5 787.5h.01M337.5 787.5h.01M382.5 787.5h.01M427.5 787.5h.01M472.5 787.5h.01M517.5 787.5h.01M562.5 787.5h.01M607.5 787.5h.01M652.5 787.5h.01M697.5 787.5h.01M742.5 787.5h.01M787.5 787.5h.01M832.5 787.5h.01M877.5 787.5h.01M922.5 787.5h.01M967.5 787.5h.01M1012.5 787.5h.01M1057.5 787.5h.01M1102.5 787.5h.01M1147.5 787.5h.01M1192.5 787.5h.01" class="bs-gen__e" stroke-width="5" stroke-linecap="round" fill="none" opacity=".55"/><text class="bs-gen__glyph bs-gen__w" x="110.2" y="688">R</text></g>
+<text class="bs-gen__label" x="40" y="64">NO.14 / 2026</text>
+</svg>
+    </figure>
+  </header>
+
+  <div class="bs-post__layout">
+    <aside class="bs-rail" aria-label="阅读进度与目录">
+      <div class="bs-rail__inner">
+        <a class="bs-progress" href="#top" data-to-top aria-label="回到顶部"><span class="bs-progress__fill"></span></a>
+        
+        <p class="bs-rail__label">目录 · CONTENTS</p>
+        <ol class="bs-toc"><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF"><span class="bs-toc-number">1.</span> <span class="bs-toc-text">学习路线</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="bs-toc-number">2.</span> <span class="bs-toc-text">核心概念</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%86%85%E5%AE%B9%E6%A6%82%E8%A7%88"><span class="bs-toc-number">3.</span> <span class="bs-toc-text">内容概览</span></a><ol class="bs-toc-child"><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E8%8A%82%E7%82%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%8C%85"><span class="bs-toc-number">3.1.</span> <span class="bs-toc-text">节点与功能包</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E8%AF%9D%E9%A2%98%E4%B8%8E%E6%9C%8D%E5%8A%A1"><span class="bs-toc-number">3.2.</span> <span class="bs-toc-text">话题与服务</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E5%B7%A5%E5%85%B7%E9%93%BE"><span class="bs-toc-number">3.3.</span> <span class="bs-toc-text">工具链</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E4%BB%BF%E7%9C%9F%E5%85%A5%E9%97%A8"><span class="bs-toc-number">3.4.</span> <span class="bs-toc-text">仿真入门</span></a></li></ol></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5"><span class="bs-toc-number">4.</span> <span class="bs-toc-text">常用命令速查</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%B7%A5%E7%A8%8B%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="bs-toc-number">5.</span> <span class="bs-toc-text">工程注意事项</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E6%8E%A8%E8%8D%90%E5%AE%9E%E8%B7%B5%E9%A1%BA%E5%BA%8F"><span class="bs-toc-number">6.</span> <span class="bs-toc-text">推荐实践顺序</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%BB%93%E5%BA%93"><span class="bs-toc-number">7.</span> <span class="bs-toc-text">仓库</span></a></li></ol>
+        
+      </div>
+    </aside>
+    <div class="bs-prose" data-prose>
+      <p>ROS 2 是机器人开发的新一代基础设施，解决了 ROS 1 在实时性、安全性和多机通信上的诸多局限。这份 165 页的学习记录从节点与功能包讲起，覆盖完整通信机制与工具链，最后延伸到 URDF 建模与 Gazebo 仿真。</p>
+<span id="more"></span>
+
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">ROS 2 基础</span><br><span class="line">    ├── 机器人、ROS 2 本质、ROS 1 与 ROS 2 对比</span><br><span class="line">    ├── 系统架构、发行版、通信机制和调试工具</span><br><span class="line">    └── Linux、VS Code、Git、Python、C++ 和环境变量</span><br><span class="line">            ↓</span><br><span class="line">节点与功能包</span><br><span class="line">    ├── Python 节点和 C++ 节点</span><br><span class="line">    ├── rclpy、rclcpp、日志和节点生命周期</span><br><span class="line">    ├── ament_python、ament_cmake 和 colcon 工作空间</span><br><span class="line">    └── 面向对象、多线程和回调函数</span><br><span class="line">            ↓</span><br><span class="line">ROS 2 通信</span><br><span class="line">    ├── Topic 发布与订阅</span><br><span class="line">    ├── Service 客户端与服务端</span><br><span class="line">    ├── 自定义消息、服务接口和参数</span><br><span class="line">    └── Launch 多节点启动与配置</span><br><span class="line">            ↓</span><br><span class="line">机器人工具链</span><br><span class="line">    ├── TF 静态与动态坐标变换</span><br><span class="line">    ├── rqt、RViz2 和 ros2 bag</span><br><span class="line">    ├── URDF、Xacro 和机器人模型可视化</span><br><span class="line">    └── Gazebo 仿真基础</span><br></pre></td></tr></table></figure>
+
+<h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>作用</th>
+<th>学习方向</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Node</td>
+<td>执行具体任务的运行单元</td>
+<td>Python&#x2F;C++ 节点、日志、节点查询</td>
+</tr>
+<tr>
+<td>Topic</td>
+<td>面向持续数据流的异步通信</td>
+<td>速度、位姿、系统状态、文本数据</td>
+</tr>
+<tr>
+<td>Service</td>
+<td>面向请求和响应的一次性通信</td>
+<td>海龟生成、人脸检测、巡逻控制</td>
+</tr>
+<tr>
+<td>Action</td>
+<td>可反馈、可取消的长时间任务</td>
+<td>通信体系的扩展方向</td>
+</tr>
+<tr>
+<td>Parameter</td>
+<td>节点运行时可配置的数据</td>
+<td>声明、读取、更新和 YAML 加载</td>
+</tr>
+<tr>
+<td>Interface</td>
+<td>描述通信数据结构</td>
+<td><code>.msg</code>、<code>.srv</code> 和接口生成</td>
+</tr>
+<tr>
+<td>Launch</td>
+<td>组织多个节点和运行参数</td>
+<td><code>*.launch.py</code> 多节点启动</td>
+</tr>
+<tr>
+<td>TF</td>
+<td>管理机器人中的坐标系关系</td>
+<td>静态 TF、动态 TF、TF 查询</td>
+</tr>
+</tbody></table>
+<h2 id="内容概览"><a href="#内容概览" class="headerlink" title="内容概览"></a>内容概览</h2><h3 id="节点与功能包"><a href="#节点与功能包" class="headerlink" title="节点与功能包"></a>节点与功能包</h3><ul>
+<li>分别用 Python（<code>rclpy</code>）和 C++（<code>rclcpp</code>）编写最小节点，理解初始化与日志；</li>
+<li>用 <code>ament_python</code> 和 <code>ament_cmake</code> 组织功能包，理解 <code>package.xml</code>、<code>setup.py</code> 与 <code>CMakeLists.txt</code> 的职责；</li>
+<li>使用 <code>colcon build</code> 构建工作空间并加载 <code>install/setup.bash</code>；</li>
+<li>Python 和 C++ 中的多线程与回调函数实践。</li>
+</ul>
+<h3 id="话题与服务"><a href="#话题与服务" class="headerlink" title="话题与服务"></a>话题与服务</h3><ul>
+<li>用 <code>geometry_msgs/msg/Twist</code> 控制 Turtlesim 前进、旋转、画圆，订阅位姿实现闭环控制；</li>
+<li>趣味实践：通过话题传输小说文本并用 <code>espeak-ng</code> 转语音，用 <code>psutil</code> 获取系统状态共享数据，用 Qt 显示订阅到的数据；</li>
+<li>自定义消息与服务接口：Python 实现人脸检测服务、C++ 实现巡逻海龟服务；</li>
+<li>参数声明、参数事件、YAML 配置加载，Launch 文件启动多节点并传递参数。</li>
+</ul>
+<h3 id="工具链"><a href="#工具链" class="headerlink" title="工具链"></a>工具链</h3><ul>
+<li>TF 坐标树：Python 发布机械臂底座到相机的静态 TF，C++ 发布地图坐标系的静态与动态 TF 并查询关系；</li>
+<li><code>rqt</code> &#x2F; <code>rqt_tf_tree</code> 检查节点、话题和 TF 树，<code>RViz2</code> 显示坐标变换与机器人状态；</li>
+<li><code>ros2 bag record</code> 记录话题数据并回放测试。</li>
+</ul>
+<h3 id="仿真入门"><a href="#仿真入门" class="headerlink" title="仿真入门"></a>仿真入门</h3><ul>
+<li>创建 ROS 2 描述功能包，使用 URDF 描述机器人连杆、关节与结构；</li>
+<li><code>urdf_to_graphviz</code> 生成模型结构图，RViz2 加载显示机器人模型；</li>
+<li>使用 Xacro 简化和复用 URDF，建立 Gazebo 仿真基础。</li>
+</ul>
+<h2 id="常用命令速查"><a href="#常用命令速查" class="headerlink" title="常用命令速查"></a>常用命令速查</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 环境加载</span></span><br><span class="line"><span class="built_in">source</span> /opt/ros/humble/setup.bash</span><br><span class="line">colcon build &amp;&amp; <span class="built_in">source</span> install/setup.bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 节点与话题</span></span><br><span class="line">ros2 node list</span><br><span class="line">ros2 topic <span class="built_in">echo</span> /turtle1/pose</span><br><span class="line">ros2 interface show geometry_msgs/msg/Twist</span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务与参数</span></span><br><span class="line">ros2 service list -t</span><br><span class="line">ros2 param <span class="built_in">set</span> /turtlesim background_r 255</span><br><span class="line"></span><br><span class="line"><span class="comment"># 工具</span></span><br><span class="line">rqt &amp;&amp; rviz2</span><br><span class="line">ros2 bag record /turtle1/cmd_vel</span><br></pre></td></tr></table></figure>
+
+<h2 id="工程注意事项"><a href="#工程注意事项" class="headerlink" title="工程注意事项"></a>工程注意事项</h2><ul>
+<li>修改 <code>package.xml</code>、<code>setup.py</code> 或 <code>CMakeLists.txt</code> 后，应重新执行 <code>colcon build</code> 并重新 <code>source install/setup.bash</code>；</li>
+<li>Topic 的名称、消息类型、QoS 配置需要保持一致；</li>
+<li>自定义 <code>.msg</code>、<code>.srv</code> 接口变更后，应重新生成接口并检查所有依赖节点；</li>
+<li>TF 查询依赖正确的父子坐标系、时间戳和 TF 发布器；</li>
+<li>多线程回调需要明确共享数据、线程退出和资源同步策略。</li>
+</ul>
+<h2 id="推荐实践顺序"><a href="#推荐实践顺序" class="headerlink" title="推荐实践顺序"></a>推荐实践顺序</h2><ol>
+<li>安装 ROS 2 后运行 Turtlesim、键盘控制和 <code>rqt</code>，确认基础环境可用；</li>
+<li>分别用 Python 和 C++ 编写最小节点，理解 <code>rclpy</code> 与 <code>rclcpp</code>；</li>
+<li>创建两类功能包，通过 Turtlesim 学习 Topic 的发布、订阅与闭环控制；</li>
+<li>使用自定义消息和服务接口，理解接口生成与服务端&#x2F;客户端；</li>
+<li>学习参数、Launch、TF、RViz2 和 <code>ros2 bag</code>；</li>
+<li>最后用 URDF、Xacro 和 Gazebo 建立建模与仿真基础。</li>
+</ol>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ashleycurry/ros2-robotics-learning-notes">ros2-robotics-learning-notes</a></li>
+</ul>
+
+    </div>
+  </div>
+
+  <footer class="bs-pfoot">
+    
+    <ul class="bs-tags" aria-label="标签">
+      <li><a href="/tags/TF/">#TF</a></li><li><a href="/tags/ROS2/">#ROS2</a></li><li><a href="/tags/Humble/">#Humble</a></li><li><a href="/tags/colcon/">#colcon</a></li><li><a href="/tags/rclpy/">#rclpy</a></li><li><a href="/tags/rclcpp/">#rclcpp</a></li><li><a href="/tags/URDF/">#URDF</a></li><li><a href="/tags/Gazebo/">#Gazebo</a></li>
+    </ul>
+    
+    <div class="bs-pfoot__grid">
+      
+      <p class="bs-license">
+        <span class="bs-kicker">LICENSE</span>
+        本文作者 XiaoGao，采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可。
+        转载请注明出处：<a href="https://xiaogao-code.github.io/2026/08/15/ros2-robotics-notes/">https:&#x2F;&#x2F;xiaogao-code.github.io&#x2F;2026&#x2F;08&#x2F;15&#x2F;ros2-robotics-notes&#x2F;</a>
+      </p>
+      
+      
+      
+    </div>
+  </footer>
+
+  <nav class="bs-pnav" aria-label="分页">
+    
+    <a class="bs-pnav__item bs-pnav__item--newer" href="/2026/08/27/opencv-computer-vision/" rel="prev">
+      <span class="bs-kicker">← 较新 NEWER</span><span class="bs-pnav__t">OpenCV 计算机视觉：从像素到特征匹配的十二课</span>
+    </a>
+    
+    
+    <a class="bs-pnav__item bs-pnav__item--older" href="/2026/08/03/ros-robotics-notes/" rel="next">
+      <span class="bs-kicker">较早 OLDER →</span><span class="bs-pnav__t">ROS 机器人开发入门：话题、服务与 TF 坐标变换</span>
+    </a>
+    
+  </nav>
+
+  
+</article>
+</main>
+
+<footer class="bs-footer">
+  <div class="bs-footer__white">
+    <a class="bs-brand bs-brand--footer" href="/">
+      <span class="bs-mark" aria-hidden="true"></span>
+      <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+    </a>
+    <p class="bs-footer__desc">嵌入式软件 / 机器人 / 计算机视觉 / LLM 应用的学习与实践笔记</p>
+    <ul class="bs-footer__social">
+      
+      <li><a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">GitHub</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+    </ul>
+    <p class="bs-footer__meta">
+      © 2026 XiaoGao
+       · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+      · 由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 与 <a href="https://github.com/LiuXiu233/hexo-theme-bisect" target="_blank" rel="noopener">Bisect</a> 主题驱动
+    </p>
+  </div>
+  <div class="bs-footer__blue">
+    
+<p class="bs-slogan bs-slogan--footer">
+  <span class="bs-slogan__zh">从寄存器到推理，把设备、数据与智能连起来。</span>
+  <span class="bs-slogan__en">Build close to the machine. Bring intelligence to the edge.</span>
+</p>
+
+
+    
+    <div class="bs-footer__actions">
+      
+      <a class="bs-btn bs-btn--line" href="#top" data-to-top>回到顶部 ↑</a>
+    </div>
+  </div>
+</footer>
+<script id="bs-config" type="application/json">{"root":"/","search":"/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
+
+<dialog class="bs-search" id="bs-search" aria-label="搜索文章或输入命令">
+  <form class="bs-search__bar" method="dialog" role="search">
+    <span class="bs-search__prompt" aria-hidden="true">&gt;</span>
+    <label class="bs-sr" for="bs-search-input">搜索文章或输入命令</label>
+    <input id="bs-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="搜索标题、正文、标签……  输入 &gt; 查看命令">
+    <button class="bs-search__close" type="submit" aria-label="关闭">esc</button>
+  </form>
+  <ol class="bs-search__list" id="bs-search-list" role="listbox" aria-label="结果"></ol>
+  <p class="bs-search__hint"><span>↑↓ 选择</span><span>↵ 打开</span><span>&gt;theme · &gt;random · &gt;top · &gt;archive</span></p>
+</dialog>
+
+<script type="module" src="/js/bisect.js"></script>
+</body>
+</html>

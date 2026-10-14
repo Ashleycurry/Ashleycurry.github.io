@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Java 工程实践手册：三阶段学习路线与案例体系 | XiaoGao 的代码笔记</title>
+<meta name="description" content="Java 学习与工程实践的课程资料与源码案例，按三个阶段推进：Java 核心与 AI 开发基础、Java 核心与 AI 开发进阶、AI 赋能 Web 开发。">
+<meta name="keywords" content="嵌入式,STM32,FreeRTOS,ROS,OpenCV,机器人,Linux,C语言,Python">
+<meta name="author" content="XiaoGao">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f9fd">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1628">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://xiaogao-code.github.io/2026/04/15/java-engineering-handbook/">
+<meta name="description" content="Java 学习与工程实践的课程资料与源码案例，按三个阶段推进：Java 核心与 AI 开发基础、Java 核心与 AI 开发进阶、AI 赋能 Web 开发。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 工程实践手册：三阶段学习路线与案例体系">
+<meta property="og:url" content="https://xiaogao-code.github.io/2026/04/15/java-engineering-handbook/index.html">
+<meta property="og:site_name" content="XiaoGao 的代码笔记">
+<meta property="og:description" content="Java 学习与工程实践的课程资料与源码案例，按三个阶段推进：Java 核心与 AI 开发基础、Java 核心与 AI 开发进阶、AI 赋能 Web 开发。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-04-15T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-14T11:02:22.000Z">
+<meta property="article:author" content="XiaoGao">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="SpringBoot">
+<meta property="article:tag" content="Web开发">
+<meta property="article:tag" content="集合">
+<meta property="article:tag" content="面向对象">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('bs-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+    document.documentElement.classList.add('js');
+    addEventListener('pagereveal', function (e) {
+      if (e.viewTransition) { e.viewTransition.ready.catch(function () {}); e.viewTransition.finished.catch(function () {}); }
+    });
+  })();
+</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400..900&family=Noto+Sans+SC:wght@900&display=swap">
+
+<link rel="stylesheet" href="/css/bisect.css">
+<link rel="alternate" type="application/atom+xml" title="XiaoGao 的代码笔记" href="/atom.xml">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.xml"}}]},"eagerness":"moderate"}]}
+</script>
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="is-post">
+<a class="bs-skip" href="#main">跳到正文</a>
+<svg class="bs-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <!-- 列表里的图片统一压成深空—分界蓝—冰白三色调 -->
+  <filter id="bs-duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues=".059 .090 .957"/>
+      <feFuncG type="table" tableValues=".090 .278 .976"/>
+      <feFuncB type="table" tableValues=".165 .902 .992"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+
+<header class="bs-header" data-header>
+  <a class="bs-brand" href="/" aria-label="XiaoGao 的代码笔记 首页">
+    <span class="bs-mark" aria-hidden="true"></span>
+    <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+  </a>
+  <nav class="bs-nav" id="bs-nav" aria-label="主导航">
+    <ul>
+      
+      <li>
+        <a href="/" aria-current="page">
+          <span class="bs-nav__no">01</span>
+          <span class="bs-nav__zh">文章</span>
+          <span class="bs-nav__en">Posts</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives/">
+          <span class="bs-nav__no">02</span>
+          <span class="bs-nav__zh">归档</span>
+          <span class="bs-nav__en">Archive</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/">
+          <span class="bs-nav__no">03</span>
+          <span class="bs-nav__zh">分类</span>
+          <span class="bs-nav__en">Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/">
+          <span class="bs-nav__no">04</span>
+          <span class="bs-nav__zh">标签</span>
+          <span class="bs-nav__en">Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about/">
+          <span class="bs-nav__no">05</span>
+          <span class="bs-nav__zh">关于</span>
+          <span class="bs-nav__en">About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">
+          <span class="bs-nav__no">06</span>
+          <span class="bs-nav__zh">GitHub</span>
+          <span class="bs-nav__en">Code ↗</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+  <div class="bs-tools">
+    <button class="bs-tool bs-tool--search" type="button" data-search-open aria-label="搜索">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <kbd>⌘K</kbd>
+    </button>
+    <button class="bs-tool bs-tool--theme" type="button" data-theme-toggle aria-label="切换深浅色">
+      <span class="bs-halfdot" aria-hidden="true"></span>
+    </button>
+    <button class="bs-tool bs-tool--menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="bs-nav">
+      <span class="bs-burger" aria-hidden="true"></span><span class="bs-sr">菜单</span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<article class="bs-post" data-font="sans">
+  <header class="bs-phead">
+    <div class="bs-phead__text">
+      <p class="bs-kicker">NO.04 · <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a></p>
+      <h1 class="bs-phead__title">Java 工程实践手册：三阶段学习路线与案例体系</h1>
+      <p class="bs-phead__desc">Java 学习与工程实践的课程资料与源码案例，按三个阶段推进：Java 核心与 AI 开发基础、Java 核心与 AI 开发进阶、AI 赋能 Web 开发。</p>
+      <dl class="bs-phead__meta">
+        <div><dt>发布 DATE</dt><dd><time datetime="2026-04-15T02:00:00.000Z">2026.04.15</time></dd></div>
+        <div><dt>字数 WORDS</dt><dd>921</dd></div>
+        <div><dt>阅读 READ</dt><dd>3 分钟</dd></div>
+      </dl>
+    </div>
+    <figure class="bs-phead__cover" aria-hidden="true">
+      <svg class="bs-gen" viewBox="0 0 1200 800" preserveAspectRatio="xMinYMid slice" role="img" aria-label="Java 工程实践手册：三阶段学习路线与案例体系">
+<defs><clipPath id="g-tyz19n"><circle cx="700.7" cy="326.4" r="349"/></clipPath></defs>
+<rect class="bs-gen__w" width="1200" height="800"/>
+<text class="bs-gen__glyph bs-gen__b" x="160" y="688">J</text>
+<g clip-path="url(#g-tyz19n)"><rect class="bs-gen__b" width="1200" height="800"/><path d="M22.5 22.5h.01M67.5 22.5h.01M112.5 22.5h.01M157.5 22.5h.01M202.5 22.5h.01M247.5 22.5h.01M292.5 22.5h.01M337.5 22.5h.01M382.5 22.5h.01M427.5 22.5h.01M472.5 22.5h.01M517.5 22.5h.01M562.5 22.5h.01M607.5 22.5h.01M652.5 22.5h.01M697.5 22.5h.01M742.5 22.5h.01M787.5 22.5h.01M832.5 22.5h.01M877.5 22.5h.01M922.5 22.5h.01M967.5 22.5h.01M1012.5 22.5h.01M1057.5 22.5h.01M1102.5 22.5h.01M1147.5 22.5h.01M1192.5 22.5h.01M22.5 67.5h.01M67.5 67.5h.01M112.5 67.5h.01M157.5 67.5h.01M202.5 67.5h.01M247.5 67.5h.01M292.5 67.5h.01M337.5 67.5h.01M382.5 67.5h.01M427.5 67.5h.01M472.5 67.5h.01M517.5 67.5h.01M562.5 67.5h.01M607.5 67.5h.01M652.5 67.5h.01M697.5 67.5h.01M742.5 67.5h.01M787.5 67.5h.01M832.5 67.5h.01M877.5 67.5h.01M922.5 67.5h.01M967.5 67.5h.01M1012.5 67.5h.01M1057.5 67.5h.01M1102.5 67.5h.01M1147.5 67.5h.01M1192.5 67.5h.01M22.5 112.5h.01M67.5 112.5h.01M112.5 112.5h.01M157.5 112.5h.01M202.5 112.5h.01M247.5 112.5h.01M292.5 112.5h.01M337.5 112.5h.01M382.5 112.5h.01M427.5 112.5h.01M472.5 112.5h.01M517.5 112.5h.01M562.5 112.5h.01M607.5 112.5h.01M652.5 112.5h.01M697.5 112.5h.01M742.5 112.5h.01M787.5 112.5h.01M832.5 112.5h.01M877.5 112.5h.01M922.5 112.5h.01M967.5 112.5h.01M1012.5 112.5h.01M1057.5 112.5h.01M1102.5 112.5h.01M1147.5 112.5h.01M1192.5 112.5h.01M22.5 157.5h.01M67.5 157.5h.01M112.5 157.5h.01M157.5 157.5h.01M202.5 157.5h.01M247.5 157.5h.01M292.5 157.5h.01M337.5 157.5h.01M382.5 157.5h.01M427.5 157.5h.01M472.5 157.5h.01M517.5 157.5h.01M562.5 157.5h.01M607.5 157.5h.01M652.5 157.5h.01M697.5 157.5h.01M742.5 157.5h.01M787.5 157.5h.01M832.5 157.5h.01M877.5 157.5h.01M922.5 157.5h.01M967.5 157.5h.01M1012.5 157.5h.01M1057.5 157.5h.01M1102.5 157.5h.01M1147.5 157.5h.01M1192.5 157.5h.01M22.5 202.5h.01M67.5 202.5h.01M112.5 202.5h.01M157.5 202.5h.01M202.5 202.5h.01M247.5 202.5h.01M292.5 202.5h.01M337.5 202.5h.01M382.5 202.5h.01M427.5 202.5h.01M472.5 202.5h.01M517.5 202.5h.01M562.5 202.5h.01M607.5 202.5h.01M652.5 202.5h.01M697.5 202.5h.01M742.5 202.5h.01M787.5 202.5h.01M832.5 202.5h.01M877.5 202.5h.01M922.5 202.5h.01M967.5 202.5h.01M1012.5 202.5h.01M1057.5 202.5h.01M1102.5 202.5h.01M1147.5 202.5h.01M1192.5 202.5h.01M22.5 247.5h.01M67.5 247.5h.01M112.5 247.5h.01M157.5 247.5h.01M202.5 247.5h.01M247.5 247.5h.01M292.5 247.5h.01M337.5 247.5h.01M382.5 247.5h.01M427.5 247.5h.01M472.5 247.5h.01M517.5 247.5h.01M562.5 247.5h.01M607.5 247.5h.01M652.5 247.5h.01M697.5 247.5h.01M742.5 247.5h.01M787.5 247.5h.01M832.5 247.5h.01M877.5 247.5h.01M922.5 247.5h.01M967.5 247.5h.01M1012.5 247.5h.01M1057.5 247.5h.01M1102.5 247.5h.01M1147.5 247.5h.01M1192.5 247.5h.01M22.5 292.5h.01M67.5 292.5h.01M112.5 292.5h.01M157.5 292.5h.01M202.5 292.5h.01M247.5 292.5h.01M292.5 292.5h.01M337.5 292.5h.01M382.5 292.5h.01M427.5 292.5h.01M472.5 292.5h.01M517.5 292.5h.01M562.5 292.5h.01M607.5 292.5h.01M652.5 292.5h.01M697.5 292.5h.01M742.5 292.5h.01M787.5 292.5h.01M832.5 292.5h.01M877.5 292.5h.01M922.5 292.5h.01M967.5 292.5h.01M1012.5 292.5h.01M1057.5 292.5h.01M1102.5 292.5h.01M1147.5 292.5h.01M1192.5 292.5h.01M22.5 337.5h.01M67.5 337.5h.01M112.5 337.5h.01M157.5 337.5h.01M202.5 337.5h.01M247.5 337.5h.01M292.5 337.5h.01M337.5 337.5h.01M382.5 337.5h.01M427.5 337.5h.01M472.5 337.5h.01M517.5 337.5h.01M562.5 337.5h.01M607.5 337.5h.01M652.5 337.5h.01M697.5 337.5h.01M742.5 337.5h.01M787.5 337.5h.01M832.5 337.5h.01M877.5 337.5h.01M922.5 337.5h.01M967.5 337.5h.01M1012.5 337.5h.01M1057.5 337.5h.01M1102.5 337.5h.01M1147.5 337.5h.01M1192.5 337.5h.01M22.5 382.5h.01M67.5 382.5h.01M112.5 382.5h.01M157.5 382.5h.01M202.5 382.5h.01M247.5 382.5h.01M292.5 382.5h.01M337.5 382.5h.01M382.5 382.5h.01M427.5 382.5h.01M472.5 382.5h.01M517.5 382.5h.01M562.5 382.5h.01M607.5 382.5h.01M652.5 382.5h.01M697.5 382.5h.01M742.5 382.5h.01M787.5 382.5h.01M832.5 382.5h.01M877.5 382.5h.01M922.5 382.5h.01M967.5 382.5h.01M1012.5 382.5h.01M1057.5 382.5h.01M1102.5 382.5h.01M1147.5 382.5h.01M1192.5 382.5h.01M22.5 427.5h.01M67.5 427.5h.01M112.5 427.5h.01M157.5 427.5h.01M202.5 427.5h.01M247.5 427.5h.01M292.5 427.5h.01M337.5 427.5h.01M382.5 427.5h.01M427.5 427.5h.01M472.5 427.5h.01M517.5 427.5h.01M562.5 427.5h.01M607.5 427.5h.01M652.5 427.5h.01M697.5 427.5h.01M742.5 427.5h.01M787.5 427.5h.01M832.5 427.5h.01M877.5 427.5h.01M922.5 427.5h.01M967.5 427.5h.01M1012.5 427.5h.01M1057.5 427.5h.01M1102.5 427.5h.01M1147.5 427.5h.01M1192.5 427.5h.01M22.5 472.5h.01M67.5 472.5h.01M112.5 472.5h.01M157.5 472.5h.01M202.5 472.5h.01M247.5 472.5h.01M292.5 472.5h.01M337.5 472.5h.01M382.5 472.5h.01M427.5 472.5h.01M472.5 472.5h.01M517.5 472.5h.01M562.5 472.5h.01M607.5 472.5h.01M652.5 472.5h.01M697.5 472.5h.01M742.5 472.5h.01M787.5 472.5h.01M832.5 472.5h.01M877.5 472.5h.01M922.5 472.5h.01M967.5 472.5h.01M1012.5 472.5h.01M1057.5 472.5h.01M1102.5 472.5h.01M1147.5 472.5h.01M1192.5 472.5h.01M22.5 517.5h.01M67.5 517.5h.01M112.5 517.5h.01M157.5 517.5h.01M202.5 517.5h.01M247.5 517.5h.01M292.5 517.5h.01M337.5 517.5h.01M382.5 517.5h.01M427.5 517.5h.01M472.5 517.5h.01M517.5 517.5h.01M562.5 517.5h.01M607.5 517.5h.01M652.5 517.5h.01M697.5 517.5h.01M742.5 517.5h.01M787.5 517.5h.01M832.5 517.5h.01M877.5 517.5h.01M922.5 517.5h.01M967.5 517.5h.01M1012.5 517.5h.01M1057.5 517.5h.01M1102.5 517.5h.01M1147.5 517.5h.01M1192.5 517.5h.01M22.5 562.5h.01M67.5 562.5h.01M112.5 562.5h.01M157.5 562.5h.01M202.5 562.5h.01M247.5 562.5h.01M292.5 562.5h.01M337.5 562.5h.01M382.5 562.5h.01M427.5 562.5h.01M472.5 562.5h.01M517.5 562.5h.01M562.5 562.5h.01M607.5 562.5h.01M652.5 562.5h.01M697.5 562.5h.01M742.5 562.5h.01M787.5 562.5h.01M832.5 562.5h.01M877.5 562.5h.01M922.5 562.5h.01M967.5 562.5h.01M1012.5 562.5h.01M1057.5 562.5h.01M1102.5 562.5h.01M1147.5 562.5h.01M1192.5 562.5h.01M22.5 607.5h.01M67.5 607.5h.01M112.5 607.5h.01M157.5 607.5h.01M202.5 607.5h.01M247.5 607.5h.01M292.5 607.5h.01M337.5 607.5h.01M382.5 607.5h.01M427.5 607.5h.01M472.5 607.5h.01M517.5 607.5h.01M562.5 607.5h.01M607.5 607.5h.01M652.5 607.5h.01M697.5 607.5h.01M742.5 607.5h.01M787.5 607.5h.01M832.5 607.5h.01M877.5 607.5h.01M922.5 607.5h.01M967.5 607.5h.01M1012.5 607.5h.01M1057.5 607.5h.01M1102.5 607.5h.01M1147.5 607.5h.01M1192.5 607.5h.01M22.5 652.5h.01M67.5 652.5h.01M112.5 652.5h.01M157.5 652.5h.01M202.5 652.5h.01M247.5 652.5h.01M292.5 652.5h.01M337.5 652.5h.01M382.5 652.5h.01M427.5 652.5h.01M472.5 652.5h.01M517.5 652.5h.01M562.5 652.5h.01M607.5 652.5h.01M652.5 652.5h.01M697.5 652.5h.01M742.5 652.5h.01M787.5 652.5h.01M832.5 652.5h.01M877.5 652.5h.01M922.5 652.5h.01M967.5 652.5h.01M1012.5 652.5h.01M1057.5 652.5h.01M1102.5 652.5h.01M1147.5 652.5h.01M1192.5 652.5h.01M22.5 697.5h.01M67.5 697.5h.01M112.5 697.5h.01M157.5 697.5h.01M202.5 697.5h.01M247.5 697.5h.01M292.5 697.5h.01M337.5 697.5h.01M382.5 697.5h.01M427.5 697.5h.01M472.5 697.5h.01M517.5 697.5h.01M562.5 697.5h.01M607.5 697.5h.01M652.5 697.5h.01M697.5 697.5h.01M742.5 697.5h.01M787.5 697.5h.01M832.5 697.5h.01M877.5 697.5h.01M922.5 697.5h.01M967.5 697.5h.01M1012.5 697.5h.01M1057.5 697.5h.01M1102.5 697.5h.01M1147.5 697.5h.01M1192.5 697.5h.01M22.5 742.5h.01M67.5 742.5h.01M112.5 742.5h.01M157.5 742.5h.01M202.5 742.5h.01M247.5 742.5h.01M292.5 742.5h.01M337.5 742.5h.01M382.5 742.5h.01M427.5 742.5h.01M472.5 742.5h.01M517.5 742.5h.01M562.5 742.5h.01M607.5 742.5h.01M652.5 742.5h.01M697.5 742.5h.01M742.5 742.5h.01M787.5 742.5h.01M832.5 742.5h.01M877.5 742.5h.01M922.5 742.5h.01M967.5 742.5h.01M1012.5 742.5h.01M1057.5 742.5h.01M1102.5 742.5h.01M1147.5 742.5h.01M1192.5 742.5h.01M22.5 787.5h.01M67.5 787.5h.01M112.5 787.5h.01M157.5 787.5h.01M202.5 787.5h.01M247.5 787.5h.01M292.5 787.5h.01M337.5 787.5h.01M382.5 787.5h.01M427.5 787.5h.01M472.5 787.5h.01M517.5 787.5h.01M562.5 787.5h.01M607.5 787.5h.01M652.5 787.5h.01M697.5 787.5h.01M742.5 787.5h.01M787.5 787.5h.01M832.5 787.5h.01M877.5 787.5h.01M922.5 787.5h.01M967.5 787.5h.01M1012.5 787.5h.01M1057.5 787.5h.01M1102.5 787.5h.01M1147.5 787.5h.01M1192.5 787.5h.01" class="bs-gen__e" stroke-width="5" stroke-linecap="round" fill="none" opacity=".55"/><text class="bs-gen__glyph bs-gen__w" x="160" y="688">J</text></g>
+<text class="bs-gen__label" x="40" y="64">NO.04 / 2026</text>
+</svg>
+    </figure>
+  </header>
+
+  <div class="bs-post__layout">
+    <aside class="bs-rail" aria-label="阅读进度与目录">
+      <div class="bs-rail__inner">
+        <a class="bs-progress" href="#top" data-to-top aria-label="回到顶部"><span class="bs-progress__fill"></span></a>
+        
+        <p class="bs-rail__label">目录 · CONTENTS</p>
+        <ol class="bs-toc"><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF"><span class="bs-toc-number">1.</span> <span class="bs-toc-text">学习路线</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E8%B5%84%E6%96%99%E4%B8%8E%E7%8E%AF%E5%A2%83"><span class="bs-toc-number">2.</span> <span class="bs-toc-text">资料与环境</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E9%98%B6%E6%AE%B5%E4%B8%80%EF%BC%9AJava-%E6%A0%B8%E5%BF%83%E4%B8%8E-AI-%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80"><span class="bs-toc-number">3.</span> <span class="bs-toc-text">阶段一：Java 核心与 AI 开发基础</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E9%98%B6%E6%AE%B5%E4%BA%8C%EF%BC%9AJava-%E6%A0%B8%E5%BF%83%E4%B8%8E-AI-%E5%BC%80%E5%8F%91%E8%BF%9B%E9%98%B6"><span class="bs-toc-number">4.</span> <span class="bs-toc-text">阶段二：Java 核心与 AI 开发进阶</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E9%98%B6%E6%AE%B5%E4%B8%89%EF%BC%9AAI-%E8%B5%8B%E8%83%BD-Web-%E5%BC%80%E5%8F%91"><span class="bs-toc-number">5.</span> <span class="bs-toc-text">阶段三：AI 赋能 Web 开发</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%A6%82%E4%BD%95%E8%BF%90%E8%A1%8C"><span class="bs-toc-number">6.</span> <span class="bs-toc-text">如何运行</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%BB%93%E5%BA%93"><span class="bs-toc-number">7.</span> <span class="bs-toc-text">仓库</span></a></li></ol>
+        
+      </div>
+    </aside>
+    <div class="bs-prose" data-prose>
+      <p>这份手册整理 Java 学习与工程实践的课程资料、源码案例和学习笔记，内容按三个阶段循序推进：阶段一为 Java 核心与 AI 开发基础；阶段二为 Java 核心与 AI 开发进阶；阶段三为 AI 赋能 Web 开发。源码案例按”一个知识点对应一个小案例”的风格编写，并配有中文注释，方便对照课件学习。</p>
+<span id="more"></span>
+
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">阶段一：Java 核心与 AI 开发基础</span><br><span class="line">    -&gt; 开发环境搭建与 IDEA 开发工具</span><br><span class="line">    -&gt; 基础语法、运算符、方法与流程控制</span><br><span class="line">    -&gt; 数组、面向对象基础与面向对象高级</span><br><span class="line">    -&gt; 常用 API、集合基础</span><br><span class="line">            |</span><br><span class="line">            v</span><br><span class="line">阶段二：Java 核心与 AI 开发进阶</span><br><span class="line">    -&gt; 集合高级（List / Set / Map 体系）</span><br><span class="line">    -&gt; Stream 流、异常、File 类与递归</span><br><span class="line">    -&gt; 常用 API、IO 流</span><br><span class="line">    -&gt; 多线程、网络编程、Java 高级技术</span><br><span class="line">            |</span><br><span class="line">            v</span><br><span class="line">阶段三：AI 赋能 Web 开发</span><br><span class="line">    -&gt; Web 基础知识、HTML + CSS、JavaScript、Vue3</span><br><span class="line">    -&gt; Maven、数据库、SpringBoot（JDBC / MyBatis）</span><br><span class="line">    -&gt; 后端 Web 实战（Tlias 智能学习辅助系统）</span><br><span class="line">    -&gt; 前端 Web 实战、项目部署（Linux）与 Docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="资料与环境"><a href="#资料与环境" class="headerlink" title="资料与环境"></a>资料与环境</h2><ul>
+<li>课件目录：3 个阶段，48 份 PPTX 与 1 份 PDF，共 49 份；</li>
+<li>编程语言：Java（JDK 21）；</li>
+<li>开发工具：IntelliJ IDEA；</li>
+<li>工程组织：按阶段划分为独立 IDEA 工程，每个章节对应一个独立模块；</li>
+<li>源码包名：<code>com.myproject.*</code>。</li>
+</ul>
+<h2 id="阶段一：Java-核心与-AI-开发基础"><a href="#阶段一：Java-核心与-AI-开发基础" class="headerlink" title="阶段一：Java 核心与 AI 开发基础"></a>阶段一：Java 核心与 AI 开发基础</h2><p>从开发环境到面向对象高级，共 15 份课件，配套 Chapter_01 ~ Chapter_06 源码案例：</p>
+<ul>
+<li><strong>Chapter_01 环境搭建</strong>：Java 背景、JDK 安装、HelloWorld 与程序执行原理、IDEA 使用；</li>
+<li><strong>Chapter_02 基础语法</strong>：注释、字面量、变量与八种基本数据类型、运算符、方法与类型转换；</li>
+<li><strong>Chapter_03 流程控制</strong>：if &#x2F; switch 分支、for &#x2F; while &#x2F; do-while 循环、break &#x2F; continue、Random 猜数字游戏；</li>
+<li><strong>Chapter_04 数组</strong>：静态与动态初始化、元素访问、遍历应用（求和、最大值、反转）、二维数组；</li>
+<li><strong>Chapter_05 面向对象基础</strong>：类与对象、封装与权限修饰符、构造方法、this、static、标准 JavaBean；</li>
+<li><strong>Chapter_06 面向对象高级</strong>：继承与方法重写、抽象类、final、Object 类与 toString 重写。</li>
+</ul>
+<h2 id="阶段二：Java-核心与-AI-开发进阶"><a href="#阶段二：Java-核心与-AI-开发进阶" class="headerlink" title="阶段二：Java 核心与 AI 开发进阶"></a>阶段二：Java 核心与 AI 开发进阶</h2><ul>
+<li><strong>集合高级</strong>：ArrayList &#x2F; LinkedList 与 HashSet &#x2F; LinkedHashSet &#x2F; TreeSet 体系；</li>
+<li><strong>Stream 流</strong>：Lambda 表达式与流式操作；</li>
+<li><strong>异常</strong>：异常体系、处理方式与自定义异常；</li>
+<li><strong>File 类</strong>：常用 API 与递归；</li>
+<li><strong>常用 API</strong>：Math、System、包装类、BigDecimal 与 Arrays；</li>
+<li><strong>IO 流</strong>：字节流与字符流；</li>
+<li><strong>多线程</strong>：线程安全与同步、线程池；</li>
+<li><strong>网络编程</strong>：网络三要素、UDP 与 TCP 通信；</li>
+<li><strong>Java 高级技术</strong>：枚举、类加载器、反射、注解与动态代理。</li>
+</ul>
+<h2 id="阶段三：AI-赋能-Web-开发"><a href="#阶段三：AI-赋能-Web-开发" class="headerlink" title="阶段三：AI 赋能 Web 开发"></a>阶段三：AI 赋能 Web 开发</h2><p>从 Web 基础到完整项目部署：</p>
+<ul>
+<li><strong>Web 基础</strong>：HTML + CSS、JavaScript、Vue3、Web 服务器与静态资源；</li>
+<li><strong>后端基础</strong>：Maven 依赖管理、数据库、JDBC &#x2F; MyBatis &#x2F; MyBatisPlus；</li>
+<li><strong>SpringBoot</strong>：登录认证、AOP、Maven 高级、SpringBoot 原理与分层架构总结；</li>
+<li><strong>后端实战</strong>：Tlias 智能学习辅助系统（部门管理与员工管理：条件分页查询、新增、修改、删除、事务与文件上传）；</li>
+<li><strong>前端实战</strong>：Vue 工程化 + ElementPlus 的 Tlias 案例；</li>
+<li><strong>部署</strong>：Linux 项目部署与 Docker 容器化。</li>
+</ul>
+<h2 id="如何运行"><a href="#如何运行" class="headerlink" title="如何运行"></a>如何运行</h2><ul>
+<li>使用 IntelliJ IDEA 打开对应阶段的工程目录（例如 <code>src/Phase_001</code>）；</li>
+<li>工程默认使用 JDK 21，若本机 JDK 版本不同，可在 <code>File → Project Structure</code> 中调整 Project SDK；</li>
+<li>每个案例类都包含 <code>main</code> 方法，可右键直接运行；</li>
+<li>所有案例仅依赖 JDK 标准库，无需额外安装依赖。</li>
+</ul>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ashleycurry/java-engineering-handbook">java-engineering-handbook</a></li>
+</ul>
+
+    </div>
+  </div>
+
+  <footer class="bs-pfoot">
+    
+    <ul class="bs-tags" aria-label="标签">
+      <li><a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">#面向对象</a></li><li><a href="/tags/Java/">#Java</a></li><li><a href="/tags/SpringBoot/">#SpringBoot</a></li><li><a href="/tags/%E9%9B%86%E5%90%88/">#集合</a></li><li><a href="/tags/Web%E5%BC%80%E5%8F%91/">#Web开发</a></li>
+    </ul>
+    
+    <div class="bs-pfoot__grid">
+      
+      <p class="bs-license">
+        <span class="bs-kicker">LICENSE</span>
+        本文作者 XiaoGao，采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可。
+        转载请注明出处：<a href="https://xiaogao-code.github.io/2026/04/15/java-engineering-handbook/">https:&#x2F;&#x2F;xiaogao-code.github.io&#x2F;2026&#x2F;04&#x2F;15&#x2F;java-engineering-handbook&#x2F;</a>
+      </p>
+      
+      
+      
+    </div>
+  </footer>
+
+  <nav class="bs-pnav" aria-label="分页">
+    
+    <a class="bs-pnav__item bs-pnav__item--newer" href="/2026/04/28/data-structures-and-algorithms/" rel="prev">
+      <span class="bs-kicker">← 较新 NEWER</span><span class="bs-pnav__t">数据结构与算法笔记：从线性结构到查找与排序</span>
+    </a>
+    
+    
+    <a class="bs-pnav__item bs-pnav__item--older" href="/2026/04/02/python-engineering-handbook/" rel="next">
+      <span class="bs-kicker">较早 OLDER →</span><span class="bs-pnav__t">Python 工程实践手册：13 个案例走完入门路径</span>
+    </a>
+    
+  </nav>
+
+  
+</article>
+</main>
+
+<footer class="bs-footer">
+  <div class="bs-footer__white">
+    <a class="bs-brand bs-brand--footer" href="/">
+      <span class="bs-mark" aria-hidden="true"></span>
+      <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+    </a>
+    <p class="bs-footer__desc">嵌入式软件 / 机器人 / 计算机视觉 / LLM 应用的学习与实践笔记</p>
+    <ul class="bs-footer__social">
+      
+      <li><a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">GitHub</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+    </ul>
+    <p class="bs-footer__meta">
+      © 2026 XiaoGao
+       · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+      · 由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 与 <a href="https://github.com/LiuXiu233/hexo-theme-bisect" target="_blank" rel="noopener">Bisect</a> 主题驱动
+    </p>
+  </div>
+  <div class="bs-footer__blue">
+    
+<p class="bs-slogan bs-slogan--footer">
+  <span class="bs-slogan__zh">从寄存器到推理，把设备、数据与智能连起来。</span>
+  <span class="bs-slogan__en">Build close to the machine. Bring intelligence to the edge.</span>
+</p>
+
+
+    
+    <div class="bs-footer__actions">
+      
+      <a class="bs-btn bs-btn--line" href="#top" data-to-top>回到顶部 ↑</a>
+    </div>
+  </div>
+</footer>
+<script id="bs-config" type="application/json">{"root":"/","search":"/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
+
+<dialog class="bs-search" id="bs-search" aria-label="搜索文章或输入命令">
+  <form class="bs-search__bar" method="dialog" role="search">
+    <span class="bs-search__prompt" aria-hidden="true">&gt;</span>
+    <label class="bs-sr" for="bs-search-input">搜索文章或输入命令</label>
+    <input id="bs-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="搜索标题、正文、标签……  输入 &gt; 查看命令">
+    <button class="bs-search__close" type="submit" aria-label="关闭">esc</button>
+  </form>
+  <ol class="bs-search__list" id="bs-search-list" role="listbox" aria-label="结果"></ol>
+  <p class="bs-search__hint"><span>↑↓ 选择</span><span>↵ 打开</span><span>&gt;theme · &gt;random · &gt;top · &gt;archive</span></p>
+</dialog>
+
+<script type="module" src="/js/bisect.js"></script>
+</body>
+</html>

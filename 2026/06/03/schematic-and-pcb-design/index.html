@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>原理图与 PCB 设计：从嘉立创 EDA 入门到实战案例 | XiaoGao 的代码笔记</title>
+<meta name="description" content="原理图绘制、PCB 设计、EDA 工具使用、元器件封装与焊接技能笔记，附完整 PCB 设计流程与工程检查清单。">
+<meta name="keywords" content="嵌入式,STM32,FreeRTOS,ROS,OpenCV,机器人,Linux,C语言,Python">
+<meta name="author" content="XiaoGao">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f9fd">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1628">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://xiaogao-code.github.io/2026/06/03/schematic-and-pcb-design/">
+<meta name="description" content="原理图绘制、PCB 设计、EDA 工具使用、元器件封装与焊接技能笔记，附完整 PCB 设计流程与工程检查清单。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="原理图与 PCB 设计：从嘉立创 EDA 入门到实战案例">
+<meta property="og:url" content="https://xiaogao-code.github.io/2026/06/03/schematic-and-pcb-design/index.html">
+<meta property="og:site_name" content="XiaoGao 的代码笔记">
+<meta property="og:description" content="原理图绘制、PCB 设计、EDA 工具使用、元器件封装与焊接技能笔记，附完整 PCB 设计流程与工程检查清单。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-06-03T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-14T11:02:44.000Z">
+<meta property="article:author" content="XiaoGao">
+<meta property="article:tag" content="EDA">
+<meta property="article:tag" content="PCB">
+<meta property="article:tag" content="原理图">
+<meta property="article:tag" content="封装">
+<meta property="article:tag" content="焊接">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('bs-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+    document.documentElement.classList.add('js');
+    addEventListener('pagereveal', function (e) {
+      if (e.viewTransition) { e.viewTransition.ready.catch(function () {}); e.viewTransition.finished.catch(function () {}); }
+    });
+  })();
+</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400..900&family=Noto+Sans+SC:wght@900&display=swap">
+
+<link rel="stylesheet" href="/css/bisect.css">
+<link rel="alternate" type="application/atom+xml" title="XiaoGao 的代码笔记" href="/atom.xml">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.xml"}}]},"eagerness":"moderate"}]}
+</script>
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="is-post">
+<a class="bs-skip" href="#main">跳到正文</a>
+<svg class="bs-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <!-- 列表里的图片统一压成深空—分界蓝—冰白三色调 -->
+  <filter id="bs-duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues=".059 .090 .957"/>
+      <feFuncG type="table" tableValues=".090 .278 .976"/>
+      <feFuncB type="table" tableValues=".165 .902 .992"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+
+<header class="bs-header" data-header>
+  <a class="bs-brand" href="/" aria-label="XiaoGao 的代码笔记 首页">
+    <span class="bs-mark" aria-hidden="true"></span>
+    <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+  </a>
+  <nav class="bs-nav" id="bs-nav" aria-label="主导航">
+    <ul>
+      
+      <li>
+        <a href="/" aria-current="page">
+          <span class="bs-nav__no">01</span>
+          <span class="bs-nav__zh">文章</span>
+          <span class="bs-nav__en">Posts</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives/">
+          <span class="bs-nav__no">02</span>
+          <span class="bs-nav__zh">归档</span>
+          <span class="bs-nav__en">Archive</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/">
+          <span class="bs-nav__no">03</span>
+          <span class="bs-nav__zh">分类</span>
+          <span class="bs-nav__en">Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/">
+          <span class="bs-nav__no">04</span>
+          <span class="bs-nav__zh">标签</span>
+          <span class="bs-nav__en">Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about/">
+          <span class="bs-nav__no">05</span>
+          <span class="bs-nav__zh">关于</span>
+          <span class="bs-nav__en">About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">
+          <span class="bs-nav__no">06</span>
+          <span class="bs-nav__zh">GitHub</span>
+          <span class="bs-nav__en">Code ↗</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+  <div class="bs-tools">
+    <button class="bs-tool bs-tool--search" type="button" data-search-open aria-label="搜索">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <kbd>⌘K</kbd>
+    </button>
+    <button class="bs-tool bs-tool--theme" type="button" data-theme-toggle aria-label="切换深浅色">
+      <span class="bs-halfdot" aria-hidden="true"></span>
+    </button>
+    <button class="bs-tool bs-tool--menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="bs-nav">
+      <span class="bs-burger" aria-hidden="true"></span><span class="bs-sr">菜单</span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<article class="bs-post" data-font="sans">
+  <header class="bs-phead">
+    <div class="bs-phead__text">
+      <p class="bs-kicker">NO.08 · <a href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/">硬件设计</a></p>
+      <h1 class="bs-phead__title">原理图与 PCB 设计：从嘉立创 EDA 入门到实战案例</h1>
+      <p class="bs-phead__desc">原理图绘制、PCB 设计、EDA 工具使用、元器件封装与焊接技能笔记，附完整 PCB 设计流程与工程检查清单。</p>
+      <dl class="bs-phead__meta">
+        <div><dt>发布 DATE</dt><dd><time datetime="2026-06-03T02:00:00.000Z">2026.06.03</time></dd></div>
+        <div><dt>字数 WORDS</dt><dd>1,159</dd></div>
+        <div><dt>阅读 READ</dt><dd>3 分钟</dd></div>
+      </dl>
+    </div>
+    <figure class="bs-phead__cover" aria-hidden="true">
+      <svg class="bs-gen" viewBox="0 0 1200 800" preserveAspectRatio="xMinYMid slice" role="img" aria-label="原理图与 PCB 设计：从嘉立创 EDA 入门到实战案例">
+<defs><clipPath id="g6txes0"><rect x="526.1" y="0" width="673.9" height="800"/></clipPath></defs>
+<rect class="bs-gen__w" width="1200" height="800"/>
+<text class="bs-gen__glyph bs-gen__b" x="226.1" y="688">原</text>
+<g clip-path="url(#g6txes0)"><rect class="bs-gen__b" width="1200" height="800"/><path d="M0 15H1200M0 30H1200M0 45H1200M0 60H1200M0 75H1200M0 90H1200M0 105H1200M0 120H1200M0 135H1200M0 150H1200M0 165H1200M0 180H1200M0 195H1200M0 210H1200M0 225H1200M0 240H1200M0 255H1200M0 270H1200M0 285H1200M0 300H1200M0 315H1200M0 330H1200M0 345H1200M0 360H1200M0 375H1200M0 390H1200M0 405H1200M0 420H1200M0 435H1200M0 450H1200M0 465H1200M0 480H1200M0 495H1200M0 510H1200M0 525H1200M0 540H1200M0 555H1200M0 570H1200M0 585H1200M0 600H1200M0 615H1200M0 630H1200M0 645H1200M0 660H1200M0 675H1200M0 690H1200M0 705H1200M0 720H1200M0 735H1200M0 750H1200M0 765H1200M0 780H1200M0 795H1200" class="bs-gen__e" stroke-width="1.5" fill="none" opacity=".35"/><text class="bs-gen__glyph bs-gen__w" x="226.1" y="688">原</text></g>
+<text class="bs-gen__label" x="40" y="64">NO.08 / 2026</text>
+</svg>
+    </figure>
+  </header>
+
+  <div class="bs-post__layout">
+    <aside class="bs-rail" aria-label="阅读进度与目录">
+      <div class="bs-rail__inner">
+        <a class="bs-progress" href="#top" data-to-top aria-label="回到顶部"><span class="bs-progress__fill"></span></a>
+        
+        <p class="bs-rail__label">目录 · CONTENTS</p>
+        <ol class="bs-toc"><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF"><span class="bs-toc-number">1.</span> <span class="bs-toc-text">学习路线</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%86%85%E5%AE%B9%E6%A6%82%E8%A7%88"><span class="bs-toc-number">2.</span> <span class="bs-toc-text">内容概览</span></a><ol class="bs-toc-child"><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%9A%E5%98%89%E7%AB%8B%E5%88%9B-EDA-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="bs-toc-number">2.1.</span> <span class="bs-toc-text">第一章：嘉立创 EDA 快速入门</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9APCB-%E6%9D%BF%E5%88%B6%E4%BD%9C%E5%9F%BA%E7%A1%80"><span class="bs-toc-number">2.2.</span> <span class="bs-toc-text">第二章：PCB 板制作基础</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%9AEDA-%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7"><span class="bs-toc-number">2.3.</span> <span class="bs-toc-text">第三章：EDA 使用技巧</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0%EF%BC%9A%E8%87%AA%E5%AE%9A%E4%B9%89%E7%AC%A6%E5%8F%B7%E5%8F%8A%E5%99%A8%E4%BB%B6%E5%B0%81%E8%A3%85"><span class="bs-toc-number">2.4.</span> <span class="bs-toc-text">第四章：自定义符号及器件封装</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0%EF%BC%9A%E6%A1%88%E4%BE%8B%E4%B8%8E%E7%84%8A%E6%8E%A5"><span class="bs-toc-number">2.5.</span> <span class="bs-toc-text">第五章：案例与焊接</span></a></li></ol></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#PCB-%E8%AE%BE%E8%AE%A1%E6%B5%81%E7%A8%8B%E9%80%9F%E6%9F%A5"><span class="bs-toc-number">3.</span> <span class="bs-toc-text">PCB 设计流程速查</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%B8%B8%E7%94%A8%E5%B7%A5%E7%A8%8B%E6%A3%80%E6%9F%A5%E7%82%B9"><span class="bs-toc-number">4.</span> <span class="bs-toc-text">常用工程检查点</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE"><span class="bs-toc-number">5.</span> <span class="bs-toc-text">学习建议</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%BB%93%E5%BA%93"><span class="bs-toc-number">6.</span> <span class="bs-toc-text">仓库</span></a></li></ol>
+        
+      </div>
+    </aside>
+    <div class="bs-prose" data-prose>
+      <p>从原理图到一块能用的 PCB，中间隔着一条完整的工程流程。这份笔记整理嘉立创 EDA 的使用、原理图设计、PCB 布局布线、自定义符号与封装，以及焊接技能，并附案例练习。</p>
+<span id="more"></span>
+
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">EDA 与项目基础</span><br><span class="line">    ├── EDA 软件和 PCB 行业工具</span><br><span class="line">    ├── 嘉立创 EDA 环境</span><br><span class="line">    ├── 绘制单位和工程管理</span><br><span class="line">    └── 原理图到 PCB 的完整流程</span><br><span class="line">            ↓</span><br><span class="line">原理图设计</span><br><span class="line">    ├── 搜索与放置元器件</span><br><span class="line">    ├── 电源、接地和网络连接</span><br><span class="line">    ├── 元器件名称、位号和方向</span><br><span class="line">    └── DRC 检查</span><br><span class="line">            ↓</span><br><span class="line">PCB 设计</span><br><span class="line">    ├── 从原理图生成 PCB</span><br><span class="line">    ├── 板框与元器件布局</span><br><span class="line">    ├── 布线、铺铜和网络标识</span><br><span class="line">    ├── 丝印调整与 DRC</span><br><span class="line">    └── 3D 仿真和生产资料导出</span><br><span class="line">            ↓</span><br><span class="line">进阶设计</span><br><span class="line">    ├── 多层板、盲埋孔和泪滴</span><br><span class="line">    ├── 文件导入与导出</span><br><span class="line">    ├── 自定义符号和封装</span><br><span class="line">    └── 封装尺寸与器件绑定</span><br><span class="line">            ↓</span><br><span class="line">案例与焊接</span><br><span class="line">    ├── 可调电阻、独立按键</span><br><span class="line">    ├── 74HC138 译码器</span><br><span class="line">    ├── 74HC245 信号放大器</span><br><span class="line">    ├── LM358 PWM 方波</span><br><span class="line">    └── 电烙铁、焊锡和返修工具</span><br></pre></td></tr></table></figure>
+
+<h2 id="内容概览"><a href="#内容概览" class="headerlink" title="内容概览"></a>内容概览</h2><h3 id="第一章：嘉立创-EDA-快速入门"><a href="#第一章：嘉立创-EDA-快速入门" class="headerlink" title="第一章：嘉立创 EDA 快速入门"></a>第一章：嘉立创 EDA 快速入门</h3><ul>
+<li>理解 EDA（Electronic Design Automation）的基本作用；</li>
+<li>以按键点灯为例学习元器件搜索、放置、连线、属性调整和位号管理；</li>
+<li>从原理图生成 PCB，完成板框、布局、布线、网络标识、铺铜和丝印；</li>
+<li>使用 DRC 检查连接错误，查看 PCB 三维仿真效果，了解下单和生产资料准备。</li>
+</ul>
+<h3 id="第二章：PCB-板制作基础"><a href="#第二章：PCB-板制作基础" class="headerlink" title="第二章：PCB 板制作基础"></a>第二章：PCB 板制作基础</h3><p><strong>布局基本原则</strong>：</p>
+<ul>
+<li>电气连接紧密的器件进行模块化布局；</li>
+<li>接口器件靠近板边并明确方向、电压等级和正负极；</li>
+<li>高压、低压、大电流、高频和热源器件合理分区；</li>
+<li>去耦电容和滤波电容靠近电源入口或电源转换器件。</li>
+</ul>
+<p><strong>布线基本原则</strong>：</p>
+<ul>
+<li>根据电流、频率、板厂工艺和信号完整性要求设置线宽线距；</li>
+<li>避免使用小于 90 度的走线拐角；</li>
+<li>高速和高频信号线注意间距与干扰控制。</li>
+</ul>
+<h3 id="第三章：EDA-使用技巧"><a href="#第三章：EDA-使用技巧" class="headerlink" title="第三章：EDA 使用技巧"></a>第三章：EDA 使用技巧</h3><p>批量扇出添加网络标签、排查铺铜后仍存在的飞线、导入外部图片和 Logo、配置多层板与盲埋孔、使用泪滴增强导线与焊盘连接的可靠性，以及工程文件的导入导出。</p>
+<h3 id="第四章：自定义符号及器件封装"><a href="#第四章：自定义符号及器件封装" class="headerlink" title="第四章：自定义符号及器件封装"></a>第四章：自定义符号及器件封装</h3><ul>
+<li>在标准模式和专业模式下创建自定义原理图符号；</li>
+<li>手工绘制 0805 电容封装，使用封装向导生成 CH340N 封装；</li>
+<li>进行封装尺寸检查，将原理图符号与个人封装绑定；</li>
+<li>了解 DIP、QFP、SOP、QFN、BGA 等常见芯片封装。</li>
+</ul>
+<h3 id="第五章：案例与焊接"><a href="#第五章：案例与焊接" class="headerlink" title="第五章：案例与焊接"></a>第五章：案例与焊接</h3><ul>
+<li>可调电阻控制 LED 亮度、独立按键控制 LED 亮灭；</li>
+<li>使用 74HC138 实现 3-8 译码器电路、74HC245 增强驱动能力、LM358 产生 PWM 方波；</li>
+<li>焊接技能：电烙铁使用、有铅&#x2F;无铅焊锡与助焊剂、蓝丁胶固定、放大镜检查、吸锡器拆焊返修。</li>
+</ul>
+<h2 id="PCB-设计流程速查"><a href="#PCB-设计流程速查" class="headerlink" title="PCB 设计流程速查"></a>PCB 设计流程速查</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">需求分析 → 元器件选型 → 建立或确认符号与封装 → 绘制原理图</span><br><span class="line">  → 原理图 DRC → 生成 PCB → 板框和器件布局 → 布线与铺铜</span><br><span class="line">  → 丝印和网络标识 → PCB DRC 与目测检查 → 3D 检查和生产资料导出</span><br><span class="line">  → PCB 制作、焊接、调试与测试</span><br></pre></td></tr></table></figure>
+
+<h2 id="常用工程检查点"><a href="#常用工程检查点" class="headerlink" title="常用工程检查点"></a>常用工程检查点</h2><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>重点检查内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>元器件选型</td>
+<td>参数、封装、引脚定义、供货和替代型号</td>
+</tr>
+<tr>
+<td>原理图</td>
+<td>电源、地、网络名称、引脚连接、位号和未连接引脚</td>
+</tr>
+<tr>
+<td>原理图 DRC</td>
+<td>悬空引脚、短路、未连接网络和规则警告</td>
+</tr>
+<tr>
+<td>PCB 布局</td>
+<td>模块分区、接口方向、高压间距、散热和去耦位置</td>
+</tr>
+<tr>
+<td>PCB 布线</td>
+<td>线宽、线距、转角、回流路径、干扰和大电流承载能力</td>
+</tr>
+<tr>
+<td>PCB DRC</td>
+<td>间距、短路、未连接网络、板框和设计规则</td>
+</tr>
+<tr>
+<td>生产准备</td>
+<td>板层、板框、丝印、封装、Gerber、BOM 和装配要求</td>
+</tr>
+<tr>
+<td>焊接调试</td>
+<td>极性、焊点、虚焊、连锡、供电电压和通电顺序</td>
+</tr>
+</tbody></table>
+<h2 id="学习建议"><a href="#学习建议" class="headerlink" title="学习建议"></a>学习建议</h2><ol>
+<li>先完成按键点灯案例，熟悉原理图到 PCB 的完整闭环；</li>
+<li>每次绘制原理图后先完成 DRC，再开始 PCB 布局和布线；</li>
+<li>选型时同时查看数据手册、封装尺寸、引脚定义和实际采购信息；</li>
+<li>布局时先划分电源、接口、控制、时钟和信号模块，再处理模块间连接；</li>
+<li>焊接前确认元器件方向、极性、封装和焊盘对应关系。</li>
+</ol>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ashleycurry/schematic-and-pcb-design">schematic-and-pcb-design</a></li>
+</ul>
+
+    </div>
+  </div>
+
+  <footer class="bs-pfoot">
+    
+    <ul class="bs-tags" aria-label="标签">
+      <li><a href="/tags/PCB/">#PCB</a></li><li><a href="/tags/EDA/">#EDA</a></li><li><a href="/tags/%E5%8E%9F%E7%90%86%E5%9B%BE/">#原理图</a></li><li><a href="/tags/%E5%B0%81%E8%A3%85/">#封装</a></li><li><a href="/tags/%E7%84%8A%E6%8E%A5/">#焊接</a></li>
+    </ul>
+    
+    <div class="bs-pfoot__grid">
+      
+      <p class="bs-license">
+        <span class="bs-kicker">LICENSE</span>
+        本文作者 XiaoGao，采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可。
+        转载请注明出处：<a href="https://xiaogao-code.github.io/2026/06/03/schematic-and-pcb-design/">https:&#x2F;&#x2F;xiaogao-code.github.io&#x2F;2026&#x2F;06&#x2F;03&#x2F;schematic-and-pcb-design&#x2F;</a>
+      </p>
+      
+      
+      
+    </div>
+  </footer>
+
+  <nav class="bs-pnav" aria-label="分页">
+    
+    <a class="bs-pnav__item bs-pnav__item--newer" href="/2026/06/15/stm32-mcu-development-notes/" rel="prev">
+      <span class="bs-kicker">← 较新 NEWER</span><span class="bs-pnav__t">STM32 单片机开发笔记：从寄存器到物联网通信</span>
+    </a>
+    
+    
+    <a class="bs-pnav__item bs-pnav__item--older" href="/2026/05/22/digital-logic-and-computer-organization/" rel="next">
+      <span class="bs-kicker">较早 OLDER →</span><span class="bs-pnav__t">数字电路与计算机组成：从逻辑门到自制 CPU</span>
+    </a>
+    
+  </nav>
+
+  
+</article>
+</main>
+
+<footer class="bs-footer">
+  <div class="bs-footer__white">
+    <a class="bs-brand bs-brand--footer" href="/">
+      <span class="bs-mark" aria-hidden="true"></span>
+      <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+    </a>
+    <p class="bs-footer__desc">嵌入式软件 / 机器人 / 计算机视觉 / LLM 应用的学习与实践笔记</p>
+    <ul class="bs-footer__social">
+      
+      <li><a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">GitHub</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+    </ul>
+    <p class="bs-footer__meta">
+      © 2026 XiaoGao
+       · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+      · 由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 与 <a href="https://github.com/LiuXiu233/hexo-theme-bisect" target="_blank" rel="noopener">Bisect</a> 主题驱动
+    </p>
+  </div>
+  <div class="bs-footer__blue">
+    
+<p class="bs-slogan bs-slogan--footer">
+  <span class="bs-slogan__zh">从寄存器到推理，把设备、数据与智能连起来。</span>
+  <span class="bs-slogan__en">Build close to the machine. Bring intelligence to the edge.</span>
+</p>
+
+
+    
+    <div class="bs-footer__actions">
+      
+      <a class="bs-btn bs-btn--line" href="#top" data-to-top>回到顶部 ↑</a>
+    </div>
+  </div>
+</footer>
+<script id="bs-config" type="application/json">{"root":"/","search":"/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
+
+<dialog class="bs-search" id="bs-search" aria-label="搜索文章或输入命令">
+  <form class="bs-search__bar" method="dialog" role="search">
+    <span class="bs-search__prompt" aria-hidden="true">&gt;</span>
+    <label class="bs-sr" for="bs-search-input">搜索文章或输入命令</label>
+    <input id="bs-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="搜索标题、正文、标签……  输入 &gt; 查看命令">
+    <button class="bs-search__close" type="submit" aria-label="关闭">esc</button>
+  </form>
+  <ol class="bs-search__list" id="bs-search-list" role="listbox" aria-label="结果"></ol>
+  <p class="bs-search__hint"><span>↑↓ 选择</span><span>↵ 打开</span><span>&gt;theme · &gt;random · &gt;top · &gt;archive</span></p>
+</dialog>
+
+<script type="module" src="/js/bisect.js"></script>
+</body>
+</html>

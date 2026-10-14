@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Python 工程实践手册：13 个案例走完入门路径 | XiaoGao 的代码笔记</title>
+<meta name="description" content="面向 Python 初学者的课程笔记与案例仓库，从环境搭建到 NumPy，13 个可运行案例覆盖基础语法、函数与模块、容器、类与文件、异常、多线程与 pip。">
+<meta name="keywords" content="嵌入式,STM32,FreeRTOS,ROS,OpenCV,机器人,Linux,C语言,Python">
+<meta name="author" content="XiaoGao">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f9fd">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1628">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://xiaogao-code.github.io/2026/04/02/python-engineering-handbook/">
+<meta name="description" content="面向 Python 初学者的课程笔记与案例仓库，从环境搭建到 NumPy，13 个可运行案例覆盖基础语法、函数与模块、容器、类与文件、异常、多线程与 pip。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 工程实践手册：13 个案例走完入门路径">
+<meta property="og:url" content="https://xiaogao-code.github.io/2026/04/02/python-engineering-handbook/index.html">
+<meta property="og:site_name" content="XiaoGao 的代码笔记">
+<meta property="og:description" content="面向 Python 初学者的课程笔记与案例仓库，从环境搭建到 NumPy，13 个可运行案例覆盖基础语法、函数与模块、容器、类与文件、异常、多线程与 pip。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-04-02T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-14T11:02:04.000Z">
+<meta property="article:author" content="XiaoGao">
+<meta property="article:tag" content="NumPy">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="多线程">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="文件操作">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('bs-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+    document.documentElement.classList.add('js');
+    addEventListener('pagereveal', function (e) {
+      if (e.viewTransition) { e.viewTransition.ready.catch(function () {}); e.viewTransition.finished.catch(function () {}); }
+    });
+  })();
+</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400..900&family=Noto+Sans+SC:wght@900&display=swap">
+
+<link rel="stylesheet" href="/css/bisect.css">
+<link rel="alternate" type="application/atom+xml" title="XiaoGao 的代码笔记" href="/atom.xml">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.xml"}}]},"eagerness":"moderate"}]}
+</script>
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="is-post">
+<a class="bs-skip" href="#main">跳到正文</a>
+<svg class="bs-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <!-- 列表里的图片统一压成深空—分界蓝—冰白三色调 -->
+  <filter id="bs-duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues=".059 .090 .957"/>
+      <feFuncG type="table" tableValues=".090 .278 .976"/>
+      <feFuncB type="table" tableValues=".165 .902 .992"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+
+<header class="bs-header" data-header>
+  <a class="bs-brand" href="/" aria-label="XiaoGao 的代码笔记 首页">
+    <span class="bs-mark" aria-hidden="true"></span>
+    <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+  </a>
+  <nav class="bs-nav" id="bs-nav" aria-label="主导航">
+    <ul>
+      
+      <li>
+        <a href="/" aria-current="page">
+          <span class="bs-nav__no">01</span>
+          <span class="bs-nav__zh">文章</span>
+          <span class="bs-nav__en">Posts</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives/">
+          <span class="bs-nav__no">02</span>
+          <span class="bs-nav__zh">归档</span>
+          <span class="bs-nav__en">Archive</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/">
+          <span class="bs-nav__no">03</span>
+          <span class="bs-nav__zh">分类</span>
+          <span class="bs-nav__en">Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/">
+          <span class="bs-nav__no">04</span>
+          <span class="bs-nav__zh">标签</span>
+          <span class="bs-nav__en">Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about/">
+          <span class="bs-nav__no">05</span>
+          <span class="bs-nav__zh">关于</span>
+          <span class="bs-nav__en">About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">
+          <span class="bs-nav__no">06</span>
+          <span class="bs-nav__zh">GitHub</span>
+          <span class="bs-nav__en">Code ↗</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+  <div class="bs-tools">
+    <button class="bs-tool bs-tool--search" type="button" data-search-open aria-label="搜索">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <kbd>⌘K</kbd>
+    </button>
+    <button class="bs-tool bs-tool--theme" type="button" data-theme-toggle aria-label="切换深浅色">
+      <span class="bs-halfdot" aria-hidden="true"></span>
+    </button>
+    <button class="bs-tool bs-tool--menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="bs-nav">
+      <span class="bs-burger" aria-hidden="true"></span><span class="bs-sr">菜单</span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<article class="bs-post" data-font="sans">
+  <header class="bs-phead">
+    <div class="bs-phead__text">
+      <p class="bs-kicker">NO.03 · <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a></p>
+      <h1 class="bs-phead__title">Python 工程实践手册：13 个案例走完入门路径</h1>
+      <p class="bs-phead__desc">面向 Python 初学者的课程笔记与案例仓库，从环境搭建到 NumPy，13 个可运行案例覆盖基础语法、函数与模块、容器、类与文件、异常、多线程与 pip。</p>
+      <dl class="bs-phead__meta">
+        <div><dt>发布 DATE</dt><dd><time datetime="2026-04-02T02:00:00.000Z">2026.04.02</time></dd></div>
+        <div><dt>字数 WORDS</dt><dd>786</dd></div>
+        <div><dt>阅读 READ</dt><dd>2 分钟</dd></div>
+      </dl>
+    </div>
+    <figure class="bs-phead__cover" aria-hidden="true">
+      <svg class="bs-gen" viewBox="0 0 1200 800" preserveAspectRatio="xMinYMid slice" role="img" aria-label="Python 工程实践手册：13 个案例走完入门路径">
+<defs><clipPath id="gw4xlh4"><rect x="718.2" y="0" width="481.8" height="800"/></clipPath></defs>
+<rect class="bs-gen__w" width="1200" height="800"/>
+<text class="bs-gen__glyph bs-gen__b" x="202.5" y="688">P</text>
+<g clip-path="url(#gw4xlh4)"><rect class="bs-gen__b" width="1200" height="800"/><path d="M0 19H1200M0 38H1200M0 57H1200M0 76H1200M0 95H1200M0 114H1200M0 133H1200M0 152H1200M0 171H1200M0 190H1200M0 209H1200M0 228H1200M0 247H1200M0 266H1200M0 285H1200M0 304H1200M0 323H1200M0 342H1200M0 361H1200M0 380H1200M0 399H1200M0 418H1200M0 437H1200M0 456H1200M0 475H1200M0 494H1200M0 513H1200M0 532H1200M0 551H1200M0 570H1200M0 589H1200M0 608H1200M0 627H1200M0 646H1200M0 665H1200M0 684H1200M0 703H1200M0 722H1200M0 741H1200M0 760H1200M0 779H1200M0 798H1200" class="bs-gen__e" stroke-width="1.5" fill="none" opacity=".35"/><text class="bs-gen__glyph bs-gen__w" x="202.5" y="688">P</text></g>
+<text class="bs-gen__label" x="40" y="64">NO.03 / 2026</text>
+</svg>
+    </figure>
+  </header>
+
+  <div class="bs-post__layout">
+    <aside class="bs-rail" aria-label="阅读进度与目录">
+      <div class="bs-rail__inner">
+        <a class="bs-progress" href="#top" data-to-top aria-label="回到顶部"><span class="bs-progress__fill"></span></a>
+        
+        <p class="bs-rail__label">目录 · CONTENTS</p>
+        <ol class="bs-toc"><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF"><span class="bs-toc-number">1.</span> <span class="bs-toc-text">学习路线</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E7%AB%A0%E8%8A%82%E4%B8%8E%E6%A1%88%E4%BE%8B"><span class="bs-toc-number">2.</span> <span class="bs-toc-text">章节与案例</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E8%BF%90%E8%A1%8C%E6%A1%88%E4%BE%8B"><span class="bs-toc-number">3.</span> <span class="bs-toc-text">运行案例</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%B7%A5%E7%A8%8B%E5%8C%96%E7%BA%A6%E5%AE%9A"><span class="bs-toc-number">4.</span> <span class="bs-toc-text">工程化约定</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E8%A1%A5%E5%85%85%E7%AF%87%EF%BC%9A%E5%8F%82%E8%80%83%E4%B9%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="bs-toc-number">5.</span> <span class="bs-toc-text">补充篇：参考书学习笔记</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%BB%93%E5%BA%93"><span class="bs-toc-number">6.</span> <span class="bs-toc-text">仓库</span></a></li></ol>
+        
+      </div>
+    </aside>
+    <div class="bs-prose" data-prose>
+      <p>Python 是自动化、数据处理和 AI 应用的通用语言。这份手册整理了从环境搭建到 NumPy 的 13 个课程主题，每个章节都对应一个可运行的案例脚本，强调”先理解基础概念，再通过小案例练习，最后形成清晰、可维护、可复用的代码习惯”。</p>
+<span id="more"></span>
+
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><p><code>Python 环境 -&gt; 基础语法 -&gt; 条件与循环 -&gt; 函数与模块 -&gt; 容器 -&gt; 类与文件 -&gt; 异常 -&gt; 内置函数 -&gt; 多线程 -&gt; pip -&gt; NumPy</code></p>
+<p>课程案例位于 <code>src/</code>，每个目录使用三位编号和英文名称，便于阅读和检索。</p>
+<h2 id="章节与案例"><a href="#章节与案例" class="headerlink" title="章节与案例"></a>章节与案例</h2><table>
+<thead>
+<tr>
+<th>主题</th>
+<th>学习内容</th>
+<th>案例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>001 介绍与安装</td>
+<td>语言特点、跨平台特性、运行环境检查</td>
+<td><code>python_environment.py</code></td>
+</tr>
+<tr>
+<td>002 Hello World</td>
+<td>字符串、<code>print()</code>、<code>sep</code>、<code>end</code> 和表达式</td>
+<td><code>hello_world.py</code></td>
+</tr>
+<tr>
+<td>003 基础语法</td>
+<td>注释、缩进、PEP 8、标识符、关键字和六种容器</td>
+<td><code>basic_syntax.py</code></td>
+</tr>
+<tr>
+<td>004 条件语句</td>
+<td>算术&#x2F;关系&#x2F;逻辑运算、<code>if</code>、<code>elif</code> 和 <code>else</code></td>
+<td><code>bmi_calculator.py</code></td>
+</tr>
+<tr>
+<td>005 循环语句</td>
+<td><code>while</code>、<code>for</code>、<code>break</code>、<code>continue</code> 和遍历</td>
+<td><code>loops_demo.py</code></td>
+</tr>
+<tr>
+<td>006 函数和模块</td>
+<td>位置&#x2F;默认&#x2F;可变&#x2F;关键字参数、可变性和模块导入</td>
+<td><code>functions_and_modules.py</code></td>
+</tr>
+<tr>
+<td>007 容器操作</td>
+<td>列表、元组、集合和字典的增删改查与去重</td>
+<td><code>containers_and_operations.py</code></td>
+</tr>
+<tr>
+<td>008 类和文件</td>
+<td>类与对象、继承、多态、文件读写与追加</td>
+<td><code>classes_and_objects.py</code> &#x2F; <code>file_operations.py</code></td>
+</tr>
+<tr>
+<td>009 异常处理</td>
+<td><code>try</code>、<code>except</code>、<code>else</code>、<code>finally</code> 与异常边界</td>
+<td><code>exception_handling.py</code></td>
+</tr>
+<tr>
+<td>010 内置函数</td>
+<td>数值运算、类型转换、序列处理与聚合</td>
+<td><code>built_in_functions.py</code></td>
+</tr>
+<tr>
+<td>011 多线程</td>
+<td><code>threading.Thread</code>、<code>join()</code>、共享数据与 <code>RLock</code></td>
+<td><code>threading_demo.py</code></td>
+</tr>
+<tr>
+<td>012 pip</td>
+<td>版本检查、包列表、安装和卸载命令</td>
+<td><code>pip_usage.py</code></td>
+</tr>
+<tr>
+<td>013 NumPy</td>
+<td>数组创建、索引切片、布尔筛选、形状变换与合并拆分</td>
+<td><code>numpy_basics.py</code></td>
+</tr>
+</tbody></table>
+<h2 id="运行案例"><a href="#运行案例" class="headerlink" title="运行案例"></a>运行案例</h2><p>建议使用 Python 3.9 或更高版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python src/002-first-hello-world-program/hello_world.py</span><br><span class="line">python src/003-python-basic-syntax/basic_syntax.py</span><br></pre></td></tr></table></figure>
+
+<p>运行 NumPy 案例前安装依赖：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python -m pip install numpy</span><br><span class="line">python src/013-python-numpy-basics/numpy_basics.py</span><br></pre></td></tr></table></figure>
+
+<p>除 NumPy 案例外，主课程案例主要使用 Python 标准库。</p>
+<h2 id="工程化约定"><a href="#工程化约定" class="headerlink" title="工程化约定"></a>工程化约定</h2><ul>
+<li>每个案例都可以作为独立脚本运行，使用 <code>if __name__ == &quot;__main__&quot;:</code> 作为入口；</li>
+<li>函数和类使用中文文档字符串，说明职责、参数、返回值和可预期异常；</li>
+<li>优先使用清晰的命名、明确的边界校验和标准库能力；</li>
+<li>文件资源使用上下文管理器，线程共享数据使用锁保护；</li>
+<li>示例保持单一主题，避免为了展示功能而引入无关复杂度。</li>
+</ul>
+<h2 id="补充篇：参考书学习笔记"><a href="#补充篇：参考书学习笔记" class="headerlink" title="补充篇：参考书学习笔记"></a>补充篇：参考书学习笔记</h2><p>手册还整理了《Python 编程入门与实践（微视频版）》中课件没有系统覆盖的知识点，包括：开发工具与帮助系统、变量与表达式细节、常用算法思维、函数进阶（Lambda&#x2F;闭包&#x2F;递归）、文件与目录进阶、面向对象设计进阶、GUI 编程（Tkinter）、多进程编程、数据库与 SQL、图像处理（Pillow）和网络编程边界意识。</p>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ashleycurry/python-engineering-handbook">python-engineering-handbook</a></li>
+</ul>
+
+    </div>
+  </div>
+
+  <footer class="bs-pfoot">
+    
+    <ul class="bs-tags" aria-label="标签">
+      <li><a href="/tags/%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">#文件操作</a></li><li><a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">#学习笔记</a></li><li><a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">#多线程</a></li><li><a href="/tags/Python/">#Python</a></li><li><a href="/tags/NumPy/">#NumPy</a></li>
+    </ul>
+    
+    <div class="bs-pfoot__grid">
+      
+      <p class="bs-license">
+        <span class="bs-kicker">LICENSE</span>
+        本文作者 XiaoGao，采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可。
+        转载请注明出处：<a href="https://xiaogao-code.github.io/2026/04/02/python-engineering-handbook/">https:&#x2F;&#x2F;xiaogao-code.github.io&#x2F;2026&#x2F;04&#x2F;02&#x2F;python-engineering-handbook&#x2F;</a>
+      </p>
+      
+      
+      
+    </div>
+  </footer>
+
+  <nav class="bs-pnav" aria-label="分页">
+    
+    <a class="bs-pnav__item bs-pnav__item--newer" href="/2026/04/15/java-engineering-handbook/" rel="prev">
+      <span class="bs-kicker">← 较新 NEWER</span><span class="bs-pnav__t">Java 工程实践手册：三阶段学习路线与案例体系</span>
+    </a>
+    
+    
+    <a class="bs-pnav__item bs-pnav__item--older" href="/2026/03/18/cpp-learning-notes/" rel="next">
+      <span class="bs-kicker">较早 OLDER →</span><span class="bs-pnav__t">C++ 学习笔记：类与对象、模板与 STL 的完整路线</span>
+    </a>
+    
+  </nav>
+
+  
+</article>
+</main>
+
+<footer class="bs-footer">
+  <div class="bs-footer__white">
+    <a class="bs-brand bs-brand--footer" href="/">
+      <span class="bs-mark" aria-hidden="true"></span>
+      <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+    </a>
+    <p class="bs-footer__desc">嵌入式软件 / 机器人 / 计算机视觉 / LLM 应用的学习与实践笔记</p>
+    <ul class="bs-footer__social">
+      
+      <li><a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">GitHub</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+    </ul>
+    <p class="bs-footer__meta">
+      © 2026 XiaoGao
+       · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+      · 由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 与 <a href="https://github.com/LiuXiu233/hexo-theme-bisect" target="_blank" rel="noopener">Bisect</a> 主题驱动
+    </p>
+  </div>
+  <div class="bs-footer__blue">
+    
+<p class="bs-slogan bs-slogan--footer">
+  <span class="bs-slogan__zh">从寄存器到推理，把设备、数据与智能连起来。</span>
+  <span class="bs-slogan__en">Build close to the machine. Bring intelligence to the edge.</span>
+</p>
+
+
+    
+    <div class="bs-footer__actions">
+      
+      <a class="bs-btn bs-btn--line" href="#top" data-to-top>回到顶部 ↑</a>
+    </div>
+  </div>
+</footer>
+<script id="bs-config" type="application/json">{"root":"/","search":"/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
+
+<dialog class="bs-search" id="bs-search" aria-label="搜索文章或输入命令">
+  <form class="bs-search__bar" method="dialog" role="search">
+    <span class="bs-search__prompt" aria-hidden="true">&gt;</span>
+    <label class="bs-sr" for="bs-search-input">搜索文章或输入命令</label>
+    <input id="bs-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="搜索标题、正文、标签……  输入 &gt; 查看命令">
+    <button class="bs-search__close" type="submit" aria-label="关闭">esc</button>
+  </form>
+  <ol class="bs-search__list" id="bs-search-list" role="listbox" aria-label="结果"></ol>
+  <p class="bs-search__hint"><span>↑↓ 选择</span><span>↵ 打开</span><span>&gt;theme · &gt;random · &gt;top · &gt;archive</span></p>
+</dialog>
+
+<script type="module" src="/js/bisect.js"></script>
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>双轴步进电机同步运动控制：Sync_CalcParams 与 AVR446 梯形加减速 | XiaoGao 的代码笔记</title>
+<meta name="description" content="双轴步进电机同步运动控制完整工程——Sync_CalcParams 参数比例缩放实现两轴同时启停，AVR446 整数递推梯形加减速无浮点规划速度曲线，ESP8266 无线透传 + Python 上位机实时轨迹可视化。">
+<meta name="keywords" content="嵌入式,STM32,FreeRTOS,ROS,OpenCV,机器人,Linux,C语言,Python">
+<meta name="author" content="XiaoGao">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f9fd">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1628">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://xiaogao-code.github.io/2026/10/10/sync-calc-params-motion-control/">
+<meta name="description" content="双轴步进电机同步运动控制完整工程——Sync_CalcParams 参数比例缩放实现两轴同时启停，AVR446 整数递推梯形加减速无浮点规划速度曲线，ESP8266 无线透传 + Python 上位机实时轨迹可视化。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="双轴步进电机同步运动控制：Sync_CalcParams 与 AVR446 梯形加减速">
+<meta property="og:url" content="https://xiaogao-code.github.io/2026/10/10/sync-calc-params-motion-control/index.html">
+<meta property="og:site_name" content="XiaoGao 的代码笔记">
+<meta property="og:description" content="双轴步进电机同步运动控制完整工程——Sync_CalcParams 参数比例缩放实现两轴同时启停，AVR446 整数递推梯形加减速无浮点规划速度曲线，ESP8266 无线透传 + Python 上位机实时轨迹可视化。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-10T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-14T11:05:12.000Z">
+<meta property="article:author" content="XiaoGao">
+<meta property="article:tag" content="AVR446">
+<meta property="article:tag" content="ESP8266">
+<meta property="article:tag" content="STM32">
+<meta property="article:tag" content="上位机">
+<meta property="article:tag" content="步进电机">
+<meta property="article:tag" content="运动控制">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('bs-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+    document.documentElement.classList.add('js');
+    addEventListener('pagereveal', function (e) {
+      if (e.viewTransition) { e.viewTransition.ready.catch(function () {}); e.viewTransition.finished.catch(function () {}); }
+    });
+  })();
+</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400..900&family=Noto+Sans+SC:wght@900&display=swap">
+
+<link rel="stylesheet" href="/css/bisect.css">
+<link rel="alternate" type="application/atom+xml" title="XiaoGao 的代码笔记" href="/atom.xml">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.xml"}}]},"eagerness":"moderate"}]}
+</script>
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="is-post">
+<a class="bs-skip" href="#main">跳到正文</a>
+<svg class="bs-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <!-- 列表里的图片统一压成深空—分界蓝—冰白三色调 -->
+  <filter id="bs-duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues=".059 .090 .957"/>
+      <feFuncG type="table" tableValues=".090 .278 .976"/>
+      <feFuncB type="table" tableValues=".165 .902 .992"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+
+<header class="bs-header" data-header>
+  <a class="bs-brand" href="/" aria-label="XiaoGao 的代码笔记 首页">
+    <span class="bs-mark" aria-hidden="true"></span>
+    <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+  </a>
+  <nav class="bs-nav" id="bs-nav" aria-label="主导航">
+    <ul>
+      
+      <li>
+        <a href="/" aria-current="page">
+          <span class="bs-nav__no">01</span>
+          <span class="bs-nav__zh">文章</span>
+          <span class="bs-nav__en">Posts</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives/">
+          <span class="bs-nav__no">02</span>
+          <span class="bs-nav__zh">归档</span>
+          <span class="bs-nav__en">Archive</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/">
+          <span class="bs-nav__no">03</span>
+          <span class="bs-nav__zh">分类</span>
+          <span class="bs-nav__en">Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/">
+          <span class="bs-nav__no">04</span>
+          <span class="bs-nav__zh">标签</span>
+          <span class="bs-nav__en">Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about/">
+          <span class="bs-nav__no">05</span>
+          <span class="bs-nav__zh">关于</span>
+          <span class="bs-nav__en">About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">
+          <span class="bs-nav__no">06</span>
+          <span class="bs-nav__zh">GitHub</span>
+          <span class="bs-nav__en">Code ↗</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+  <div class="bs-tools">
+    <button class="bs-tool bs-tool--search" type="button" data-search-open aria-label="搜索">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <kbd>⌘K</kbd>
+    </button>
+    <button class="bs-tool bs-tool--theme" type="button" data-theme-toggle aria-label="切换深浅色">
+      <span class="bs-halfdot" aria-hidden="true"></span>
+    </button>
+    <button class="bs-tool bs-tool--menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="bs-nav">
+      <span class="bs-burger" aria-hidden="true"></span><span class="bs-sr">菜单</span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<article class="bs-post" data-font="sans">
+  <header class="bs-phead">
+    <div class="bs-phead__text">
+      <p class="bs-kicker">NO.20 · <a href="/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/">机器人</a></p>
+      <h1 class="bs-phead__title">双轴步进电机同步运动控制：Sync_CalcParams 与 AVR446 梯形加减速</h1>
+      <p class="bs-phead__desc">双轴步进电机同步运动控制完整工程——Sync_CalcParams 参数比例缩放实现两轴同时启停，AVR446 整数递推梯形加减速无浮点规划速度曲线，ESP8266 无线透传 + Python 上位机实时轨迹可视化。</p>
+      <dl class="bs-phead__meta">
+        <div><dt>发布 DATE</dt><dd><time datetime="2026-10-10T02:00:00.000Z">2026.10.10</time></dd></div>
+        <div><dt>字数 WORDS</dt><dd>1,186</dd></div>
+        <div><dt>阅读 READ</dt><dd>3 分钟</dd></div>
+      </dl>
+    </div>
+    <figure class="bs-phead__cover" aria-hidden="true">
+      <svg class="bs-gen" viewBox="0 0 1200 800" preserveAspectRatio="xMinYMid slice" role="img" aria-label="双轴步进电机同步运动控制：Sync_CalcParams 与 AVR446 梯形加减速">
+<defs><clipPath id="gwtbxqv"><circle cx="818.6" cy="446.2" r="439"/></clipPath></defs>
+<rect class="bs-gen__w" width="1200" height="800"/>
+<text class="bs-gen__glyph bs-gen__b" x="111.4" y="688">双</text>
+<g clip-path="url(#gwtbxqv)"><rect class="bs-gen__b" width="1200" height="800"/><path d="M22 22h.01M66 22h.01M110 22h.01M154 22h.01M198 22h.01M242 22h.01M286 22h.01M330 22h.01M374 22h.01M418 22h.01M462 22h.01M506 22h.01M550 22h.01M594 22h.01M638 22h.01M682 22h.01M726 22h.01M770 22h.01M814 22h.01M858 22h.01M902 22h.01M946 22h.01M990 22h.01M1034 22h.01M1078 22h.01M1122 22h.01M1166 22h.01M22 66h.01M66 66h.01M110 66h.01M154 66h.01M198 66h.01M242 66h.01M286 66h.01M330 66h.01M374 66h.01M418 66h.01M462 66h.01M506 66h.01M550 66h.01M594 66h.01M638 66h.01M682 66h.01M726 66h.01M770 66h.01M814 66h.01M858 66h.01M902 66h.01M946 66h.01M990 66h.01M1034 66h.01M1078 66h.01M1122 66h.01M1166 66h.01M22 110h.01M66 110h.01M110 110h.01M154 110h.01M198 110h.01M242 110h.01M286 110h.01M330 110h.01M374 110h.01M418 110h.01M462 110h.01M506 110h.01M550 110h.01M594 110h.01M638 110h.01M682 110h.01M726 110h.01M770 110h.01M814 110h.01M858 110h.01M902 110h.01M946 110h.01M990 110h.01M1034 110h.01M1078 110h.01M1122 110h.01M1166 110h.01M22 154h.01M66 154h.01M110 154h.01M154 154h.01M198 154h.01M242 154h.01M286 154h.01M330 154h.01M374 154h.01M418 154h.01M462 154h.01M506 154h.01M550 154h.01M594 154h.01M638 154h.01M682 154h.01M726 154h.01M770 154h.01M814 154h.01M858 154h.01M902 154h.01M946 154h.01M990 154h.01M1034 154h.01M1078 154h.01M1122 154h.01M1166 154h.01M22 198h.01M66 198h.01M110 198h.01M154 198h.01M198 198h.01M242 198h.01M286 198h.01M330 198h.01M374 198h.01M418 198h.01M462 198h.01M506 198h.01M550 198h.01M594 198h.01M638 198h.01M682 198h.01M726 198h.01M770 198h.01M814 198h.01M858 198h.01M902 198h.01M946 198h.01M990 198h.01M1034 198h.01M1078 198h.01M1122 198h.01M1166 198h.01M22 242h.01M66 242h.01M110 242h.01M154 242h.01M198 242h.01M242 242h.01M286 242h.01M330 242h.01M374 242h.01M418 242h.01M462 242h.01M506 242h.01M550 242h.01M594 242h.01M638 242h.01M682 242h.01M726 242h.01M770 242h.01M814 242h.01M858 242h.01M902 242h.01M946 242h.01M990 242h.01M1034 242h.01M1078 242h.01M1122 242h.01M1166 242h.01M22 286h.01M66 286h.01M110 286h.01M154 286h.01M198 286h.01M242 286h.01M286 286h.01M330 286h.01M374 286h.01M418 286h.01M462 286h.01M506 286h.01M550 286h.01M594 286h.01M638 286h.01M682 286h.01M726 286h.01M770 286h.01M814 286h.01M858 286h.01M902 286h.01M946 286h.01M990 286h.01M1034 286h.01M1078 286h.01M1122 286h.01M1166 286h.01M22 330h.01M66 330h.01M110 330h.01M154 330h.01M198 330h.01M242 330h.01M286 330h.01M330 330h.01M374 330h.01M418 330h.01M462 330h.01M506 330h.01M550 330h.01M594 330h.01M638 330h.01M682 330h.01M726 330h.01M770 330h.01M814 330h.01M858 330h.01M902 330h.01M946 330h.01M990 330h.01M1034 330h.01M1078 330h.01M1122 330h.01M1166 330h.01M22 374h.01M66 374h.01M110 374h.01M154 374h.01M198 374h.01M242 374h.01M286 374h.01M330 374h.01M374 374h.01M418 374h.01M462 374h.01M506 374h.01M550 374h.01M594 374h.01M638 374h.01M682 374h.01M726 374h.01M770 374h.01M814 374h.01M858 374h.01M902 374h.01M946 374h.01M990 374h.01M1034 374h.01M1078 374h.01M1122 374h.01M1166 374h.01M22 418h.01M66 418h.01M110 418h.01M154 418h.01M198 418h.01M242 418h.01M286 418h.01M330 418h.01M374 418h.01M418 418h.01M462 418h.01M506 418h.01M550 418h.01M594 418h.01M638 418h.01M682 418h.01M726 418h.01M770 418h.01M814 418h.01M858 418h.01M902 418h.01M946 418h.01M990 418h.01M1034 418h.01M1078 418h.01M1122 418h.01M1166 418h.01M22 462h.01M66 462h.01M110 462h.01M154 462h.01M198 462h.01M242 462h.01M286 462h.01M330 462h.01M374 462h.01M418 462h.01M462 462h.01M506 462h.01M550 462h.01M594 462h.01M638 462h.01M682 462h.01M726 462h.01M770 462h.01M814 462h.01M858 462h.01M902 462h.01M946 462h.01M990 462h.01M1034 462h.01M1078 462h.01M1122 462h.01M1166 462h.01M22 506h.01M66 506h.01M110 506h.01M154 506h.01M198 506h.01M242 506h.01M286 506h.01M330 506h.01M374 506h.01M418 506h.01M462 506h.01M506 506h.01M550 506h.01M594 506h.01M638 506h.01M682 506h.01M726 506h.01M770 506h.01M814 506h.01M858 506h.01M902 506h.01M946 506h.01M990 506h.01M1034 506h.01M1078 506h.01M1122 506h.01M1166 506h.01M22 550h.01M66 550h.01M110 550h.01M154 550h.01M198 550h.01M242 550h.01M286 550h.01M330 550h.01M374 550h.01M418 550h.01M462 550h.01M506 550h.01M550 550h.01M594 550h.01M638 550h.01M682 550h.01M726 550h.01M770 550h.01M814 550h.01M858 550h.01M902 550h.01M946 550h.01M990 550h.01M1034 550h.01M1078 550h.01M1122 550h.01M1166 550h.01M22 594h.01M66 594h.01M110 594h.01M154 594h.01M198 594h.01M242 594h.01M286 594h.01M330 594h.01M374 594h.01M418 594h.01M462 594h.01M506 594h.01M550 594h.01M594 594h.01M638 594h.01M682 594h.01M726 594h.01M770 594h.01M814 594h.01M858 594h.01M902 594h.01M946 594h.01M990 594h.01M1034 594h.01M1078 594h.01M1122 594h.01M1166 594h.01M22 638h.01M66 638h.01M110 638h.01M154 638h.01M198 638h.01M242 638h.01M286 638h.01M330 638h.01M374 638h.01M418 638h.01M462 638h.01M506 638h.01M550 638h.01M594 638h.01M638 638h.01M682 638h.01M726 638h.01M770 638h.01M814 638h.01M858 638h.01M902 638h.01M946 638h.01M990 638h.01M1034 638h.01M1078 638h.01M1122 638h.01M1166 638h.01M22 682h.01M66 682h.01M110 682h.01M154 682h.01M198 682h.01M242 682h.01M286 682h.01M330 682h.01M374 682h.01M418 682h.01M462 682h.01M506 682h.01M550 682h.01M594 682h.01M638 682h.01M682 682h.01M726 682h.01M770 682h.01M814 682h.01M858 682h.01M902 682h.01M946 682h.01M990 682h.01M1034 682h.01M1078 682h.01M1122 682h.01M1166 682h.01M22 726h.01M66 726h.01M110 726h.01M154 726h.01M198 726h.01M242 726h.01M286 726h.01M330 726h.01M374 726h.01M418 726h.01M462 726h.01M506 726h.01M550 726h.01M594 726h.01M638 726h.01M682 726h.01M726 726h.01M770 726h.01M814 726h.01M858 726h.01M902 726h.01M946 726h.01M990 726h.01M1034 726h.01M1078 726h.01M1122 726h.01M1166 726h.01M22 770h.01M66 770h.01M110 770h.01M154 770h.01M198 770h.01M242 770h.01M286 770h.01M330 770h.01M374 770h.01M418 770h.01M462 770h.01M506 770h.01M550 770h.01M594 770h.01M638 770h.01M682 770h.01M726 770h.01M770 770h.01M814 770h.01M858 770h.01M902 770h.01M946 770h.01M990 770h.01M1034 770h.01M1078 770h.01M1122 770h.01M1166 770h.01" class="bs-gen__e" stroke-width="5" stroke-linecap="round" fill="none" opacity=".55"/><text class="bs-gen__glyph bs-gen__w" x="111.4" y="688">双</text></g>
+<text class="bs-gen__label" x="40" y="64">NO.20 / 2026</text>
+</svg>
+    </figure>
+  </header>
+
+  <div class="bs-post__layout">
+    <aside class="bs-rail" aria-label="阅读进度与目录">
+      <div class="bs-rail__inner">
+        <a class="bs-progress" href="#top" data-to-top aria-label="回到顶部"><span class="bs-progress__fill"></span></a>
+        
+        <p class="bs-rail__label">目录 · CONTENTS</p>
+        <ol class="bs-toc"><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84"><span class="bs-toc-number">1.</span> <span class="bs-toc-text">系统架构</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95%E4%B8%80%EF%BC%9ASync-CalcParams-%E5%8F%8C%E8%BD%B4%E5%90%8C%E6%AD%A5"><span class="bs-toc-number">2.</span> <span class="bs-toc-text">核心算法一：Sync_CalcParams 双轴同步</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95%E4%BA%8C%EF%BC%9AAVR446-%E6%95%B4%E6%95%B0%E6%A2%AF%E5%BD%A2%E5%8A%A0%E5%87%8F%E9%80%9F"><span class="bs-toc-number">3.</span> <span class="bs-toc-text">核心算法二：AVR446 整数梯形加减速</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE"><span class="bs-toc-number">4.</span> <span class="bs-toc-text">通信协议</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E7%A1%AC%E4%BB%B6%E4%B8%8E%E8%BD%AF%E4%BB%B6"><span class="bs-toc-number">5.</span> <span class="bs-toc-text">硬件与软件</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%B8%80%E4%B8%AA%E5%80%BC%E5%BE%97%E8%AE%B0%E4%BD%8F%E7%9A%84%E7%BB%86%E8%8A%82"><span class="bs-toc-number">6.</span> <span class="bs-toc-text">一个值得记住的细节</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%BB%93%E5%BA%93"><span class="bs-toc-number">7.</span> <span class="bs-toc-text">仓库</span></a></li></ol>
+        
+      </div>
+    </aside>
+    <div class="bs-prose" data-prose>
+      <p>两轴各走各的梯形曲线，步数不同就会不同时停。这个项目用一个漂亮的数学观察解决了同步问题：只要两轴的 <code>speed/accel</code>、<code>speed/decel</code> 相同，三段运动时间就完全一致——于是把从轴参数按步数比例统一缩放即可。全整数运算，无浮点、无查表。</p>
+<span id="more"></span>
+
+<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">┌───────────────────────────┐   TCP :5000    ┌───────────────────────────┐</span><br><span class="line">│  Python 上位机            │ &lt;============&gt; │  ESP8266（TCP 透传）      │</span><br><span class="line">│  指令下发 / 轨迹可视化    │                └─────────────┬─────────────┘</span><br><span class="line">└───────────────────────────┘                              │ USART3 115200</span><br><span class="line">                                                           v</span><br><span class="line">┌──────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│                          STM32F103VET6                              │</span><br><span class="line">│                                                                      │</span><br><span class="line">│  USART3 中断（IDLE 帧判定）→ 指令解析（8 参数）                      │</span><br><span class="line">│      → Sync_CalcParams 双轴同步算法（参数缩放）                      │</span><br><span class="line">│      → MSD_Move1 / MSD_Move2 同时启动                                │</span><br><span class="line">│                                                                      │</span><br><span class="line">│  TIM3 中断 → 电机 1 脉冲（加速 / 匀速 / 减速状态机）                │</span><br><span class="line">│  TIM4 中断 → 电机 2 脉冲（加速 / 匀速 / 减速状态机）                │</span><br><span class="line">│                                                                      │</span><br><span class="line">│  USART1 115200 → 调试信息打印                                        │</span><br><span class="line">└──────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="核心算法一：Sync-CalcParams-双轴同步"><a href="#核心算法一：Sync-CalcParams-双轴同步" class="headerlink" title="核心算法一：Sync_CalcParams 双轴同步"></a>核心算法一：Sync_CalcParams 双轴同步</h2><p><strong>问题</strong>：两轴各自独立执行梯形加减速时，若步数不同，就会在不同时刻停止，无法同步到达。</p>
+<p><strong>原理</strong>：梯形速度曲线的关键时间参数为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">t_accel = speed / accel      （加速段时间）</span><br><span class="line">t_decel = speed / decel      （减速段时间）</span><br></pre></td></tr></table></figure>
+
+<p>只要两轴的 <code>speed/accel</code>、<code>speed/decel</code> 相同，三段运动时间就完全一致。因此选出步数较多的轴为<strong>主轴</strong>（参数不变），<strong>从轴</strong>的速度与加&#x2F;减速度统一乘以步数比例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ratio       = steps_slave / steps_master</span><br><span class="line">speed_slave = speed_master × ratio</span><br><span class="line">accel_slave = accel_master × ratio</span><br><span class="line">decel_slave = decel_master × ratio</span><br></pre></td></tr></table></figure>
+
+<p><code>ratio</code> 在时间公式中被约去：<code>t = (speed×ratio) / (accel×ratio) = speed / accel</code>，从轴在时间轴上与主轴完全对齐。步数相差多少，缩放比例就是多少，与方向无关。</p>
+<p><strong>示例</strong>：<code>2000 200 200 75 | 1000 200 200 75</code></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th align="right">电机 1（主轴）</th>
+<th align="right">电机 2（从轴，缩放后）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>步数</td>
+<td align="right">2000</td>
+<td align="right">1000</td>
+</tr>
+<tr>
+<td>速度</td>
+<td align="right">75</td>
+<td align="right">75 × 0.5 &#x3D; <strong>37</strong></td>
+</tr>
+<tr>
+<td>加速度</td>
+<td align="right">200</td>
+<td align="right">200 × 0.5 &#x3D; <strong>100</strong></td>
+</tr>
+<tr>
+<td>减速度</td>
+<td align="right">200</td>
+<td align="right">200 × 0.5 &#x3D; <strong>100</strong></td>
+</tr>
+</tbody></table>
+<p>电机 2 以一半的速度、一半的加速度走一半的路程，与电机 1 同时出发、同时到达。</p>
+<p><strong>工程保护</strong>：缩放乘法用 32 位中间量防溢出，缩放结果下限钳位为 1 杜绝除零，步数为 0 的轴跳过计算，步数取绝对值比较（方向不影响同步）。</p>
+<h2 id="核心算法二：AVR446-整数梯形加减速"><a href="#核心算法二：AVR446-整数梯形加减速" class="headerlink" title="核心算法二：AVR446 整数梯形加减速"></a>核心算法二：AVR446 整数梯形加减速</h2><p>速度规划基于 Atmel AVR446 应用笔记的整数算法，全部整数乘除与平方根查算：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">min_delay  = A_T_x100 / speed                            # 最高速度最小脉冲间隔</span><br><span class="line">step_delay = T1_FREQ_148 × sqrt(A_SQ / accel) / 100      # 加速度首步脉冲间隔</span><br><span class="line">max_s_lim  = speed² / (A_x20000 × accel / 100)           # 达到最高速度所需步数</span><br><span class="line">accel_lim  = step × decel / (accel + decel)              # 开始减速的临界步数</span><br></pre></td></tr></table></figure>
+
+<p>定时器中断内以递推方式逼近理论速度曲线：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">new_delay = delay - (2 × delay + rest) / (4 × accel_count + 1)</span><br><span class="line">rest      = (2 × delay + rest) % (4 × accel_count + 1)</span><br></pre></td></tr></table></figure>
+
+<p>余数 <code>rest</code> 携带到下一次迭代，使整数运算不产生累计误差：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">STOP ──&gt; ACCEL ──&gt; RUN ──&gt; DECEL ──&gt; STOP</span><br><span class="line">  启动     加速段      匀速段     减速段     到达目标步数</span><br></pre></td></tr></table></figure>
+
+<p>每个脉冲下降沿完成一次状态评估与延时更新（软件步进计数），保证双轴脉冲互不干扰。</p>
+<h2 id="通信协议"><a href="#通信协议" class="headerlink" title="通信协议"></a>通信协议</h2><p>文本指令协议：8 个整数、空格分隔、<code>\r\n</code> 结尾，以 IDLE 空闲中断判定帧结束，无帧头帧尾开销。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">step1 accel1 decel1 speed1 step2 accel2 decel2 speed2</span><br><span class="line"></span><br><span class="line">示例：2000 200 200 75 1000 200 200 75</span><br></pre></td></tr></table></figure>
+
+<p>用户只需给出两轴各自步数与主轴速度参数，从轴参数由固件自动按比例缩放。</p>
+<h2 id="硬件与软件"><a href="#硬件与软件" class="headerlink" title="硬件与软件"></a>硬件与软件</h2><table>
+<thead>
+<tr>
+<th>器件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MCU</td>
+<td>STM32F103VET6（Cortex-M3，72 MHz，512 KB Flash）</td>
+</tr>
+<tr>
+<td>执行机构</td>
+<td>微步细分步进电机驱动器 ×2（PUL &#x2F; DIR &#x2F; ENA）</td>
+</tr>
+<tr>
+<td>无线模块</td>
+<td>ESP8266（AT 固件，STA 模式 TCP 客户端）</td>
+</tr>
+</tbody></table>
+<p><strong>固件架构</strong>：裸机前后台——中断负责实时脉冲输出与串口不定长帧接收，主循环负责指令解析与运动调度，全程无阻塞延时。双定时器独立中断通道（TIM3&#x2F;TIM4）驱动两轴，时基精度 1 µs；DWT 周期计数器实现微秒级精确延时；ESP8266 检测到 <code>CLOSED</code> 后自动重连。</p>
+<p><strong>Python 上位机</strong>（<code>server.py</code>）：TCP 服务器（端口 5000）+ Matplotlib 实时可视化——按脉冲当量（默认 2000 步&#x2F;cm）换算位移，实时绘制双轴位置与运动轨迹，移动记录持久化，后台线程打印 STM32 调试信息。</p>
+<h2 id="一个值得记住的细节"><a href="#一个值得记住的细节" class="headerlink" title="一个值得记住的细节"></a>一个值得记住的细节</h2><p>两轴步数相差越悬殊，从轴速度越低；低速时梯形曲线可能退化为纯加减速（无匀速段），但<strong>时间同步仍然成立</strong>——因为同步的前提是时间参数比例一致，而不是速度曲线形状一致。这个不变量是整套算法能够成立的关键。</p>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ashleycurry/sync-calc-params-motion-control">sync-calc-params-motion-control</a></li>
+</ul>
+
+    </div>
+  </div>
+
+  <footer class="bs-pfoot">
+    
+    <ul class="bs-tags" aria-label="标签">
+      <li><a href="/tags/STM32/">#STM32</a></li><li><a href="/tags/%E6%AD%A5%E8%BF%9B%E7%94%B5%E6%9C%BA/">#步进电机</a></li><li><a href="/tags/%E8%BF%90%E5%8A%A8%E6%8E%A7%E5%88%B6/">#运动控制</a></li><li><a href="/tags/AVR446/">#AVR446</a></li><li><a href="/tags/ESP8266/">#ESP8266</a></li><li><a href="/tags/%E4%B8%8A%E4%BD%8D%E6%9C%BA/">#上位机</a></li>
+    </ul>
+    
+    <div class="bs-pfoot__grid">
+      
+      <p class="bs-license">
+        <span class="bs-kicker">LICENSE</span>
+        本文作者 XiaoGao，采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可。
+        转载请注明出处：<a href="https://xiaogao-code.github.io/2026/10/10/sync-calc-params-motion-control/">https:&#x2F;&#x2F;xiaogao-code.github.io&#x2F;2026&#x2F;10&#x2F;10&#x2F;sync-calc-params-motion-control&#x2F;</a>
+      </p>
+      
+      
+      
+    </div>
+  </footer>
+
+  <nav class="bs-pnav" aria-label="分页">
+    <span class="bs-pnav__item bs-pnav__item--newer is-empty"><span class="bs-kicker">这是最新的一篇</span></span>
+    
+    <a class="bs-pnav__item bs-pnav__item--older" href="/2026/09/29/stm32f407-smart-timer-controller/" rel="next">
+      <span class="bs-kicker">较早 OLDER →</span><span class="bs-pnav__t">STM32F407 智能定时用电控制器：四状态机 + 1ms 分时调度</span>
+    </a>
+    
+  </nav>
+
+  
+</article>
+</main>
+
+<footer class="bs-footer">
+  <div class="bs-footer__white">
+    <a class="bs-brand bs-brand--footer" href="/">
+      <span class="bs-mark" aria-hidden="true"></span>
+      <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+    </a>
+    <p class="bs-footer__desc">嵌入式软件 / 机器人 / 计算机视觉 / LLM 应用的学习与实践笔记</p>
+    <ul class="bs-footer__social">
+      
+      <li><a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">GitHub</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+    </ul>
+    <p class="bs-footer__meta">
+      © 2026 XiaoGao
+       · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+      · 由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 与 <a href="https://github.com/LiuXiu233/hexo-theme-bisect" target="_blank" rel="noopener">Bisect</a> 主题驱动
+    </p>
+  </div>
+  <div class="bs-footer__blue">
+    
+<p class="bs-slogan bs-slogan--footer">
+  <span class="bs-slogan__zh">从寄存器到推理，把设备、数据与智能连起来。</span>
+  <span class="bs-slogan__en">Build close to the machine. Bring intelligence to the edge.</span>
+</p>
+
+
+    
+    <div class="bs-footer__actions">
+      
+      <a class="bs-btn bs-btn--line" href="#top" data-to-top>回到顶部 ↑</a>
+    </div>
+  </div>
+</footer>
+<script id="bs-config" type="application/json">{"root":"/","search":"/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
+
+<dialog class="bs-search" id="bs-search" aria-label="搜索文章或输入命令">
+  <form class="bs-search__bar" method="dialog" role="search">
+    <span class="bs-search__prompt" aria-hidden="true">&gt;</span>
+    <label class="bs-sr" for="bs-search-input">搜索文章或输入命令</label>
+    <input id="bs-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="搜索标题、正文、标签……  输入 &gt; 查看命令">
+    <button class="bs-search__close" type="submit" aria-label="关闭">esc</button>
+  </form>
+  <ol class="bs-search__list" id="bs-search-list" role="listbox" aria-label="结果"></ol>
+  <p class="bs-search__hint"><span>↑↓ 选择</span><span>↵ 打开</span><span>&gt;theme · &gt;random · &gt;top · &gt;archive</span></p>
+</dialog>
+
+<script type="module" src="/js/bisect.js"></script>
+</body>
+</html>

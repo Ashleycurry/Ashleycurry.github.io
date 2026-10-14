@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Linux 应用层开发：从文件 I/O 到 epoll 高并发 | XiaoGao 的代码笔记</title>
+<meta name="description" content="Linux 应用层开发笔记，覆盖 GCC 工具链与 Makefile、文件 I/O、进程与线程、IPC、TCP/UDP Socket 编程、守护进程与 select/poll/epoll 高并发模型。">
+<meta name="keywords" content="嵌入式,STM32,FreeRTOS,ROS,OpenCV,机器人,Linux,C语言,Python">
+<meta name="author" content="XiaoGao">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f9fd">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1628">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://xiaogao-code.github.io/2026/07/22/linux-application-development/">
+<meta name="description" content="Linux 应用层开发笔记，覆盖 GCC 工具链与 Makefile、文件 I&#x2F;O、进程与线程、IPC、TCP&#x2F;UDP Socket 编程、守护进程与 select&#x2F;poll&#x2F;epoll 高并发模型。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 应用层开发：从文件 I&#x2F;O 到 epoll 高并发">
+<meta property="og:url" content="https://xiaogao-code.github.io/2026/07/22/linux-application-development/index.html">
+<meta property="og:site_name" content="XiaoGao 的代码笔记">
+<meta property="og:description" content="Linux 应用层开发笔记，覆盖 GCC 工具链与 Makefile、文件 I&#x2F;O、进程与线程、IPC、TCP&#x2F;UDP Socket 编程、守护进程与 select&#x2F;poll&#x2F;epoll 高并发模型。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-07-22T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-14T11:03:46.000Z">
+<meta property="article:author" content="XiaoGao">
+<meta property="article:tag" content="C语言">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Socket">
+<meta property="article:tag" content="epoll">
+<meta property="article:tag" content="多线程">
+<meta property="article:tag" content="进程通信">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('bs-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+    document.documentElement.classList.add('js');
+    addEventListener('pagereveal', function (e) {
+      if (e.viewTransition) { e.viewTransition.ready.catch(function () {}); e.viewTransition.finished.catch(function () {}); }
+    });
+  })();
+</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400..900&family=Noto+Sans+SC:wght@900&display=swap">
+
+<link rel="stylesheet" href="/css/bisect.css">
+<link rel="alternate" type="application/atom+xml" title="XiaoGao 的代码笔记" href="/atom.xml">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.xml"}}]},"eagerness":"moderate"}]}
+</script>
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="is-post">
+<a class="bs-skip" href="#main">跳到正文</a>
+<svg class="bs-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <!-- 列表里的图片统一压成深空—分界蓝—冰白三色调 -->
+  <filter id="bs-duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues=".059 .090 .957"/>
+      <feFuncG type="table" tableValues=".090 .278 .976"/>
+      <feFuncB type="table" tableValues=".165 .902 .992"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+
+<header class="bs-header" data-header>
+  <a class="bs-brand" href="/" aria-label="XiaoGao 的代码笔记 首页">
+    <span class="bs-mark" aria-hidden="true"></span>
+    <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+  </a>
+  <nav class="bs-nav" id="bs-nav" aria-label="主导航">
+    <ul>
+      
+      <li>
+        <a href="/" aria-current="page">
+          <span class="bs-nav__no">01</span>
+          <span class="bs-nav__zh">文章</span>
+          <span class="bs-nav__en">Posts</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives/">
+          <span class="bs-nav__no">02</span>
+          <span class="bs-nav__zh">归档</span>
+          <span class="bs-nav__en">Archive</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/">
+          <span class="bs-nav__no">03</span>
+          <span class="bs-nav__zh">分类</span>
+          <span class="bs-nav__en">Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/">
+          <span class="bs-nav__no">04</span>
+          <span class="bs-nav__zh">标签</span>
+          <span class="bs-nav__en">Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about/">
+          <span class="bs-nav__no">05</span>
+          <span class="bs-nav__zh">关于</span>
+          <span class="bs-nav__en">About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">
+          <span class="bs-nav__no">06</span>
+          <span class="bs-nav__zh">GitHub</span>
+          <span class="bs-nav__en">Code ↗</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+  <div class="bs-tools">
+    <button class="bs-tool bs-tool--search" type="button" data-search-open aria-label="搜索">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <kbd>⌘K</kbd>
+    </button>
+    <button class="bs-tool bs-tool--theme" type="button" data-theme-toggle aria-label="切换深浅色">
+      <span class="bs-halfdot" aria-hidden="true"></span>
+    </button>
+    <button class="bs-tool bs-tool--menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="bs-nav">
+      <span class="bs-burger" aria-hidden="true"></span><span class="bs-sr">菜单</span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<article class="bs-post" data-font="sans">
+  <header class="bs-phead">
+    <div class="bs-phead__text">
+      <p class="bs-kicker">NO.12 · <a href="/categories/Linux-%E4%B8%8E%E5%B7%A5%E5%85%B7/">Linux 与工具</a></p>
+      <h1 class="bs-phead__title">Linux 应用层开发：从文件 I/O 到 epoll 高并发</h1>
+      <p class="bs-phead__desc">Linux 应用层开发笔记，覆盖 GCC 工具链与 Makefile、文件 I/O、进程与线程、IPC、TCP/UDP Socket 编程、守护进程与 select/poll/epoll 高并发模型。</p>
+      <dl class="bs-phead__meta">
+        <div><dt>发布 DATE</dt><dd><time datetime="2026-07-22T02:00:00.000Z">2026.07.22</time></dd></div>
+        <div><dt>字数 WORDS</dt><dd>1,190</dd></div>
+        <div><dt>阅读 READ</dt><dd>3 分钟</dd></div>
+      </dl>
+    </div>
+    <figure class="bs-phead__cover" aria-hidden="true">
+      <svg class="bs-gen" viewBox="0 0 1200 800" preserveAspectRatio="xMinYMid slice" role="img" aria-label="Linux 应用层开发：从文件 I&#x2F;O 到 epoll 高并发">
+<defs><clipPath id="gybjksq"><rect x="0" y="468.7" width="1200" height="331.3"/></clipPath></defs>
+<rect class="bs-gen__w" width="1200" height="800"/>
+<text class="bs-gen__glyph bs-gen__b" x="231.3" y="688">L</text>
+<g clip-path="url(#gybjksq)"><rect class="bs-gen__b" width="1200" height="800"/><path d="M24.5 24.5h.01M73.5 24.5h.01M122.5 24.5h.01M171.5 24.5h.01M220.5 24.5h.01M269.5 24.5h.01M318.5 24.5h.01M367.5 24.5h.01M416.5 24.5h.01M465.5 24.5h.01M514.5 24.5h.01M563.5 24.5h.01M612.5 24.5h.01M661.5 24.5h.01M710.5 24.5h.01M759.5 24.5h.01M808.5 24.5h.01M857.5 24.5h.01M906.5 24.5h.01M955.5 24.5h.01M1004.5 24.5h.01M1053.5 24.5h.01M1102.5 24.5h.01M1151.5 24.5h.01M24.5 73.5h.01M73.5 73.5h.01M122.5 73.5h.01M171.5 73.5h.01M220.5 73.5h.01M269.5 73.5h.01M318.5 73.5h.01M367.5 73.5h.01M416.5 73.5h.01M465.5 73.5h.01M514.5 73.5h.01M563.5 73.5h.01M612.5 73.5h.01M661.5 73.5h.01M710.5 73.5h.01M759.5 73.5h.01M808.5 73.5h.01M857.5 73.5h.01M906.5 73.5h.01M955.5 73.5h.01M1004.5 73.5h.01M1053.5 73.5h.01M1102.5 73.5h.01M1151.5 73.5h.01M24.5 122.5h.01M73.5 122.5h.01M122.5 122.5h.01M171.5 122.5h.01M220.5 122.5h.01M269.5 122.5h.01M318.5 122.5h.01M367.5 122.5h.01M416.5 122.5h.01M465.5 122.5h.01M514.5 122.5h.01M563.5 122.5h.01M612.5 122.5h.01M661.5 122.5h.01M710.5 122.5h.01M759.5 122.5h.01M808.5 122.5h.01M857.5 122.5h.01M906.5 122.5h.01M955.5 122.5h.01M1004.5 122.5h.01M1053.5 122.5h.01M1102.5 122.5h.01M1151.5 122.5h.01M24.5 171.5h.01M73.5 171.5h.01M122.5 171.5h.01M171.5 171.5h.01M220.5 171.5h.01M269.5 171.5h.01M318.5 171.5h.01M367.5 171.5h.01M416.5 171.5h.01M465.5 171.5h.01M514.5 171.5h.01M563.5 171.5h.01M612.5 171.5h.01M661.5 171.5h.01M710.5 171.5h.01M759.5 171.5h.01M808.5 171.5h.01M857.5 171.5h.01M906.5 171.5h.01M955.5 171.5h.01M1004.5 171.5h.01M1053.5 171.5h.01M1102.5 171.5h.01M1151.5 171.5h.01M24.5 220.5h.01M73.5 220.5h.01M122.5 220.5h.01M171.5 220.5h.01M220.5 220.5h.01M269.5 220.5h.01M318.5 220.5h.01M367.5 220.5h.01M416.5 220.5h.01M465.5 220.5h.01M514.5 220.5h.01M563.5 220.5h.01M612.5 220.5h.01M661.5 220.5h.01M710.5 220.5h.01M759.5 220.5h.01M808.5 220.5h.01M857.5 220.5h.01M906.5 220.5h.01M955.5 220.5h.01M1004.5 220.5h.01M1053.5 220.5h.01M1102.5 220.5h.01M1151.5 220.5h.01M24.5 269.5h.01M73.5 269.5h.01M122.5 269.5h.01M171.5 269.5h.01M220.5 269.5h.01M269.5 269.5h.01M318.5 269.5h.01M367.5 269.5h.01M416.5 269.5h.01M465.5 269.5h.01M514.5 269.5h.01M563.5 269.5h.01M612.5 269.5h.01M661.5 269.5h.01M710.5 269.5h.01M759.5 269.5h.01M808.5 269.5h.01M857.5 269.5h.01M906.5 269.5h.01M955.5 269.5h.01M1004.5 269.5h.01M1053.5 269.5h.01M1102.5 269.5h.01M1151.5 269.5h.01M24.5 318.5h.01M73.5 318.5h.01M122.5 318.5h.01M171.5 318.5h.01M220.5 318.5h.01M269.5 318.5h.01M318.5 318.5h.01M367.5 318.5h.01M416.5 318.5h.01M465.5 318.5h.01M514.5 318.5h.01M563.5 318.5h.01M612.5 318.5h.01M661.5 318.5h.01M710.5 318.5h.01M759.5 318.5h.01M808.5 318.5h.01M857.5 318.5h.01M906.5 318.5h.01M955.5 318.5h.01M1004.5 318.5h.01M1053.5 318.5h.01M1102.5 318.5h.01M1151.5 318.5h.01M24.5 367.5h.01M73.5 367.5h.01M122.5 367.5h.01M171.5 367.5h.01M220.5 367.5h.01M269.5 367.5h.01M318.5 367.5h.01M367.5 367.5h.01M416.5 367.5h.01M465.5 367.5h.01M514.5 367.5h.01M563.5 367.5h.01M612.5 367.5h.01M661.5 367.5h.01M710.5 367.5h.01M759.5 367.5h.01M808.5 367.5h.01M857.5 367.5h.01M906.5 367.5h.01M955.5 367.5h.01M1004.5 367.5h.01M1053.5 367.5h.01M1102.5 367.5h.01M1151.5 367.5h.01M24.5 416.5h.01M73.5 416.5h.01M122.5 416.5h.01M171.5 416.5h.01M220.5 416.5h.01M269.5 416.5h.01M318.5 416.5h.01M367.5 416.5h.01M416.5 416.5h.01M465.5 416.5h.01M514.5 416.5h.01M563.5 416.5h.01M612.5 416.5h.01M661.5 416.5h.01M710.5 416.5h.01M759.5 416.5h.01M808.5 416.5h.01M857.5 416.5h.01M906.5 416.5h.01M955.5 416.5h.01M1004.5 416.5h.01M1053.5 416.5h.01M1102.5 416.5h.01M1151.5 416.5h.01M24.5 465.5h.01M73.5 465.5h.01M122.5 465.5h.01M171.5 465.5h.01M220.5 465.5h.01M269.5 465.5h.01M318.5 465.5h.01M367.5 465.5h.01M416.5 465.5h.01M465.5 465.5h.01M514.5 465.5h.01M563.5 465.5h.01M612.5 465.5h.01M661.5 465.5h.01M710.5 465.5h.01M759.5 465.5h.01M808.5 465.5h.01M857.5 465.5h.01M906.5 465.5h.01M955.5 465.5h.01M1004.5 465.5h.01M1053.5 465.5h.01M1102.5 465.5h.01M1151.5 465.5h.01M24.5 514.5h.01M73.5 514.5h.01M122.5 514.5h.01M171.5 514.5h.01M220.5 514.5h.01M269.5 514.5h.01M318.5 514.5h.01M367.5 514.5h.01M416.5 514.5h.01M465.5 514.5h.01M514.5 514.5h.01M563.5 514.5h.01M612.5 514.5h.01M661.5 514.5h.01M710.5 514.5h.01M759.5 514.5h.01M808.5 514.5h.01M857.5 514.5h.01M906.5 514.5h.01M955.5 514.5h.01M1004.5 514.5h.01M1053.5 514.5h.01M1102.5 514.5h.01M1151.5 514.5h.01M24.5 563.5h.01M73.5 563.5h.01M122.5 563.5h.01M171.5 563.5h.01M220.5 563.5h.01M269.5 563.5h.01M318.5 563.5h.01M367.5 563.5h.01M416.5 563.5h.01M465.5 563.5h.01M514.5 563.5h.01M563.5 563.5h.01M612.5 563.5h.01M661.5 563.5h.01M710.5 563.5h.01M759.5 563.5h.01M808.5 563.5h.01M857.5 563.5h.01M906.5 563.5h.01M955.5 563.5h.01M1004.5 563.5h.01M1053.5 563.5h.01M1102.5 563.5h.01M1151.5 563.5h.01M24.5 612.5h.01M73.5 612.5h.01M122.5 612.5h.01M171.5 612.5h.01M220.5 612.5h.01M269.5 612.5h.01M318.5 612.5h.01M367.5 612.5h.01M416.5 612.5h.01M465.5 612.5h.01M514.5 612.5h.01M563.5 612.5h.01M612.5 612.5h.01M661.5 612.5h.01M710.5 612.5h.01M759.5 612.5h.01M808.5 612.5h.01M857.5 612.5h.01M906.5 612.5h.01M955.5 612.5h.01M1004.5 612.5h.01M1053.5 612.5h.01M1102.5 612.5h.01M1151.5 612.5h.01M24.5 661.5h.01M73.5 661.5h.01M122.5 661.5h.01M171.5 661.5h.01M220.5 661.5h.01M269.5 661.5h.01M318.5 661.5h.01M367.5 661.5h.01M416.5 661.5h.01M465.5 661.5h.01M514.5 661.5h.01M563.5 661.5h.01M612.5 661.5h.01M661.5 661.5h.01M710.5 661.5h.01M759.5 661.5h.01M808.5 661.5h.01M857.5 661.5h.01M906.5 661.5h.01M955.5 661.5h.01M1004.5 661.5h.01M1053.5 661.5h.01M1102.5 661.5h.01M1151.5 661.5h.01M24.5 710.5h.01M73.5 710.5h.01M122.5 710.5h.01M171.5 710.5h.01M220.5 710.5h.01M269.5 710.5h.01M318.5 710.5h.01M367.5 710.5h.01M416.5 710.5h.01M465.5 710.5h.01M514.5 710.5h.01M563.5 710.5h.01M612.5 710.5h.01M661.5 710.5h.01M710.5 710.5h.01M759.5 710.5h.01M808.5 710.5h.01M857.5 710.5h.01M906.5 710.5h.01M955.5 710.5h.01M1004.5 710.5h.01M1053.5 710.5h.01M1102.5 710.5h.01M1151.5 710.5h.01M24.5 759.5h.01M73.5 759.5h.01M122.5 759.5h.01M171.5 759.5h.01M220.5 759.5h.01M269.5 759.5h.01M318.5 759.5h.01M367.5 759.5h.01M416.5 759.5h.01M465.5 759.5h.01M514.5 759.5h.01M563.5 759.5h.01M612.5 759.5h.01M661.5 759.5h.01M710.5 759.5h.01M759.5 759.5h.01M808.5 759.5h.01M857.5 759.5h.01M906.5 759.5h.01M955.5 759.5h.01M1004.5 759.5h.01M1053.5 759.5h.01M1102.5 759.5h.01M1151.5 759.5h.01" class="bs-gen__e" stroke-width="5" stroke-linecap="round" fill="none" opacity=".55"/><text class="bs-gen__glyph bs-gen__w" x="231.3" y="688">L</text></g>
+<text class="bs-gen__label" x="40" y="64">NO.12 / 2026</text>
+</svg>
+    </figure>
+  </header>
+
+  <div class="bs-post__layout">
+    <aside class="bs-rail" aria-label="阅读进度与目录">
+      <div class="bs-rail__inner">
+        <a class="bs-progress" href="#top" data-to-top aria-label="回到顶部"><span class="bs-progress__fill"></span></a>
+        
+        <p class="bs-rail__label">目录 · CONTENTS</p>
+        <ol class="bs-toc"><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF"><span class="bs-toc-number">1.</span> <span class="bs-toc-text">学习路线</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%86%85%E5%AE%B9%E6%A6%82%E8%A7%88"><span class="bs-toc-number">2.</span> <span class="bs-toc-text">内容概览</span></a><ol class="bs-toc-child"><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E7%BC%96%E8%AF%91%E4%B8%8E%E6%9E%84%E5%BB%BA"><span class="bs-toc-number">2.1.</span> <span class="bs-toc-text">编译与构建</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E6%96%87%E4%BB%B6-I-O"><span class="bs-toc-number">2.2.</span> <span class="bs-toc-text">文件 I&#x2F;O</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86"><span class="bs-toc-number">2.3.</span> <span class="bs-toc-text">进程处理</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%A4%84%E7%90%86"><span class="bs-toc-number">2.4.</span> <span class="bs-toc-text">线程处理</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#Socket-%E7%BC%96%E7%A8%8B"><span class="bs-toc-number">2.5.</span> <span class="bs-toc-text">Socket 编程</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%E4%B8%8E-I-O-%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8"><span class="bs-toc-number">2.6.</span> <span class="bs-toc-text">守护进程与 I&#x2F;O 多路复用</span></a></li></ol></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%B8%B8%E7%94%A8-API-%E9%80%9F%E6%9F%A5"><span class="bs-toc-number">3.</span> <span class="bs-toc-text">常用 API 速查</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%B7%A5%E7%A8%8B%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="bs-toc-number">4.</span> <span class="bs-toc-text">工程注意事项</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE"><span class="bs-toc-number">5.</span> <span class="bs-toc-text">学习建议</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%BB%93%E5%BA%93"><span class="bs-toc-number">6.</span> <span class="bs-toc-text">仓库</span></a></li></ol>
+        
+      </div>
+    </aside>
+    <div class="bs-prose" data-prose>
+      <p>在 Linux 上写 C 程序，是嵌入式工程师从”操作寄存器”走向”操作系统服务”的必经之路。这份笔记从 GCC 编译链接讲起，深入文件 I&#x2F;O、进程线程、进程间通信、Socket 网络编程，最后到达 epoll 高并发服务器的完整实现。</p>
+<span id="more"></span>
+
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Linux C 开发基础</span><br><span class="line">    ├── GCC、glibc、GNU C 和 POSIX</span><br><span class="line">    ├── VSCode 与 GCC 开发环境</span><br><span class="line">    ├── C 语言编译、汇编和链接</span><br><span class="line">    └── Makefile</span><br><span class="line">            ↓</span><br><span class="line">Linux 系统接口</span><br><span class="line">    ├── 标准 I/O 与文件操作</span><br><span class="line">    ├── 系统调用</span><br><span class="line">    └── 文件描述符</span><br><span class="line">            ↓</span><br><span class="line">并发与进程间通信</span><br><span class="line">    ├── 进程创建与执行</span><br><span class="line">    ├── 管道、共享内存、消息队列</span><br><span class="line">    ├── 信号</span><br><span class="line">    ├── 线程和线程同步</span><br><span class="line">    └── 线程池</span><br><span class="line">            ↓</span><br><span class="line">网络应用开发</span><br><span class="line">    ├── TCP/IP 网络模型</span><br><span class="line">    ├── TCP、UDP 和 Unix Domain Socket</span><br><span class="line">    ├── 单连接、多进程和多线程服务器</span><br><span class="line">    └── IP、DNS、ARP、MAC 和物理层</span><br><span class="line">            ↓</span><br><span class="line">服务化与高并发</span><br><span class="line">    ├── 守护进程</span><br><span class="line">    └── select、poll、epoll</span><br></pre></td></tr></table></figure>
+
+<h2 id="内容概览"><a href="#内容概览" class="headerlink" title="内容概览"></a>内容概览</h2><h3 id="编译与构建"><a href="#编译与构建" class="headerlink" title="编译与构建"></a>编译与构建</h3><p>理解 GCC、glibc、GNU C 和 POSIX 的关系，掌握 C 语言从源文件到可执行文件的完整过程（预处理 → 编译 → 汇编 → 链接），使用 Makefile 管理编译目标、依赖关系和构建命令。</p>
+<h3 id="文件-I-O"><a href="#文件-I-O" class="headerlink" title="文件 I&#x2F;O"></a>文件 I&#x2F;O</h3><p>区分面向流的标准 I&#x2F;O（<code>fopen</code>&#x2F;<code>fread</code>&#x2F;<code>fwrite</code>）与面向文件描述符的系统 I&#x2F;O（<code>open</code>&#x2F;<code>read</code>&#x2F;<code>write</code>），理解标准输入输出、文件描述符及其在进程中的引用关系。</p>
+<h3 id="进程处理"><a href="#进程处理" class="headerlink" title="进程处理"></a>进程处理</h3><ul>
+<li><code>system</code> 创建子进程、<code>fork</code> 理解父子进程执行流、<code>execve</code> 替换进程映像、<code>waitpid</code> 回收子进程；</li>
+<li>理解文件描述符引用计数、进程树和孤儿进程；</li>
+<li>进程间通信：匿名管道（Pipe）、有名管道（FIFO）、共享内存、消息队列，以及信号处理例程。</li>
+</ul>
+<h3 id="线程处理"><a href="#线程处理" class="headerlink" title="线程处理"></a>线程处理</h3><ul>
+<li>理解 Linux 线程模型与进程的关系，使用线程 API 创建和终止线程；</li>
+<li>认识竞态条件，使用互斥锁、读写锁、自旋锁、条件变量和信号量完成同步；</li>
+<li>使用 Glib 线程池组织任务执行和线程复用。</li>
+</ul>
+<p><strong>并发模型对比</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>主要特点</th>
+<th>适用方向</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>单进程单线程</td>
+<td>结构简单，资源开销小</td>
+<td>简单命令行程序</td>
+</tr>
+<tr>
+<td>多进程</td>
+<td>地址空间隔离，故障影响小</td>
+<td>独立任务和进程级隔离</td>
+</tr>
+<tr>
+<td>多线程</td>
+<td>共享地址空间，通信成本低</td>
+<td>多连接服务、共享数据处理</td>
+</tr>
+<tr>
+<td>I&#x2F;O 多路复用</td>
+<td>一个执行流管理多个 I&#x2F;O</td>
+<td>大量网络连接、事件驱动</td>
+</tr>
+</tbody></table>
+<h3 id="Socket-编程"><a href="#Socket-编程" class="headerlink" title="Socket 编程"></a>Socket 编程</h3><ul>
+<li>网络基础：OSI 七层、TCP&#x2F;IP 四层模型，数据单元与以太网通信流程；</li>
+<li>TCP：报文段格式、连接建立与释放、可靠传输、滑动窗口和拥塞控制，实现只支持单连接的版本后，再用多线程和多进程扩展；</li>
+<li>UDP 与 Unix Domain Socket 本地进程间通信；</li>
+<li>深入 IP 地址分类、DNS 查询过程、数据链路层、MAC 地址与 ARP。</li>
+</ul>
+<h3 id="守护进程与-I-O-多路复用"><a href="#守护进程与-I-O-多路复用" class="headerlink" title="守护进程与 I&#x2F;O 多路复用"></a>守护进程与 I&#x2F;O 多路复用</h3><ul>
+<li>掌握创建守护进程的基本规则：脱离终端、处理文件描述符、日志记录与优雅关闭；</li>
+<li>对比 <code>select</code>（fd 集合）、<code>poll</code>（事件数组）和 <code>epoll</code>（事件通知）的工作方式；</li>
+<li>理解 <code>epoll</code> 的水平触发（LT）与边沿触发（ET）模式，ET 模式需要配合非阻塞 I&#x2F;O 和持续读取策略。</li>
+</ul>
+<h2 id="常用-API-速查"><a href="#常用-API-速查" class="headerlink" title="常用 API 速查"></a>常用 API 速查</h2><table>
+<thead>
+<tr>
+<th>领域</th>
+<th>常用 API</th>
+<th>主要用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>文件描述符</td>
+<td><code>open</code>、<code>close</code>、<code>read</code>、<code>write</code></td>
+<td>系统调用方式访问文件</td>
+</tr>
+<tr>
+<td>进程</td>
+<td><code>system</code>、<code>fork</code>、<code>execve</code>、<code>waitpid</code></td>
+<td>创建、替换和回收进程</td>
+</tr>
+<tr>
+<td>线程</td>
+<td><code>pthread_create</code></td>
+<td>创建、控制和回收线程</td>
+</tr>
+<tr>
+<td>同步</td>
+<td>互斥锁、读写锁、条件变量、信号量</td>
+<td>保护共享资源和协调执行</td>
+</tr>
+<tr>
+<td>TCP Socket</td>
+<td><code>socket</code>、<code>bind</code>、<code>listen</code>、<code>accept</code>、<code>connect</code></td>
+<td>建立 TCP 网络通信</td>
+</tr>
+<tr>
+<td>UDP Socket</td>
+<td><code>sendto</code>、<code>recvfrom</code></td>
+<td>实现无连接通信</td>
+</tr>
+<tr>
+<td>I&#x2F;O 多路复用</td>
+<td><code>select</code>、<code>poll</code>、<code>epoll</code></td>
+<td>监听多个文件描述符</td>
+</tr>
+</tbody></table>
+<h2 id="工程注意事项"><a href="#工程注意事项" class="headerlink" title="工程注意事项"></a>工程注意事项</h2><ul>
+<li>共享内存、消息队列、管道和 Socket 使用后应及时释放或关闭资源；</li>
+<li>TCP 服务端应处理断开、短读、短写、缓冲区边界和异常连接；</li>
+<li>多线程程序需要明确共享数据、锁的所有权、等待条件和退出流程；</li>
+<li>每个系统调用都记录返回值、错误处理、资源释放和并发安全要求。</li>
+</ul>
+<h2 id="学习建议"><a href="#学习建议" class="headerlink" title="学习建议"></a>学习建议</h2><ol>
+<li>先掌握 GCC、编译链接流程和 Makefile，再学习 Linux 系统接口；</li>
+<li>按 <code>fork</code>、<code>execve</code>、<code>waitpid</code> 的顺序理解进程创建和执行；</li>
+<li>先掌握管道和共享内存，再学习消息队列、信号和更复杂的 IPC；</li>
+<li>网络部分先理解 TCP 状态和 Socket API，再对比多进程、多线程和 I&#x2F;O 多路复用服务器。</li>
+</ol>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ashleycurry/linux-application-development-notes">linux-application-development-notes</a></li>
+</ul>
+
+    </div>
+  </div>
+
+  <footer class="bs-pfoot">
+    
+    <ul class="bs-tags" aria-label="标签">
+      <li><a href="/tags/C%E8%AF%AD%E8%A8%80/">#C语言</a></li><li><a href="/tags/Linux/">#Linux</a></li><li><a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">#多线程</a></li><li><a href="/tags/Socket/">#Socket</a></li><li><a href="/tags/epoll/">#epoll</a></li><li><a href="/tags/%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/">#进程通信</a></li>
+    </ul>
+    
+    <div class="bs-pfoot__grid">
+      
+      <p class="bs-license">
+        <span class="bs-kicker">LICENSE</span>
+        本文作者 XiaoGao，采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可。
+        转载请注明出处：<a href="https://xiaogao-code.github.io/2026/07/22/linux-application-development/">https:&#x2F;&#x2F;xiaogao-code.github.io&#x2F;2026&#x2F;07&#x2F;22&#x2F;linux-application-development&#x2F;</a>
+      </p>
+      
+      
+      
+    </div>
+  </footer>
+
+  <nav class="bs-pnav" aria-label="分页">
+    
+    <a class="bs-pnav__item bs-pnav__item--newer" href="/2026/08/03/ros-robotics-notes/" rel="prev">
+      <span class="bs-kicker">← 较新 NEWER</span><span class="bs-pnav__t">ROS 机器人开发入门：话题、服务与 TF 坐标变换</span>
+    </a>
+    
+    
+    <a class="bs-pnav__item bs-pnav__item--older" href="/2026/07/10/linux-shell-regex/" rel="next">
+      <span class="bs-kicker">较早 OLDER →</span><span class="bs-pnav__t">Linux、Shell 与正则表达式：文本处理三件套</span>
+    </a>
+    
+  </nav>
+
+  
+</article>
+</main>
+
+<footer class="bs-footer">
+  <div class="bs-footer__white">
+    <a class="bs-brand bs-brand--footer" href="/">
+      <span class="bs-mark" aria-hidden="true"></span>
+      <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+    </a>
+    <p class="bs-footer__desc">嵌入式软件 / 机器人 / 计算机视觉 / LLM 应用的学习与实践笔记</p>
+    <ul class="bs-footer__social">
+      
+      <li><a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">GitHub</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+    </ul>
+    <p class="bs-footer__meta">
+      © 2026 XiaoGao
+       · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+      · 由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 与 <a href="https://github.com/LiuXiu233/hexo-theme-bisect" target="_blank" rel="noopener">Bisect</a> 主题驱动
+    </p>
+  </div>
+  <div class="bs-footer__blue">
+    
+<p class="bs-slogan bs-slogan--footer">
+  <span class="bs-slogan__zh">从寄存器到推理，把设备、数据与智能连起来。</span>
+  <span class="bs-slogan__en">Build close to the machine. Bring intelligence to the edge.</span>
+</p>
+
+
+    
+    <div class="bs-footer__actions">
+      
+      <a class="bs-btn bs-btn--line" href="#top" data-to-top>回到顶部 ↑</a>
+    </div>
+  </div>
+</footer>
+<script id="bs-config" type="application/json">{"root":"/","search":"/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
+
+<dialog class="bs-search" id="bs-search" aria-label="搜索文章或输入命令">
+  <form class="bs-search__bar" method="dialog" role="search">
+    <span class="bs-search__prompt" aria-hidden="true">&gt;</span>
+    <label class="bs-sr" for="bs-search-input">搜索文章或输入命令</label>
+    <input id="bs-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="搜索标题、正文、标签……  输入 &gt; 查看命令">
+    <button class="bs-search__close" type="submit" aria-label="关闭">esc</button>
+  </form>
+  <ol class="bs-search__list" id="bs-search-list" role="listbox" aria-label="结果"></ol>
+  <p class="bs-search__hint"><span>↑↓ 选择</span><span>↵ 打开</span><span>&gt;theme · &gt;random · &gt;top · &gt;archive</span></p>
+</dialog>
+
+<script type="module" src="/js/bisect.js"></script>
+</body>
+</html>

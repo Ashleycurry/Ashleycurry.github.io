@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>STM32 单片机开发笔记：从寄存器到物联网通信 | XiaoGao 的代码笔记</title>
+<meta name="description" content="STM32 单片机开发课程笔记，覆盖 GPIO、中断、USART、I2C、SPI、DMA、ADC、FSMC 等外设，以及 CAN、以太网、Wi-Fi、BLE、LoRa 等物联网通信。">
+<meta name="keywords" content="嵌入式,STM32,FreeRTOS,ROS,OpenCV,机器人,Linux,C语言,Python">
+<meta name="author" content="XiaoGao">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f9fd">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1628">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://xiaogao-code.github.io/2026/06/15/stm32-mcu-development-notes/">
+<meta name="description" content="STM32 单片机开发课程笔记，覆盖 GPIO、中断、USART、I2C、SPI、DMA、ADC、FSMC 等外设，以及 CAN、以太网、Wi-Fi、BLE、LoRa 等物联网通信。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32 单片机开发笔记：从寄存器到物联网通信">
+<meta property="og:url" content="https://xiaogao-code.github.io/2026/06/15/stm32-mcu-development-notes/index.html">
+<meta property="og:site_name" content="XiaoGao 的代码笔记">
+<meta property="og:description" content="STM32 单片机开发课程笔记，覆盖 GPIO、中断、USART、I2C、SPI、DMA、ADC、FSMC 等外设，以及 CAN、以太网、Wi-Fi、BLE、LoRa 等物联网通信。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-06-15T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-14T11:02:44.000Z">
+<meta property="article:author" content="XiaoGao">
+<meta property="article:tag" content="CAN">
+<meta property="article:tag" content="HAL">
+<meta property="article:tag" content="LoRa">
+<meta property="article:tag" content="STM32">
+<meta property="article:tag" content="寄存器">
+<meta property="article:tag" content="物联网">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('bs-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+    document.documentElement.classList.add('js');
+    addEventListener('pagereveal', function (e) {
+      if (e.viewTransition) { e.viewTransition.ready.catch(function () {}); e.viewTransition.finished.catch(function () {}); }
+    });
+  })();
+</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400..900&family=Noto+Sans+SC:wght@900&display=swap">
+
+<link rel="stylesheet" href="/css/bisect.css">
+<link rel="alternate" type="application/atom+xml" title="XiaoGao 的代码笔记" href="/atom.xml">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.xml"}}]},"eagerness":"moderate"}]}
+</script>
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="is-post">
+<a class="bs-skip" href="#main">跳到正文</a>
+<svg class="bs-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <!-- 列表里的图片统一压成深空—分界蓝—冰白三色调 -->
+  <filter id="bs-duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues=".059 .090 .957"/>
+      <feFuncG type="table" tableValues=".090 .278 .976"/>
+      <feFuncB type="table" tableValues=".165 .902 .992"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+
+<header class="bs-header" data-header>
+  <a class="bs-brand" href="/" aria-label="XiaoGao 的代码笔记 首页">
+    <span class="bs-mark" aria-hidden="true"></span>
+    <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+  </a>
+  <nav class="bs-nav" id="bs-nav" aria-label="主导航">
+    <ul>
+      
+      <li>
+        <a href="/" aria-current="page">
+          <span class="bs-nav__no">01</span>
+          <span class="bs-nav__zh">文章</span>
+          <span class="bs-nav__en">Posts</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives/">
+          <span class="bs-nav__no">02</span>
+          <span class="bs-nav__zh">归档</span>
+          <span class="bs-nav__en">Archive</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/">
+          <span class="bs-nav__no">03</span>
+          <span class="bs-nav__zh">分类</span>
+          <span class="bs-nav__en">Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/">
+          <span class="bs-nav__no">04</span>
+          <span class="bs-nav__zh">标签</span>
+          <span class="bs-nav__en">Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about/">
+          <span class="bs-nav__no">05</span>
+          <span class="bs-nav__zh">关于</span>
+          <span class="bs-nav__en">About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">
+          <span class="bs-nav__no">06</span>
+          <span class="bs-nav__zh">GitHub</span>
+          <span class="bs-nav__en">Code ↗</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+  <div class="bs-tools">
+    <button class="bs-tool bs-tool--search" type="button" data-search-open aria-label="搜索">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <kbd>⌘K</kbd>
+    </button>
+    <button class="bs-tool bs-tool--theme" type="button" data-theme-toggle aria-label="切换深浅色">
+      <span class="bs-halfdot" aria-hidden="true"></span>
+    </button>
+    <button class="bs-tool bs-tool--menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="bs-nav">
+      <span class="bs-burger" aria-hidden="true"></span><span class="bs-sr">菜单</span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<article class="bs-post" data-font="sans">
+  <header class="bs-phead">
+    <div class="bs-phead__text">
+      <p class="bs-kicker">NO.09 · <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">嵌入式开发</a></p>
+      <h1 class="bs-phead__title">STM32 单片机开发笔记：从寄存器到物联网通信</h1>
+      <p class="bs-phead__desc">STM32 单片机开发课程笔记，覆盖 GPIO、中断、USART、I2C、SPI、DMA、ADC、FSMC 等外设，以及 CAN、以太网、Wi-Fi、BLE、LoRa 等物联网通信。</p>
+      <dl class="bs-phead__meta">
+        <div><dt>发布 DATE</dt><dd><time datetime="2026-06-15T02:00:00.000Z">2026.06.15</time></dd></div>
+        <div><dt>字数 WORDS</dt><dd>1,023</dd></div>
+        <div><dt>阅读 READ</dt><dd>3 分钟</dd></div>
+      </dl>
+    </div>
+    <figure class="bs-phead__cover" aria-hidden="true">
+      <svg class="bs-gen" viewBox="0 0 1200 800" preserveAspectRatio="xMinYMid slice" role="img" aria-label="STM32 单片机开发笔记：从寄存器到物联网通信">
+<defs><clipPath id="gghdsbg"><rect x="544.5" y="0" width="655.5" height="800"/></clipPath></defs>
+<rect class="bs-gen__w" width="1200" height="800"/>
+<text class="bs-gen__glyph bs-gen__b" x="274.8" y="688">S</text>
+<g clip-path="url(#gghdsbg)"><rect class="bs-gen__b" width="1200" height="800"/><path d="M23.5 23.5h.01M70.5 23.5h.01M117.5 23.5h.01M164.5 23.5h.01M211.5 23.5h.01M258.5 23.5h.01M305.5 23.5h.01M352.5 23.5h.01M399.5 23.5h.01M446.5 23.5h.01M493.5 23.5h.01M540.5 23.5h.01M587.5 23.5h.01M634.5 23.5h.01M681.5 23.5h.01M728.5 23.5h.01M775.5 23.5h.01M822.5 23.5h.01M869.5 23.5h.01M916.5 23.5h.01M963.5 23.5h.01M1010.5 23.5h.01M1057.5 23.5h.01M1104.5 23.5h.01M1151.5 23.5h.01M1198.5 23.5h.01M23.5 70.5h.01M70.5 70.5h.01M117.5 70.5h.01M164.5 70.5h.01M211.5 70.5h.01M258.5 70.5h.01M305.5 70.5h.01M352.5 70.5h.01M399.5 70.5h.01M446.5 70.5h.01M493.5 70.5h.01M540.5 70.5h.01M587.5 70.5h.01M634.5 70.5h.01M681.5 70.5h.01M728.5 70.5h.01M775.5 70.5h.01M822.5 70.5h.01M869.5 70.5h.01M916.5 70.5h.01M963.5 70.5h.01M1010.5 70.5h.01M1057.5 70.5h.01M1104.5 70.5h.01M1151.5 70.5h.01M1198.5 70.5h.01M23.5 117.5h.01M70.5 117.5h.01M117.5 117.5h.01M164.5 117.5h.01M211.5 117.5h.01M258.5 117.5h.01M305.5 117.5h.01M352.5 117.5h.01M399.5 117.5h.01M446.5 117.5h.01M493.5 117.5h.01M540.5 117.5h.01M587.5 117.5h.01M634.5 117.5h.01M681.5 117.5h.01M728.5 117.5h.01M775.5 117.5h.01M822.5 117.5h.01M869.5 117.5h.01M916.5 117.5h.01M963.5 117.5h.01M1010.5 117.5h.01M1057.5 117.5h.01M1104.5 117.5h.01M1151.5 117.5h.01M1198.5 117.5h.01M23.5 164.5h.01M70.5 164.5h.01M117.5 164.5h.01M164.5 164.5h.01M211.5 164.5h.01M258.5 164.5h.01M305.5 164.5h.01M352.5 164.5h.01M399.5 164.5h.01M446.5 164.5h.01M493.5 164.5h.01M540.5 164.5h.01M587.5 164.5h.01M634.5 164.5h.01M681.5 164.5h.01M728.5 164.5h.01M775.5 164.5h.01M822.5 164.5h.01M869.5 164.5h.01M916.5 164.5h.01M963.5 164.5h.01M1010.5 164.5h.01M1057.5 164.5h.01M1104.5 164.5h.01M1151.5 164.5h.01M1198.5 164.5h.01M23.5 211.5h.01M70.5 211.5h.01M117.5 211.5h.01M164.5 211.5h.01M211.5 211.5h.01M258.5 211.5h.01M305.5 211.5h.01M352.5 211.5h.01M399.5 211.5h.01M446.5 211.5h.01M493.5 211.5h.01M540.5 211.5h.01M587.5 211.5h.01M634.5 211.5h.01M681.5 211.5h.01M728.5 211.5h.01M775.5 211.5h.01M822.5 211.5h.01M869.5 211.5h.01M916.5 211.5h.01M963.5 211.5h.01M1010.5 211.5h.01M1057.5 211.5h.01M1104.5 211.5h.01M1151.5 211.5h.01M1198.5 211.5h.01M23.5 258.5h.01M70.5 258.5h.01M117.5 258.5h.01M164.5 258.5h.01M211.5 258.5h.01M258.5 258.5h.01M305.5 258.5h.01M352.5 258.5h.01M399.5 258.5h.01M446.5 258.5h.01M493.5 258.5h.01M540.5 258.5h.01M587.5 258.5h.01M634.5 258.5h.01M681.5 258.5h.01M728.5 258.5h.01M775.5 258.5h.01M822.5 258.5h.01M869.5 258.5h.01M916.5 258.5h.01M963.5 258.5h.01M1010.5 258.5h.01M1057.5 258.5h.01M1104.5 258.5h.01M1151.5 258.5h.01M1198.5 258.5h.01M23.5 305.5h.01M70.5 305.5h.01M117.5 305.5h.01M164.5 305.5h.01M211.5 305.5h.01M258.5 305.5h.01M305.5 305.5h.01M352.5 305.5h.01M399.5 305.5h.01M446.5 305.5h.01M493.5 305.5h.01M540.5 305.5h.01M587.5 305.5h.01M634.5 305.5h.01M681.5 305.5h.01M728.5 305.5h.01M775.5 305.5h.01M822.5 305.5h.01M869.5 305.5h.01M916.5 305.5h.01M963.5 305.5h.01M1010.5 305.5h.01M1057.5 305.5h.01M1104.5 305.5h.01M1151.5 305.5h.01M1198.5 305.5h.01M23.5 352.5h.01M70.5 352.5h.01M117.5 352.5h.01M164.5 352.5h.01M211.5 352.5h.01M258.5 352.5h.01M305.5 352.5h.01M352.5 352.5h.01M399.5 352.5h.01M446.5 352.5h.01M493.5 352.5h.01M540.5 352.5h.01M587.5 352.5h.01M634.5 352.5h.01M681.5 352.5h.01M728.5 352.5h.01M775.5 352.5h.01M822.5 352.5h.01M869.5 352.5h.01M916.5 352.5h.01M963.5 352.5h.01M1010.5 352.5h.01M1057.5 352.5h.01M1104.5 352.5h.01M1151.5 352.5h.01M1198.5 352.5h.01M23.5 399.5h.01M70.5 399.5h.01M117.5 399.5h.01M164.5 399.5h.01M211.5 399.5h.01M258.5 399.5h.01M305.5 399.5h.01M352.5 399.5h.01M399.5 399.5h.01M446.5 399.5h.01M493.5 399.5h.01M540.5 399.5h.01M587.5 399.5h.01M634.5 399.5h.01M681.5 399.5h.01M728.5 399.5h.01M775.5 399.5h.01M822.5 399.5h.01M869.5 399.5h.01M916.5 399.5h.01M963.5 399.5h.01M1010.5 399.5h.01M1057.5 399.5h.01M1104.5 399.5h.01M1151.5 399.5h.01M1198.5 399.5h.01M23.5 446.5h.01M70.5 446.5h.01M117.5 446.5h.01M164.5 446.5h.01M211.5 446.5h.01M258.5 446.5h.01M305.5 446.5h.01M352.5 446.5h.01M399.5 446.5h.01M446.5 446.5h.01M493.5 446.5h.01M540.5 446.5h.01M587.5 446.5h.01M634.5 446.5h.01M681.5 446.5h.01M728.5 446.5h.01M775.5 446.5h.01M822.5 446.5h.01M869.5 446.5h.01M916.5 446.5h.01M963.5 446.5h.01M1010.5 446.5h.01M1057.5 446.5h.01M1104.5 446.5h.01M1151.5 446.5h.01M1198.5 446.5h.01M23.5 493.5h.01M70.5 493.5h.01M117.5 493.5h.01M164.5 493.5h.01M211.5 493.5h.01M258.5 493.5h.01M305.5 493.5h.01M352.5 493.5h.01M399.5 493.5h.01M446.5 493.5h.01M493.5 493.5h.01M540.5 493.5h.01M587.5 493.5h.01M634.5 493.5h.01M681.5 493.5h.01M728.5 493.5h.01M775.5 493.5h.01M822.5 493.5h.01M869.5 493.5h.01M916.5 493.5h.01M963.5 493.5h.01M1010.5 493.5h.01M1057.5 493.5h.01M1104.5 493.5h.01M1151.5 493.5h.01M1198.5 493.5h.01M23.5 540.5h.01M70.5 540.5h.01M117.5 540.5h.01M164.5 540.5h.01M211.5 540.5h.01M258.5 540.5h.01M305.5 540.5h.01M352.5 540.5h.01M399.5 540.5h.01M446.5 540.5h.01M493.5 540.5h.01M540.5 540.5h.01M587.5 540.5h.01M634.5 540.5h.01M681.5 540.5h.01M728.5 540.5h.01M775.5 540.5h.01M822.5 540.5h.01M869.5 540.5h.01M916.5 540.5h.01M963.5 540.5h.01M1010.5 540.5h.01M1057.5 540.5h.01M1104.5 540.5h.01M1151.5 540.5h.01M1198.5 540.5h.01M23.5 587.5h.01M70.5 587.5h.01M117.5 587.5h.01M164.5 587.5h.01M211.5 587.5h.01M258.5 587.5h.01M305.5 587.5h.01M352.5 587.5h.01M399.5 587.5h.01M446.5 587.5h.01M493.5 587.5h.01M540.5 587.5h.01M587.5 587.5h.01M634.5 587.5h.01M681.5 587.5h.01M728.5 587.5h.01M775.5 587.5h.01M822.5 587.5h.01M869.5 587.5h.01M916.5 587.5h.01M963.5 587.5h.01M1010.5 587.5h.01M1057.5 587.5h.01M1104.5 587.5h.01M1151.5 587.5h.01M1198.5 587.5h.01M23.5 634.5h.01M70.5 634.5h.01M117.5 634.5h.01M164.5 634.5h.01M211.5 634.5h.01M258.5 634.5h.01M305.5 634.5h.01M352.5 634.5h.01M399.5 634.5h.01M446.5 634.5h.01M493.5 634.5h.01M540.5 634.5h.01M587.5 634.5h.01M634.5 634.5h.01M681.5 634.5h.01M728.5 634.5h.01M775.5 634.5h.01M822.5 634.5h.01M869.5 634.5h.01M916.5 634.5h.01M963.5 634.5h.01M1010.5 634.5h.01M1057.5 634.5h.01M1104.5 634.5h.01M1151.5 634.5h.01M1198.5 634.5h.01M23.5 681.5h.01M70.5 681.5h.01M117.5 681.5h.01M164.5 681.5h.01M211.5 681.5h.01M258.5 681.5h.01M305.5 681.5h.01M352.5 681.5h.01M399.5 681.5h.01M446.5 681.5h.01M493.5 681.5h.01M540.5 681.5h.01M587.5 681.5h.01M634.5 681.5h.01M681.5 681.5h.01M728.5 681.5h.01M775.5 681.5h.01M822.5 681.5h.01M869.5 681.5h.01M916.5 681.5h.01M963.5 681.5h.01M1010.5 681.5h.01M1057.5 681.5h.01M1104.5 681.5h.01M1151.5 681.5h.01M1198.5 681.5h.01M23.5 728.5h.01M70.5 728.5h.01M117.5 728.5h.01M164.5 728.5h.01M211.5 728.5h.01M258.5 728.5h.01M305.5 728.5h.01M352.5 728.5h.01M399.5 728.5h.01M446.5 728.5h.01M493.5 728.5h.01M540.5 728.5h.01M587.5 728.5h.01M634.5 728.5h.01M681.5 728.5h.01M728.5 728.5h.01M775.5 728.5h.01M822.5 728.5h.01M869.5 728.5h.01M916.5 728.5h.01M963.5 728.5h.01M1010.5 728.5h.01M1057.5 728.5h.01M1104.5 728.5h.01M1151.5 728.5h.01M1198.5 728.5h.01M23.5 775.5h.01M70.5 775.5h.01M117.5 775.5h.01M164.5 775.5h.01M211.5 775.5h.01M258.5 775.5h.01M305.5 775.5h.01M352.5 775.5h.01M399.5 775.5h.01M446.5 775.5h.01M493.5 775.5h.01M540.5 775.5h.01M587.5 775.5h.01M634.5 775.5h.01M681.5 775.5h.01M728.5 775.5h.01M775.5 775.5h.01M822.5 775.5h.01M869.5 775.5h.01M916.5 775.5h.01M963.5 775.5h.01M1010.5 775.5h.01M1057.5 775.5h.01M1104.5 775.5h.01M1151.5 775.5h.01M1198.5 775.5h.01" class="bs-gen__e" stroke-width="5" stroke-linecap="round" fill="none" opacity=".55"/><text class="bs-gen__glyph bs-gen__w" x="274.8" y="688">S</text></g>
+<text class="bs-gen__label" x="40" y="64">NO.09 / 2026</text>
+</svg>
+    </figure>
+  </header>
+
+  <div class="bs-post__layout">
+    <aside class="bs-rail" aria-label="阅读进度与目录">
+      <div class="bs-rail__inner">
+        <a class="bs-progress" href="#top" data-to-top aria-label="回到顶部"><span class="bs-progress__fill"></span></a>
+        
+        <p class="bs-rail__label">目录 · CONTENTS</p>
+        <ol class="bs-toc"><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF"><span class="bs-toc-number">1.</span> <span class="bs-toc-text">学习路线</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%9F%BA%E7%A1%80%E7%AF%87%EF%BC%9A%E5%A4%96%E8%AE%BE%E4%B8%8E%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B"><span class="bs-toc-number">2.</span> <span class="bs-toc-text">基础篇：外设与开发流程</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E9%AB%98%E7%BA%A7%E7%AF%87%EF%BC%9A%E7%89%A9%E8%81%94%E7%BD%91%E9%80%9A%E4%BF%A1"><span class="bs-toc-number">3.</span> <span class="bs-toc-text">高级篇：物联网通信</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E6%89%A9%E5%B1%95%E7%AF%87%EF%BC%9A%E7%B3%BB%E7%BB%9F%E7%BA%A7%E5%8A%9F%E8%83%BD"><span class="bs-toc-number">4.</span> <span class="bs-toc-text">扩展篇：系统级功能</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%BC%80%E5%8F%91%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94"><span class="bs-toc-number">5.</span> <span class="bs-toc-text">开发方式对比</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E6%8E%A8%E8%8D%90%E5%AD%A6%E4%B9%A0%E9%A1%BA%E5%BA%8F"><span class="bs-toc-number">6.</span> <span class="bs-toc-text">推荐学习顺序</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%BB%93%E5%BA%93"><span class="bs-toc-number">7.</span> <span class="bs-toc-text">仓库</span></a></li></ol>
+        
+      </div>
+    </aside>
+    <div class="bs-prose" data-prose>
+      <p>STM32 是嵌入式开发的主战场。这份笔记覆盖基础外设、通信协议、存储器、低功耗、实时系统和工程开发流程，从寄存器与 HAL 库双视角出发，一路延伸到 CAN、以太网、Wi-Fi、蓝牙和 LoRa 等物联网通信。</p>
+<span id="more"></span>
+
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">STM32 基础</span><br><span class="line">    ├── ARM 内核、STM32 系列和开发工具</span><br><span class="line">    ├── 最小系统、开发板和工程创建</span><br><span class="line">    ├── GPIO、时钟和 HAL 库</span><br><span class="line">    ├── 中断、USART、I2C 和定时器</span><br><span class="line">    ├── DMA、ADC、SPI 和外部存储</span><br><span class="line">    └── FSMC、LCD 和寄存器映射</span><br><span class="line">            ↓</span><br><span class="line">STM32 高级通信</span><br><span class="line">    ├── CAN 总线</span><br><span class="line">    ├── W5500 以太网</span><br><span class="line">    ├── ESP32-C3 Wi-Fi</span><br><span class="line">    ├── ESP32-C3 Bluetooth LE</span><br><span class="line">    └── LoRa 节点与网关</span><br><span class="line">            ↓</span><br><span class="line">STM32 系统扩展</span><br><span class="line">    ├── 电源管理与低功耗</span><br><span class="line">    ├── RTC 与备份寄存器</span><br><span class="line">    ├── 闹钟唤醒和掉电保持</span><br><span class="line">    ├── 独立看门狗与窗口看门狗</span><br><span class="line">    └── HAL 工程结构、编译过程和程序状态</span><br></pre></td></tr></table></figure>
+
+<h2 id="基础篇：外设与开发流程"><a href="#基础篇：外设与开发流程" class="headerlink" title="基础篇：外设与开发流程"></a>基础篇：外设与开发流程</h2><ol>
+<li><strong>芯片与工程环境</strong>：ARM 内核介绍、STM32 系列命名规则、Keil MDK &#x2F; STM32CubeMX &#x2F; ST-LINK 工具链、最小系统与第一个工程；</li>
+<li><strong>GPIO 与寄存器</strong>：工作模式、端口配置和数据寄存器（<code>GPIOx_CRL/CRH/IDR/ODR/BSRR/BRR/LCKR</code>），寄存器方式实现流水灯；</li>
+<li><strong>系统架构与时钟</strong>：STM32 总体架构与时钟树；</li>
+<li><strong>HAL 库开发</strong>：CubeMX 生成 HAL 工程，理解自动生成代码和用户代码的组织方式；</li>
+<li><strong>中断</strong>：中断体系、NVIC、外部中断控制器与按键检测案例；</li>
+<li><strong>USART 串口通信</strong>：并行&#x2F;串行、单工&#x2F;半双工&#x2F;全双工、同步&#x2F;异步，轮询与中断接收，<code>printf</code> 重定向；</li>
+<li><strong>I2C 通信</strong>：通过 M24C02 案例学习软件模拟 I2C 与硬件 I2C；</li>
+<li><strong>定时器</strong>：SysTick、基本&#x2F;通用&#x2F;高级定时器，PWM 呼吸灯与频率、占空比测量；</li>
+<li><strong>DMA</strong>：ROM 到 RAM、RAM 到串口的数据传输；</li>
+<li><strong>ADC</strong>：逐次逼近型 ADC 原理、单通道采集与多通道采集；</li>
+<li><strong>SPI 与 Flash</strong>：W25Q32 读写，软件模拟 SPI 与硬件 SPI；</li>
+<li><strong>存储器与 FSMC</strong>：存储器映射、FSMC 扩展外部 SRAM、8080 时序控制 LCD。</li>
+</ol>
+<h2 id="高级篇：物联网通信"><a href="#高级篇：物联网通信" class="headerlink" title="高级篇：物联网通信"></a>高级篇：物联网通信</h2><ul>
+<li><strong>CAN 通信</strong>：物理层、协议层、数据帧与总线仲裁，环回静默模式测试与双节点通信；</li>
+<li><strong>以太网与 W5500</strong>：OSI 七层模型、TCP&#x2F;IP 四层模型，TCP 服务端&#x2F;客户端、UDP 通信与简易 Web 服务器；</li>
+<li><strong>Wi-Fi 与 ESP32-C3</strong>：ESP-AT 固件与 AT 指令，STM32 与 ESP32-C3 串口交互，建立 TCP 通信；</li>
+<li><strong>Bluetooth LE</strong>：BLE 协议栈（PHY &#x2F; LL &#x2F; HCI &#x2F; GAP &#x2F; ATT &#x2F; GATT）、广播扫描与透传模式数据收发；</li>
+<li><strong>LoRa</strong>：E220-400M22S 模块、普通节点与网关搭建，验证节点到网关的数据传输。</li>
+</ul>
+<h2 id="扩展篇：系统级功能"><a href="#扩展篇：系统级功能" class="headerlink" title="扩展篇：系统级功能"></a>扩展篇：系统级功能</h2><ul>
+<li><strong>电源控制与低功耗</strong>：睡眠、停机、待机三种低功耗模式与唤醒源管理；</li>
+<li><strong>RTC 与备份域</strong>：掉电继续运行、备份寄存器保存数据、闹钟唤醒待机模式；</li>
+<li><strong>看门狗</strong>：独立看门狗与窗口看门狗的工作方式和触发条件；</li>
+<li><strong>HAL 工程与编译流程</strong>：<code>startup_stm32f103xe.s</code>、<code>system_stm32f1xx.c</code>、<code>HAL_Init()</code> 初始化流程与 Keil MDK 编译过程。</li>
+</ul>
+<h2 id="开发方式对比"><a href="#开发方式对比" class="headerlink" title="开发方式对比"></a>开发方式对比</h2><table>
+<thead>
+<tr>
+<th>方式</th>
+<th>主要特点</th>
+<th>学习重点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>寄存器开发</td>
+<td>直接操作外设寄存器，接近芯片硬件</td>
+<td>地址、位域、时序和参考手册</td>
+</tr>
+<tr>
+<td>HAL 库开发</td>
+<td>使用 ST 提供的抽象接口，提高开发效率</td>
+<td>CubeMX 配置、回调、状态和生成代码</td>
+</tr>
+<tr>
+<td>混合开发</td>
+<td>在 HAL 工程中针对关键功能使用寄存器</td>
+<td>抽象层边界、时序控制和可维护性</td>
+</tr>
+</tbody></table>
+<h2 id="推荐学习顺序"><a href="#推荐学习顺序" class="headerlink" title="推荐学习顺序"></a>推荐学习顺序</h2><ol>
+<li>完成基础篇中的 GPIO、时钟、HAL 和第一个下载运行工程；</li>
+<li>按 USART、I2C、SPI 的顺序学习常用片上通信接口；</li>
+<li>学习中断、定时器、DMA 和 ADC，建立事件驱动与数据搬运能力；</li>
+<li>学习存储器映射、FSMC 和 LCD，理解外部设备扩展；</li>
+<li>进入高级篇，依次学习 CAN、以太网、Wi-Fi、蓝牙和 LoRa；</li>
+<li>最后学习扩展篇中的低功耗、RTC、备份域、看门狗和 HAL 工程分析。</li>
+</ol>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ashleycurry/stm32-mcu-development-notes">stm32-mcu-development-notes</a></li>
+</ul>
+
+    </div>
+  </div>
+
+  <footer class="bs-pfoot">
+    
+    <ul class="bs-tags" aria-label="标签">
+      <li><a href="/tags/STM32/">#STM32</a></li><li><a href="/tags/HAL/">#HAL</a></li><li><a href="/tags/%E5%AF%84%E5%AD%98%E5%99%A8/">#寄存器</a></li><li><a href="/tags/CAN/">#CAN</a></li><li><a href="/tags/LoRa/">#LoRa</a></li><li><a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/">#物联网</a></li>
+    </ul>
+    
+    <div class="bs-pfoot__grid">
+      
+      <p class="bs-license">
+        <span class="bs-kicker">LICENSE</span>
+        本文作者 XiaoGao，采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可。
+        转载请注明出处：<a href="https://xiaogao-code.github.io/2026/06/15/stm32-mcu-development-notes/">https:&#x2F;&#x2F;xiaogao-code.github.io&#x2F;2026&#x2F;06&#x2F;15&#x2F;stm32-mcu-development-notes&#x2F;</a>
+      </p>
+      
+      
+      
+    </div>
+  </footer>
+
+  <nav class="bs-pnav" aria-label="分页">
+    
+    <a class="bs-pnav__item bs-pnav__item--newer" href="/2026/06/28/freertos-learning-notes/" rel="prev">
+      <span class="bs-kicker">← 较新 NEWER</span><span class="bs-pnav__t">FreeRTOS 实时操作系统：从裸机到多任务调度</span>
+    </a>
+    
+    
+    <a class="bs-pnav__item bs-pnav__item--older" href="/2026/06/03/schematic-and-pcb-design/" rel="next">
+      <span class="bs-kicker">较早 OLDER →</span><span class="bs-pnav__t">原理图与 PCB 设计：从嘉立创 EDA 入门到实战案例</span>
+    </a>
+    
+  </nav>
+
+  
+</article>
+</main>
+
+<footer class="bs-footer">
+  <div class="bs-footer__white">
+    <a class="bs-brand bs-brand--footer" href="/">
+      <span class="bs-mark" aria-hidden="true"></span>
+      <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+    </a>
+    <p class="bs-footer__desc">嵌入式软件 / 机器人 / 计算机视觉 / LLM 应用的学习与实践笔记</p>
+    <ul class="bs-footer__social">
+      
+      <li><a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">GitHub</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+    </ul>
+    <p class="bs-footer__meta">
+      © 2026 XiaoGao
+       · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+      · 由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 与 <a href="https://github.com/LiuXiu233/hexo-theme-bisect" target="_blank" rel="noopener">Bisect</a> 主题驱动
+    </p>
+  </div>
+  <div class="bs-footer__blue">
+    
+<p class="bs-slogan bs-slogan--footer">
+  <span class="bs-slogan__zh">从寄存器到推理，把设备、数据与智能连起来。</span>
+  <span class="bs-slogan__en">Build close to the machine. Bring intelligence to the edge.</span>
+</p>
+
+
+    
+    <div class="bs-footer__actions">
+      
+      <a class="bs-btn bs-btn--line" href="#top" data-to-top>回到顶部 ↑</a>
+    </div>
+  </div>
+</footer>
+<script id="bs-config" type="application/json">{"root":"/","search":"/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
+
+<dialog class="bs-search" id="bs-search" aria-label="搜索文章或输入命令">
+  <form class="bs-search__bar" method="dialog" role="search">
+    <span class="bs-search__prompt" aria-hidden="true">&gt;</span>
+    <label class="bs-sr" for="bs-search-input">搜索文章或输入命令</label>
+    <input id="bs-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="搜索标题、正文、标签……  输入 &gt; 查看命令">
+    <button class="bs-search__close" type="submit" aria-label="关闭">esc</button>
+  </form>
+  <ol class="bs-search__list" id="bs-search-list" role="listbox" aria-label="结果"></ol>
+  <p class="bs-search__hint"><span>↑↓ 选择</span><span>↵ 打开</span><span>&gt;theme · &gt;random · &gt;top · &gt;archive</span></p>
+</dialog>
+
+<script type="module" src="/js/bisect.js"></script>
+</body>
+</html>

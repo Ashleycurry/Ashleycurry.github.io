@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#HAL | XiaoGao 的代码笔记</title>
+<meta name="description" content="嵌入式软件 / 机器人 / 计算机视觉 / LLM 应用的学习与实践笔记">
+<meta name="keywords" content="嵌入式,STM32,FreeRTOS,ROS,OpenCV,机器人,Linux,C语言,Python">
+<meta name="author" content="XiaoGao">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f9fd">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1628">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://xiaogao-code.github.io/tags/HAL/">
+<meta name="description" content="嵌入式软件 &#x2F; 机器人 &#x2F; 计算机视觉 &#x2F; LLM 应用的学习与实践笔记">
+<meta property="og:type" content="website">
+<meta property="og:title" content="XiaoGao 的代码笔记">
+<meta property="og:url" content="https://xiaogao-code.github.io/tags/HAL/index.html">
+<meta property="og:site_name" content="XiaoGao 的代码笔记">
+<meta property="og:description" content="嵌入式软件 &#x2F; 机器人 &#x2F; 计算机视觉 &#x2F; LLM 应用的学习与实践笔记">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="XiaoGao">
+<meta property="article:tag" content="嵌入式,STM32,FreeRTOS,ROS,OpenCV,机器人,Linux,C语言,Python">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('bs-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+    document.documentElement.classList.add('js');
+    addEventListener('pagereveal', function (e) {
+      if (e.viewTransition) { e.viewTransition.ready.catch(function () {}); e.viewTransition.finished.catch(function () {}); }
+    });
+  })();
+</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400..900&family=Noto+Sans+SC:wght@900&display=swap">
+
+<link rel="stylesheet" href="/css/bisect.css">
+<link rel="alternate" type="application/atom+xml" title="XiaoGao 的代码笔记" href="/atom.xml">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.xml"}}]},"eagerness":"moderate"}]}
+</script>
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="is-page">
+<a class="bs-skip" href="#main">跳到正文</a>
+<svg class="bs-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <!-- 列表里的图片统一压成深空—分界蓝—冰白三色调 -->
+  <filter id="bs-duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues=".059 .090 .957"/>
+      <feFuncG type="table" tableValues=".090 .278 .976"/>
+      <feFuncB type="table" tableValues=".165 .902 .992"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+
+<header class="bs-header" data-header>
+  <a class="bs-brand" href="/" aria-label="XiaoGao 的代码笔记 首页">
+    <span class="bs-mark" aria-hidden="true"></span>
+    <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+  </a>
+  <nav class="bs-nav" id="bs-nav" aria-label="主导航">
+    <ul>
+      
+      <li>
+        <a href="/">
+          <span class="bs-nav__no">01</span>
+          <span class="bs-nav__zh">文章</span>
+          <span class="bs-nav__en">Posts</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives/">
+          <span class="bs-nav__no">02</span>
+          <span class="bs-nav__zh">归档</span>
+          <span class="bs-nav__en">Archive</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/">
+          <span class="bs-nav__no">03</span>
+          <span class="bs-nav__zh">分类</span>
+          <span class="bs-nav__en">Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/" aria-current="page">
+          <span class="bs-nav__no">04</span>
+          <span class="bs-nav__zh">标签</span>
+          <span class="bs-nav__en">Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about/">
+          <span class="bs-nav__no">05</span>
+          <span class="bs-nav__zh">关于</span>
+          <span class="bs-nav__en">About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">
+          <span class="bs-nav__no">06</span>
+          <span class="bs-nav__zh">GitHub</span>
+          <span class="bs-nav__en">Code ↗</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+  <div class="bs-tools">
+    <button class="bs-tool bs-tool--search" type="button" data-search-open aria-label="搜索">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <kbd>⌘K</kbd>
+    </button>
+    <button class="bs-tool bs-tool--theme" type="button" data-theme-toggle aria-label="切换深浅色">
+      <span class="bs-halfdot" aria-hidden="true"></span>
+    </button>
+    <button class="bs-tool bs-tool--menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="bs-nav">
+      <span class="bs-burger" aria-hidden="true"></span><span class="bs-sr">菜单</span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1"><header class="bs-pagehead">
+  <div class="bs-pagehead__white">
+    <p class="bs-kicker">TAG · 标签</p>
+    <h1 class="bs-pagehead__title">#HAL</h1>
+    <p class="bs-pagehead__lead">带有这个标签的文章有 1 篇。 <a href="/tags/">查看全部标签 →</a></p>
+  </div>
+  <div class="bs-pagehead__blue" aria-hidden="true">
+    <span class="bs-pagehead__en">TAG</span>
+    <span class="bs-pagehead__big">1</span>
+  </div>
+</header>
+
+<section class="bs-index">
+  
+<div class="bs-years">
+
+  <section class="bs-year" data-year="2026" id="y2026">
+    <h3 class="bs-year__label"><span class="bs-year__num">2026</span><span class="bs-year__count">1 篇</span></h3>
+    
+    <ol class="bs-rows">
+      
+<li class="bs-row" data-cats="嵌入式开发">
+  <a class="bs-row__link" href="/2026/06/15/stm32-mcu-development-notes/">
+    <span class="bs-row__no" data-meta=" · 2026.06.15 · 嵌入式开发 · 1,023 字">NO.09</span>
+    <span class="bs-row__main">
+      <span class="bs-row__title">STM32 单片机开发笔记：从寄存器到物联网通信</span>
+      <span class="bs-row__desc">STM32 单片机开发课程笔记，覆盖 GPIO、中断、USART、I2C、SPI、DMA、ADC、FSMC 等外设，以及 CAN、以太网、Wi-…</span>
+    </span>
+    <span class="bs-row__cats">嵌入式开发</span>
+    <span class="bs-row__date"><time datetime="2026-06-15T02:00:00.000Z">2026.06.15</time></span>
+    <span class="bs-row__len">1,023 字</span>
+    <span class="bs-row__thumb" aria-hidden="true"><svg class="bs-gen" viewBox="0 0 1200 800" preserveAspectRatio="xMinYMid slice" role="img" aria-label="STM32 单片机开发笔记：从寄存器到物联网通信">
+<defs><clipPath id="gghdsbg"><rect x="544.5" y="0" width="655.5" height="800"/></clipPath></defs>
+<rect class="bs-gen__w" width="1200" height="800"/>
+<text class="bs-gen__glyph bs-gen__b" x="274.8" y="688">S</text>
+<g clip-path="url(#gghdsbg)"><rect class="bs-gen__b" width="1200" height="800"/><path d="M23.5 23.5h.01M70.5 23.5h.01M117.5 23.5h.01M164.5 23.5h.01M211.5 23.5h.01M258.5 23.5h.01M305.5 23.5h.01M352.5 23.5h.01M399.5 23.5h.01M446.5 23.5h.01M493.5 23.5h.01M540.5 23.5h.01M587.5 23.5h.01M634.5 23.5h.01M681.5 23.5h.01M728.5 23.5h.01M775.5 23.5h.01M822.5 23.5h.01M869.5 23.5h.01M916.5 23.5h.01M963.5 23.5h.01M1010.5 23.5h.01M1057.5 23.5h.01M1104.5 23.5h.01M1151.5 23.5h.01M1198.5 23.5h.01M23.5 70.5h.01M70.5 70.5h.01M117.5 70.5h.01M164.5 70.5h.01M211.5 70.5h.01M258.5 70.5h.01M305.5 70.5h.01M352.5 70.5h.01M399.5 70.5h.01M446.5 70.5h.01M493.5 70.5h.01M540.5 70.5h.01M587.5 70.5h.01M634.5 70.5h.01M681.5 70.5h.01M728.5 70.5h.01M775.5 70.5h.01M822.5 70.5h.01M869.5 70.5h.01M916.5 70.5h.01M963.5 70.5h.01M1010.5 70.5h.01M1057.5 70.5h.01M1104.5 70.5h.01M1151.5 70.5h.01M1198.5 70.5h.01M23.5 117.5h.01M70.5 117.5h.01M117.5 117.5h.01M164.5 117.5h.01M211.5 117.5h.01M258.5 117.5h.01M305.5 117.5h.01M352.5 117.5h.01M399.5 117.5h.01M446.5 117.5h.01M493.5 117.5h.01M540.5 117.5h.01M587.5 117.5h.01M634.5 117.5h.01M681.5 117.5h.01M728.5 117.5h.01M775.5 117.5h.01M822.5 117.5h.01M869.5 117.5h.01M916.5 117.5h.01M963.5 117.5h.01M1010.5 117.5h.01M1057.5 117.5h.01M1104.5 117.5h.01M1151.5 117.5h.01M1198.5 117.5h.01M23.5 164.5h.01M70.5 164.5h.01M117.5 164.5h.01M164.5 164.5h.01M211.5 164.5h.01M258.5 164.5h.01M305.5 164.5h.01M352.5 164.5h.01M399.5 164.5h.01M446.5 164.5h.01M493.5 164.5h.01M540.5 164.5h.01M587.5 164.5h.01M634.5 164.5h.01M681.5 164.5h.01M728.5 164.5h.01M775.5 164.5h.01M822.5 164.5h.01M869.5 164.5h.01M916.5 164.5h.01M963.5 164.5h.01M1010.5 164.5h.01M1057.5 164.5h.01M1104.5 164.5h.01M1151.5 164.5h.01M1198.5 164.5h.01M23.5 211.5h.01M70.5 211.5h.01M117.5 211.5h.01M164.5 211.5h.01M211.5 211.5h.01M258.5 211.5h.01M305.5 211.5h.01M352.5 211.5h.01M399.5 211.5h.01M446.5 211.5h.01M493.5 211.5h.01M540.5 211.5h.01M587.5 211.5h.01M634.5 211.5h.01M681.5 211.5h.01M728.5 211.5h.01M775.5 211.5h.01M822.5 211.5h.01M869.5 211.5h.01M916.5 211.5h.01M963.5 211.5h.01M1010.5 211.5h.01M1057.5 211.5h.01M1104.5 211.5h.01M1151.5 211.5h.01M1198.5 211.5h.01M23.5 258.5h.01M70.5 258.5h.01M117.5 258.5h.01M164.5 258.5h.01M211.5 258.5h.01M258.5 258.5h.01M305.5 258.5h.01M352.5 258.5h.01M399.5 258.5h.01M446.5 258.5h.01M493.5 258.5h.01M540.5 258.5h.01M587.5 258.5h.01M634.5 258.5h.01M681.5 258.5h.01M728.5 258.5h.01M775.5 258.5h.01M822.5 258.5h.01M869.5 258.5h.01M916.5 258.5h.01M963.5 258.5h.01M1010.5 258.5h.01M1057.5 258.5h.01M1104.5 258.5h.01M1151.5 258.5h.01M1198.5 258.5h.01M23.5 305.5h.01M70.5 305.5h.01M117.5 305.5h.01M164.5 305.5h.01M211.5 305.5h.01M258.5 305.5h.01M305.5 305.5h.01M352.5 305.5h.01M399.5 305.5h.01M446.5 305.5h.01M493.5 305.5h.01M540.5 305.5h.01M587.5 305.5h.01M634.5 305.5h.01M681.5 305.5h.01M728.5 305.5h.01M775.5 305.5h.01M822.5 305.5h.01M869.5 305.5h.01M916.5 305.5h.01M963.5 305.5h.01M1010.5 305.5h.01M1057.5 305.5h.01M1104.5 305.5h.01M1151.5 305.5h.01M1198.5 305.5h.01M23.5 352.5h.01M70.5 352.5h.01M117.5 352.5h.01M164.5 352.5h.01M211.5 352.5h.01M258.5 352.5h.01M305.5 352.5h.01M352.5 352.5h.01M399.5 352.5h.01M446.5 352.5h.01M493.5 352.5h.01M540.5 352.5h.01M587.5 352.5h.01M634.5 352.5h.01M681.5 352.5h.01M728.5 352.5h.01M775.5 352.5h.01M822.5 352.5h.01M869.5 352.5h.01M916.5 352.5h.01M963.5 352.5h.01M1010.5 352.5h.01M1057.5 352.5h.01M1104.5 352.5h.01M1151.5 352.5h.01M1198.5 352.5h.01M23.5 399.5h.01M70.5 399.5h.01M117.5 399.5h.01M164.5 399.5h.01M211.5 399.5h.01M258.5 399.5h.01M305.5 399.5h.01M352.5 399.5h.01M399.5 399.5h.01M446.5 399.5h.01M493.5 399.5h.01M540.5 399.5h.01M587.5 399.5h.01M634.5 399.5h.01M681.5 399.5h.01M728.5 399.5h.01M775.5 399.5h.01M822.5 399.5h.01M869.5 399.5h.01M916.5 399.5h.01M963.5 399.5h.01M1010.5 399.5h.01M1057.5 399.5h.01M1104.5 399.5h.01M1151.5 399.5h.01M1198.5 399.5h.01M23.5 446.5h.01M70.5 446.5h.01M117.5 446.5h.01M164.5 446.5h.01M211.5 446.5h.01M258.5 446.5h.01M305.5 446.5h.01M352.5 446.5h.01M399.5 446.5h.01M446.5 446.5h.01M493.5 446.5h.01M540.5 446.5h.01M587.5 446.5h.01M634.5 446.5h.01M681.5 446.5h.01M728.5 446.5h.01M775.5 446.5h.01M822.5 446.5h.01M869.5 446.5h.01M916.5 446.5h.01M963.5 446.5h.01M1010.5 446.5h.01M1057.5 446.5h.01M1104.5 446.5h.01M1151.5 446.5h.01M1198.5 446.5h.01M23.5 493.5h.01M70.5 493.5h.01M117.5 493.5h.01M164.5 493.5h.01M211.5 493.5h.01M258.5 493.5h.01M305.5 493.5h.01M352.5 493.5h.01M399.5 493.5h.01M446.5 493.5h.01M493.5 493.5h.01M540.5 493.5h.01M587.5 493.5h.01M634.5 493.5h.01M681.5 493.5h.01M728.5 493.5h.01M775.5 493.5h.01M822.5 493.5h.01M869.5 493.5h.01M916.5 493.5h.01M963.5 493.5h.01M1010.5 493.5h.01M1057.5 493.5h.01M1104.5 493.5h.01M1151.5 493.5h.01M1198.5 493.5h.01M23.5 540.5h.01M70.5 540.5h.01M117.5 540.5h.01M164.5 540.5h.01M211.5 540.5h.01M258.5 540.5h.01M305.5 540.5h.01M352.5 540.5h.01M399.5 540.5h.01M446.5 540.5h.01M493.5 540.5h.01M540.5 540.5h.01M587.5 540.5h.01M634.5 540.5h.01M681.5 540.5h.01M728.5 540.5h.01M775.5 540.5h.01M822.5 540.5h.01M869.5 540.5h.01M916.5 540.5h.01M963.5 540.5h.01M1010.5 540.5h.01M1057.5 540.5h.01M1104.5 540.5h.01M1151.5 540.5h.01M1198.5 540.5h.01M23.5 587.5h.01M70.5 587.5h.01M117.5 587.5h.01M164.5 587.5h.01M211.5 587.5h.01M258.5 587.5h.01M305.5 587.5h.01M352.5 587.5h.01M399.5 587.5h.01M446.5 587.5h.01M493.5 587.5h.01M540.5 587.5h.01M587.5 587.5h.01M634.5 587.5h.01M681.5 587.5h.01M728.5 587.5h.01M775.5 587.5h.01M822.5 587.5h.01M869.5 587.5h.01M916.5 587.5h.01M963.5 587.5h.01M1010.5 587.5h.01M1057.5 587.5h.01M1104.5 587.5h.01M1151.5 587.5h.01M1198.5 587.5h.01M23.5 634.5h.01M70.5 634.5h.01M117.5 634.5h.01M164.5 634.5h.01M211.5 634.5h.01M258.5 634.5h.01M305.5 634.5h.01M352.5 634.5h.01M399.5 634.5h.01M446.5 634.5h.01M493.5 634.5h.01M540.5 634.5h.01M587.5 634.5h.01M634.5 634.5h.01M681.5 634.5h.01M728.5 634.5h.01M775.5 634.5h.01M822.5 634.5h.01M869.5 634.5h.01M916.5 634.5h.01M963.5 634.5h.01M1010.5 634.5h.01M1057.5 634.5h.01M1104.5 634.5h.01M1151.5 634.5h.01M1198.5 634.5h.01M23.5 681.5h.01M70.5 681.5h.01M117.5 681.5h.01M164.5 681.5h.01M211.5 681.5h.01M258.5 681.5h.01M305.5 681.5h.01M352.5 681.5h.01M399.5 681.5h.01M446.5 681.5h.01M493.5 681.5h.01M540.5 681.5h.01M587.5 681.5h.01M634.5 681.5h.01M681.5 681.5h.01M728.5 681.5h.01M775.5 681.5h.01M822.5 681.5h.01M869.5 681.5h.01M916.5 681.5h.01M963.5 681.5h.01M1010.5 681.5h.01M1057.5 681.5h.01M1104.5 681.5h.01M1151.5 681.5h.01M1198.5 681.5h.01M23.5 728.5h.01M70.5 728.5h.01M117.5 728.5h.01M164.5 728.5h.01M211.5 728.5h.01M258.5 728.5h.01M305.5 728.5h.01M352.5 728.5h.01M399.5 728.5h.01M446.5 728.5h.01M493.5 728.5h.01M540.5 728.5h.01M587.5 728.5h.01M634.5 728.5h.01M681.5 728.5h.01M728.5 728.5h.01M775.5 728.5h.01M822.5 728.5h.01M869.5 728.5h.01M916.5 728.5h.01M963.5 728.5h.01M1010.5 728.5h.01M1057.5 728.5h.01M1104.5 728.5h.01M1151.5 728.5h.01M1198.5 728.5h.01M23.5 775.5h.01M70.5 775.5h.01M117.5 775.5h.01M164.5 775.5h.01M211.5 775.5h.01M258.5 775.5h.01M305.5 775.5h.01M352.5 775.5h.01M399.5 775.5h.01M446.5 775.5h.01M493.5 775.5h.01M540.5 775.5h.01M587.5 775.5h.01M634.5 775.5h.01M681.5 775.5h.01M728.5 775.5h.01M775.5 775.5h.01M822.5 775.5h.01M869.5 775.5h.01M916.5 775.5h.01M963.5 775.5h.01M1010.5 775.5h.01M1057.5 775.5h.01M1104.5 775.5h.01M1151.5 775.5h.01M1198.5 775.5h.01" class="bs-gen__e" stroke-width="5" stroke-linecap="round" fill="none" opacity=".55"/><text class="bs-gen__glyph bs-gen__w" x="274.8" y="688">S</text></g>
+<text class="bs-gen__label" x="40" y="64">NO.09 / 2026</text>
+</svg></span>
+  </a>
+</li>
+
+    </ol>
+    
+  </section>
+
+</div>
+
+  
+</section>
+</main>
+
+<footer class="bs-footer">
+  <div class="bs-footer__white">
+    <a class="bs-brand bs-brand--footer" href="/">
+      <span class="bs-mark" aria-hidden="true"></span>
+      <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+    </a>
+    <p class="bs-footer__desc">嵌入式软件 / 机器人 / 计算机视觉 / LLM 应用的学习与实践笔记</p>
+    <ul class="bs-footer__social">
+      
+      <li><a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">GitHub</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+    </ul>
+    <p class="bs-footer__meta">
+      © 2026 XiaoGao
+       · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+      · 由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 与 <a href="https://github.com/LiuXiu233/hexo-theme-bisect" target="_blank" rel="noopener">Bisect</a> 主题驱动
+    </p>
+  </div>
+  <div class="bs-footer__blue">
+    
+<p class="bs-slogan bs-slogan--footer">
+  <span class="bs-slogan__zh">从寄存器到推理，把设备、数据与智能连起来。</span>
+  <span class="bs-slogan__en">Build close to the machine. Bring intelligence to the edge.</span>
+</p>
+
+
+    
+    <div class="bs-footer__actions">
+      
+      <a class="bs-btn bs-btn--line" href="#top" data-to-top>回到顶部 ↑</a>
+    </div>
+  </div>
+</footer>
+<script id="bs-config" type="application/json">{"root":"/","search":"/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
+
+<dialog class="bs-search" id="bs-search" aria-label="搜索文章或输入命令">
+  <form class="bs-search__bar" method="dialog" role="search">
+    <span class="bs-search__prompt" aria-hidden="true">&gt;</span>
+    <label class="bs-sr" for="bs-search-input">搜索文章或输入命令</label>
+    <input id="bs-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="搜索标题、正文、标签……  输入 &gt; 查看命令">
+    <button class="bs-search__close" type="submit" aria-label="关闭">esc</button>
+  </form>
+  <ol class="bs-search__list" id="bs-search-list" role="listbox" aria-label="结果"></ol>
+  <p class="bs-search__hint"><span>↑↓ 选择</span><span>↵ 打开</span><span>&gt;theme · &gt;random · &gt;top · &gt;archive</span></p>
+</dialog>
+
+<script type="module" src="/js/bisect.js"></script>
+</body>
+</html>

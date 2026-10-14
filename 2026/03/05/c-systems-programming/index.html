@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>C 语言学习笔记：从语法基础到指针与内存 | XiaoGao 的代码笔记</title>
+<meta name="description" content="一套循序渐进的 C 语言学习笔记，覆盖开发环境、数据类型、流程控制、数组与函数、指针与指针安全、预处理器、动态内存分配与文件操作。">
+<meta name="keywords" content="嵌入式,STM32,FreeRTOS,ROS,OpenCV,机器人,Linux,C语言,Python">
+<meta name="author" content="XiaoGao">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f9fd">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1628">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://xiaogao-code.github.io/2026/03/05/c-systems-programming/">
+<meta name="description" content="一套循序渐进的 C 语言学习笔记，覆盖开发环境、数据类型、流程控制、数组与函数、指针与指针安全、预处理器、动态内存分配与文件操作。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C 语言学习笔记：从语法基础到指针与内存">
+<meta property="og:url" content="https://xiaogao-code.github.io/2026/03/05/c-systems-programming/index.html">
+<meta property="og:site_name" content="XiaoGao 的代码笔记">
+<meta property="og:description" content="一套循序渐进的 C 语言学习笔记，覆盖开发环境、数据类型、流程控制、数组与函数、指针与指针安全、预处理器、动态内存分配与文件操作。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-03-05T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-14T11:01:50.000Z">
+<meta property="article:author" content="XiaoGao">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="内存管理">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="指针">
+<meta property="article:tag" content="文件操作">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('bs-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+    document.documentElement.classList.add('js');
+    addEventListener('pagereveal', function (e) {
+      if (e.viewTransition) { e.viewTransition.ready.catch(function () {}); e.viewTransition.finished.catch(function () {}); }
+    });
+  })();
+</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400..900&family=Noto+Sans+SC:wght@900&display=swap">
+
+<link rel="stylesheet" href="/css/bisect.css">
+<link rel="alternate" type="application/atom+xml" title="XiaoGao 的代码笔记" href="/atom.xml">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.xml"}}]},"eagerness":"moderate"}]}
+</script>
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="is-post">
+<a class="bs-skip" href="#main">跳到正文</a>
+<svg class="bs-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <!-- 列表里的图片统一压成深空—分界蓝—冰白三色调 -->
+  <filter id="bs-duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues=".059 .090 .957"/>
+      <feFuncG type="table" tableValues=".090 .278 .976"/>
+      <feFuncB type="table" tableValues=".165 .902 .992"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+
+<header class="bs-header" data-header>
+  <a class="bs-brand" href="/" aria-label="XiaoGao 的代码笔记 首页">
+    <span class="bs-mark" aria-hidden="true"></span>
+    <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+  </a>
+  <nav class="bs-nav" id="bs-nav" aria-label="主导航">
+    <ul>
+      
+      <li>
+        <a href="/" aria-current="page">
+          <span class="bs-nav__no">01</span>
+          <span class="bs-nav__zh">文章</span>
+          <span class="bs-nav__en">Posts</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives/">
+          <span class="bs-nav__no">02</span>
+          <span class="bs-nav__zh">归档</span>
+          <span class="bs-nav__en">Archive</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/">
+          <span class="bs-nav__no">03</span>
+          <span class="bs-nav__zh">分类</span>
+          <span class="bs-nav__en">Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/">
+          <span class="bs-nav__no">04</span>
+          <span class="bs-nav__zh">标签</span>
+          <span class="bs-nav__en">Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about/">
+          <span class="bs-nav__no">05</span>
+          <span class="bs-nav__zh">关于</span>
+          <span class="bs-nav__en">About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">
+          <span class="bs-nav__no">06</span>
+          <span class="bs-nav__zh">GitHub</span>
+          <span class="bs-nav__en">Code ↗</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+  <div class="bs-tools">
+    <button class="bs-tool bs-tool--search" type="button" data-search-open aria-label="搜索">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <kbd>⌘K</kbd>
+    </button>
+    <button class="bs-tool bs-tool--theme" type="button" data-theme-toggle aria-label="切换深浅色">
+      <span class="bs-halfdot" aria-hidden="true"></span>
+    </button>
+    <button class="bs-tool bs-tool--menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="bs-nav">
+      <span class="bs-burger" aria-hidden="true"></span><span class="bs-sr">菜单</span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<article class="bs-post" data-font="sans">
+  <header class="bs-phead">
+    <div class="bs-phead__text">
+      <p class="bs-kicker">NO.01 · <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a></p>
+      <h1 class="bs-phead__title">C 语言学习笔记：从语法基础到指针与内存</h1>
+      <p class="bs-phead__desc">一套循序渐进的 C 语言学习笔记，覆盖开发环境、数据类型、流程控制、数组与函数、指针与指针安全、预处理器、动态内存分配与文件操作。</p>
+      <dl class="bs-phead__meta">
+        <div><dt>发布 DATE</dt><dd><time datetime="2026-03-05T02:00:00.000Z">2026.03.05</time></dd></div>
+        <div><dt>字数 WORDS</dt><dd>957</dd></div>
+        <div><dt>阅读 READ</dt><dd>3 分钟</dd></div>
+      </dl>
+    </div>
+    <figure class="bs-phead__cover" aria-hidden="true">
+      <svg class="bs-gen" viewBox="0 0 1200 800" preserveAspectRatio="xMinYMid slice" role="img" aria-label="C 语言学习笔记：从语法基础到指针与内存">
+<defs><clipPath id="gbj7azw"><rect x="514.7" y="0" width="685.3" height="800"/></clipPath></defs>
+<rect class="bs-gen__w" width="1200" height="800"/>
+<text class="bs-gen__glyph bs-gen__b" x="292.3" y="688">C</text>
+<g clip-path="url(#gbj7azw)"><rect class="bs-gen__b" width="1200" height="800"/><path d="M24 24h.01M72 24h.01M120 24h.01M168 24h.01M216 24h.01M264 24h.01M312 24h.01M360 24h.01M408 24h.01M456 24h.01M504 24h.01M552 24h.01M600 24h.01M648 24h.01M696 24h.01M744 24h.01M792 24h.01M840 24h.01M888 24h.01M936 24h.01M984 24h.01M1032 24h.01M1080 24h.01M1128 24h.01M1176 24h.01M24 72h.01M72 72h.01M120 72h.01M168 72h.01M216 72h.01M264 72h.01M312 72h.01M360 72h.01M408 72h.01M456 72h.01M504 72h.01M552 72h.01M600 72h.01M648 72h.01M696 72h.01M744 72h.01M792 72h.01M840 72h.01M888 72h.01M936 72h.01M984 72h.01M1032 72h.01M1080 72h.01M1128 72h.01M1176 72h.01M24 120h.01M72 120h.01M120 120h.01M168 120h.01M216 120h.01M264 120h.01M312 120h.01M360 120h.01M408 120h.01M456 120h.01M504 120h.01M552 120h.01M600 120h.01M648 120h.01M696 120h.01M744 120h.01M792 120h.01M840 120h.01M888 120h.01M936 120h.01M984 120h.01M1032 120h.01M1080 120h.01M1128 120h.01M1176 120h.01M24 168h.01M72 168h.01M120 168h.01M168 168h.01M216 168h.01M264 168h.01M312 168h.01M360 168h.01M408 168h.01M456 168h.01M504 168h.01M552 168h.01M600 168h.01M648 168h.01M696 168h.01M744 168h.01M792 168h.01M840 168h.01M888 168h.01M936 168h.01M984 168h.01M1032 168h.01M1080 168h.01M1128 168h.01M1176 168h.01M24 216h.01M72 216h.01M120 216h.01M168 216h.01M216 216h.01M264 216h.01M312 216h.01M360 216h.01M408 216h.01M456 216h.01M504 216h.01M552 216h.01M600 216h.01M648 216h.01M696 216h.01M744 216h.01M792 216h.01M840 216h.01M888 216h.01M936 216h.01M984 216h.01M1032 216h.01M1080 216h.01M1128 216h.01M1176 216h.01M24 264h.01M72 264h.01M120 264h.01M168 264h.01M216 264h.01M264 264h.01M312 264h.01M360 264h.01M408 264h.01M456 264h.01M504 264h.01M552 264h.01M600 264h.01M648 264h.01M696 264h.01M744 264h.01M792 264h.01M840 264h.01M888 264h.01M936 264h.01M984 264h.01M1032 264h.01M1080 264h.01M1128 264h.01M1176 264h.01M24 312h.01M72 312h.01M120 312h.01M168 312h.01M216 312h.01M264 312h.01M312 312h.01M360 312h.01M408 312h.01M456 312h.01M504 312h.01M552 312h.01M600 312h.01M648 312h.01M696 312h.01M744 312h.01M792 312h.01M840 312h.01M888 312h.01M936 312h.01M984 312h.01M1032 312h.01M1080 312h.01M1128 312h.01M1176 312h.01M24 360h.01M72 360h.01M120 360h.01M168 360h.01M216 360h.01M264 360h.01M312 360h.01M360 360h.01M408 360h.01M456 360h.01M504 360h.01M552 360h.01M600 360h.01M648 360h.01M696 360h.01M744 360h.01M792 360h.01M840 360h.01M888 360h.01M936 360h.01M984 360h.01M1032 360h.01M1080 360h.01M1128 360h.01M1176 360h.01M24 408h.01M72 408h.01M120 408h.01M168 408h.01M216 408h.01M264 408h.01M312 408h.01M360 408h.01M408 408h.01M456 408h.01M504 408h.01M552 408h.01M600 408h.01M648 408h.01M696 408h.01M744 408h.01M792 408h.01M840 408h.01M888 408h.01M936 408h.01M984 408h.01M1032 408h.01M1080 408h.01M1128 408h.01M1176 408h.01M24 456h.01M72 456h.01M120 456h.01M168 456h.01M216 456h.01M264 456h.01M312 456h.01M360 456h.01M408 456h.01M456 456h.01M504 456h.01M552 456h.01M600 456h.01M648 456h.01M696 456h.01M744 456h.01M792 456h.01M840 456h.01M888 456h.01M936 456h.01M984 456h.01M1032 456h.01M1080 456h.01M1128 456h.01M1176 456h.01M24 504h.01M72 504h.01M120 504h.01M168 504h.01M216 504h.01M264 504h.01M312 504h.01M360 504h.01M408 504h.01M456 504h.01M504 504h.01M552 504h.01M600 504h.01M648 504h.01M696 504h.01M744 504h.01M792 504h.01M840 504h.01M888 504h.01M936 504h.01M984 504h.01M1032 504h.01M1080 504h.01M1128 504h.01M1176 504h.01M24 552h.01M72 552h.01M120 552h.01M168 552h.01M216 552h.01M264 552h.01M312 552h.01M360 552h.01M408 552h.01M456 552h.01M504 552h.01M552 552h.01M600 552h.01M648 552h.01M696 552h.01M744 552h.01M792 552h.01M840 552h.01M888 552h.01M936 552h.01M984 552h.01M1032 552h.01M1080 552h.01M1128 552h.01M1176 552h.01M24 600h.01M72 600h.01M120 600h.01M168 600h.01M216 600h.01M264 600h.01M312 600h.01M360 600h.01M408 600h.01M456 600h.01M504 600h.01M552 600h.01M600 600h.01M648 600h.01M696 600h.01M744 600h.01M792 600h.01M840 600h.01M888 600h.01M936 600h.01M984 600h.01M1032 600h.01M1080 600h.01M1128 600h.01M1176 600h.01M24 648h.01M72 648h.01M120 648h.01M168 648h.01M216 648h.01M264 648h.01M312 648h.01M360 648h.01M408 648h.01M456 648h.01M504 648h.01M552 648h.01M600 648h.01M648 648h.01M696 648h.01M744 648h.01M792 648h.01M840 648h.01M888 648h.01M936 648h.01M984 648h.01M1032 648h.01M1080 648h.01M1128 648h.01M1176 648h.01M24 696h.01M72 696h.01M120 696h.01M168 696h.01M216 696h.01M264 696h.01M312 696h.01M360 696h.01M408 696h.01M456 696h.01M504 696h.01M552 696h.01M600 696h.01M648 696h.01M696 696h.01M744 696h.01M792 696h.01M840 696h.01M888 696h.01M936 696h.01M984 696h.01M1032 696h.01M1080 696h.01M1128 696h.01M1176 696h.01M24 744h.01M72 744h.01M120 744h.01M168 744h.01M216 744h.01M264 744h.01M312 744h.01M360 744h.01M408 744h.01M456 744h.01M504 744h.01M552 744h.01M600 744h.01M648 744h.01M696 744h.01M744 744h.01M792 744h.01M840 744h.01M888 744h.01M936 744h.01M984 744h.01M1032 744h.01M1080 744h.01M1128 744h.01M1176 744h.01M24 792h.01M72 792h.01M120 792h.01M168 792h.01M216 792h.01M264 792h.01M312 792h.01M360 792h.01M408 792h.01M456 792h.01M504 792h.01M552 792h.01M600 792h.01M648 792h.01M696 792h.01M744 792h.01M792 792h.01M840 792h.01M888 792h.01M936 792h.01M984 792h.01M1032 792h.01M1080 792h.01M1128 792h.01M1176 792h.01" class="bs-gen__e" stroke-width="5" stroke-linecap="round" fill="none" opacity=".55"/><text class="bs-gen__glyph bs-gen__w" x="292.3" y="688">C</text></g>
+<text class="bs-gen__label" x="40" y="64">NO.01 / 2026</text>
+</svg>
+    </figure>
+  </header>
+
+  <div class="bs-post__layout">
+    <aside class="bs-rail" aria-label="阅读进度与目录">
+      <div class="bs-rail__inner">
+        <a class="bs-progress" href="#top" data-to-top aria-label="回到顶部"><span class="bs-progress__fill"></span></a>
+        
+        <p class="bs-rail__label">目录 · CONTENTS</p>
+        <ol class="bs-toc"><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF"><span class="bs-toc-number">1.</span> <span class="bs-toc-text">学习路线</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E7%AC%94%E8%AE%B0-01%EF%BC%9A%E5%85%A5%E9%97%A8%E4%B8%8E%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95"><span class="bs-toc-number">2.</span> <span class="bs-toc-text">笔记 01：入门与基础语法</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E7%AC%94%E8%AE%B0-02%EF%BC%9A%E6%8C%87%E9%92%88%E3%80%81%E5%86%85%E5%AD%98%E4%B8%8E%E6%96%87%E4%BB%B6"><span class="bs-toc-number">3.</span> <span class="bs-toc-text">笔记 02：指针、内存与文件</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="bs-toc-number">4.</span> <span class="bs-toc-text">开发环境</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E9%98%85%E8%AF%BB%E5%BB%BA%E8%AE%AE"><span class="bs-toc-number">5.</span> <span class="bs-toc-text">阅读建议</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%BB%93%E5%BA%93"><span class="bs-toc-number">6.</span> <span class="bs-toc-text">仓库</span></a></li></ol>
+        
+      </div>
+    </aside>
+    <div class="bs-prose" data-prose>
+      <p>C 语言是嵌入式开发的起点，也是理解内存、编译与硬件之间关系的第一扇门。这套笔记从编程基础和开发环境开始，逐步覆盖 C 语言的核心语法、数据类型、指针、动态内存和文件操作，适合系统学习、课堂复习和编写 C 语言练习程序。</p>
+<span id="more"></span>
+
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><p>建议按照以下顺序阅读：</p>
+<ol>
+<li>了解程序、编程语言和 C 语言的发展背景；</li>
+<li>配置 C 语言开发环境，完成第一个 C 程序；</li>
+<li>学习变量、常量、进制、数据类型和类型转换；</li>
+<li>掌握运算符、表达式和程序控制语句；</li>
+<li>学习数组、字符串、函数和作用域；</li>
+<li>理解指针、指针与数组的关系，以及函数指针；</li>
+<li>学习预处理器、自定义数据类型和结构化数据；</li>
+<li>掌握动态内存分配和基本文件操作；</li>
+<li>使用断点调试和课后练习巩固知识。</li>
+</ol>
+<h2 id="笔记-01：入门与基础语法"><a href="#笔记-01：入门与基础语法" class="headerlink" title="笔记 01：入门与基础语法"></a>笔记 01：入门与基础语法</h2><p>第一份笔记覆盖 C 语言入门和基础语法：</p>
+<ul>
+<li><strong>C 语言概述</strong>：程序的概念、计算机语言简史、C 语言的发展与发行版本；</li>
+<li><strong>开发快速入门</strong>：开发工具选择、MinGW-w64 安装、VS Code 安装与配置；</li>
+<li><strong>第一个 C 程序</strong>：创建、编译、运行和分析 <code>Hello World</code>；</li>
+<li><strong>程序运行机制</strong>：预处理、编译、汇编、链接和运行；</li>
+<li><strong>变量与常量</strong>：变量声明、输入输出、标识符、关键字、<code>#define</code> 和 <code>const</code>；</li>
+<li><strong>二进制与进制转换</strong>：二进制、十进制、十六进制，以及原码、反码和补码；</li>
+<li><strong>数据类型</strong>：整数、浮点数、字符、布尔类型、格式占位符和类型转换；</li>
+<li><strong>运算符</strong>：算术、关系、逻辑、赋值、位运算、三元运算符和优先级；</li>
+<li><strong>程序控制语句</strong>：顺序、分支、<code>switch</code>、<code>while</code>、<code>do...while</code>、<code>for</code>、嵌套循环及跳转控制；</li>
+<li><strong>断点调试</strong>：断点设置、逐过程调试和逐断点调试。</li>
+</ul>
+<h2 id="笔记-02：指针、内存与文件"><a href="#笔记-02：指针、内存与文件" class="headerlink" title="笔记 02：指针、内存与文件"></a>笔记 02：指针、内存与文件</h2><p>第二份笔记在基础语法之上继续介绍 C 语言的核心能力：</p>
+<ul>
+<li><strong>数组与字符串</strong>：一维数组、字符数组、多维数组、数组遍历和数组越界；</li>
+<li><strong>函数</strong>：函数声明、调用、参数、返回值、函数原型和作用域；</li>
+<li><strong>递归与常用函数</strong>：递归函数，以及字符串、输入输出、日期时间和数学函数；</li>
+<li><strong>指针</strong>：地址、解引用、指针运算、指针与数组、字符指针、函数指针和多级指针；</li>
+<li><strong>指针安全</strong>：空指针、野指针、指针越界和释放后使用等常见问题；</li>
+<li><strong>预处理器</strong>：宏定义、带参数的宏、文件包含和条件编译；</li>
+<li><strong>自定义数据类型</strong>：枚举、结构体、共用体和 <code>typedef</code>；</li>
+<li><strong>动态内存分配</strong>：<code>void *</code>、<code>malloc</code>、<code>calloc</code>、<code>realloc</code>、<code>free</code> 以及内存管理原则；</li>
+<li><strong>文件操作</strong>：标准输入输出、文件打开与关闭、文件读写和常用文件函数。</li>
+</ul>
+<h2 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h2><p>笔记以 Windows 环境下的 C 语言开发为主要示例，推荐使用：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://code.visualstudio.com/">Visual Studio Code</a>：编辑 C 语言源代码；</li>
+<li><a target="_blank" rel="noopener" href="https://www.mingw-w64.org/">MinGW-w64</a>：提供 GCC 编译器工具链；</li>
+<li>VS Code 的 <strong>C&#x2F;C++ Extension Pack</strong>：提供代码编辑、编译和调试支持。</li>
+</ul>
+<p>也可以根据个人习惯选择 Visual Studio、Code::Blocks、CLion 或在线 C 编译器。</p>
+<h2 id="阅读建议"><a href="#阅读建议" class="headerlink" title="阅读建议"></a>阅读建议</h2><ul>
+<li>先通读概念，再运行文档中的代码示例；</li>
+<li>为每个章节单独创建练习目录，记录编译器输出和调试过程；</li>
+<li>重点练习指针、数组、函数和动态内存之间的关系；</li>
+<li>涉及编译器、操作系统或平台差异的内容，应结合当前开发环境进行验证。</li>
+</ul>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><p>笔记与文档源码见 GitHub 仓库：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ashleycurry/c-systems-programming-handbook">c-systems-programming-handbook</a></li>
+</ul>
+
+    </div>
+  </div>
+
+  <footer class="bs-pfoot">
+    
+    <ul class="bs-tags" aria-label="标签">
+      <li><a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">#内存管理</a></li><li><a href="/tags/C/">#C</a></li><li><a href="/tags/%E6%8C%87%E9%92%88/">#指针</a></li><li><a href="/tags/%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">#文件操作</a></li><li><a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">#学习笔记</a></li>
+    </ul>
+    
+    <div class="bs-pfoot__grid">
+      
+      <p class="bs-license">
+        <span class="bs-kicker">LICENSE</span>
+        本文作者 XiaoGao，采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可。
+        转载请注明出处：<a href="https://xiaogao-code.github.io/2026/03/05/c-systems-programming/">https:&#x2F;&#x2F;xiaogao-code.github.io&#x2F;2026&#x2F;03&#x2F;05&#x2F;c-systems-programming&#x2F;</a>
+      </p>
+      
+      
+      
+    </div>
+  </footer>
+
+  <nav class="bs-pnav" aria-label="分页">
+    
+    <a class="bs-pnav__item bs-pnav__item--newer" href="/2026/03/18/cpp-learning-notes/" rel="prev">
+      <span class="bs-kicker">← 较新 NEWER</span><span class="bs-pnav__t">C++ 学习笔记：类与对象、模板与 STL 的完整路线</span>
+    </a>
+    
+    <span class="bs-pnav__item bs-pnav__item--older is-empty"><span class="bs-kicker">这是最早的一篇</span></span>
+  </nav>
+
+  
+</article>
+</main>
+
+<footer class="bs-footer">
+  <div class="bs-footer__white">
+    <a class="bs-brand bs-brand--footer" href="/">
+      <span class="bs-mark" aria-hidden="true"></span>
+      <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+    </a>
+    <p class="bs-footer__desc">嵌入式软件 / 机器人 / 计算机视觉 / LLM 应用的学习与实践笔记</p>
+    <ul class="bs-footer__social">
+      
+      <li><a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">GitHub</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+    </ul>
+    <p class="bs-footer__meta">
+      © 2026 XiaoGao
+       · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+      · 由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 与 <a href="https://github.com/LiuXiu233/hexo-theme-bisect" target="_blank" rel="noopener">Bisect</a> 主题驱动
+    </p>
+  </div>
+  <div class="bs-footer__blue">
+    
+<p class="bs-slogan bs-slogan--footer">
+  <span class="bs-slogan__zh">从寄存器到推理，把设备、数据与智能连起来。</span>
+  <span class="bs-slogan__en">Build close to the machine. Bring intelligence to the edge.</span>
+</p>
+
+
+    
+    <div class="bs-footer__actions">
+      
+      <a class="bs-btn bs-btn--line" href="#top" data-to-top>回到顶部 ↑</a>
+    </div>
+  </div>
+</footer>
+<script id="bs-config" type="application/json">{"root":"/","search":"/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
+
+<dialog class="bs-search" id="bs-search" aria-label="搜索文章或输入命令">
+  <form class="bs-search__bar" method="dialog" role="search">
+    <span class="bs-search__prompt" aria-hidden="true">&gt;</span>
+    <label class="bs-sr" for="bs-search-input">搜索文章或输入命令</label>
+    <input id="bs-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="搜索标题、正文、标签……  输入 &gt; 查看命令">
+    <button class="bs-search__close" type="submit" aria-label="关闭">esc</button>
+  </form>
+  <ol class="bs-search__list" id="bs-search-list" role="listbox" aria-label="结果"></ol>
+  <p class="bs-search__hint"><span>↑↓ 选择</span><span>↵ 打开</span><span>&gt;theme · &gt;random · &gt;top · &gt;archive</span></p>
+</dialog>
+
+<script type="module" src="/js/bisect.js"></script>
+</body>
+</html>

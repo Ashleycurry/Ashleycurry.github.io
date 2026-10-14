@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Linux、Shell 与正则表达式：文本处理三件套 | XiaoGao 的代码笔记</title>
+<meta name="description" content="Linux（Ubuntu）系统管理、Shell 脚本编程与正则表达式语法笔记，涵盖文件权限、进程管理、crontab、条件循环、awk 文本处理与正则元字符速查。">
+<meta name="keywords" content="嵌入式,STM32,FreeRTOS,ROS,OpenCV,机器人,Linux,C语言,Python">
+<meta name="author" content="XiaoGao">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f9fd">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1628">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://xiaogao-code.github.io/2026/07/10/linux-shell-regex/">
+<meta name="description" content="Linux（Ubuntu）系统管理、Shell 脚本编程与正则表达式语法笔记，涵盖文件权限、进程管理、crontab、条件循环、awk 文本处理与正则元字符速查。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux、Shell 与正则表达式：文本处理三件套">
+<meta property="og:url" content="https://xiaogao-code.github.io/2026/07/10/linux-shell-regex/index.html">
+<meta property="og:site_name" content="XiaoGao 的代码笔记">
+<meta property="og:description" content="Linux（Ubuntu）系统管理、Shell 脚本编程与正则表达式语法笔记，涵盖文件权限、进程管理、crontab、条件循环、awk 文本处理与正则元字符速查。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-07-10T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-14T11:03:34.000Z">
+<meta property="article:author" content="XiaoGao">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Shell">
+<meta property="article:tag" content="Ubuntu">
+<meta property="article:tag" content="awk">
+<meta property="article:tag" content="grep">
+<meta property="article:tag" content="正则表达式">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('bs-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+    document.documentElement.classList.add('js');
+    addEventListener('pagereveal', function (e) {
+      if (e.viewTransition) { e.viewTransition.ready.catch(function () {}); e.viewTransition.finished.catch(function () {}); }
+    });
+  })();
+</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400..900&family=Noto+Sans+SC:wght@900&display=swap">
+
+<link rel="stylesheet" href="/css/bisect.css">
+<link rel="alternate" type="application/atom+xml" title="XiaoGao 的代码笔记" href="/atom.xml">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.xml"}}]},"eagerness":"moderate"}]}
+</script>
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="is-post">
+<a class="bs-skip" href="#main">跳到正文</a>
+<svg class="bs-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <!-- 列表里的图片统一压成深空—分界蓝—冰白三色调 -->
+  <filter id="bs-duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues=".059 .090 .957"/>
+      <feFuncG type="table" tableValues=".090 .278 .976"/>
+      <feFuncB type="table" tableValues=".165 .902 .992"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+
+<header class="bs-header" data-header>
+  <a class="bs-brand" href="/" aria-label="XiaoGao 的代码笔记 首页">
+    <span class="bs-mark" aria-hidden="true"></span>
+    <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+  </a>
+  <nav class="bs-nav" id="bs-nav" aria-label="主导航">
+    <ul>
+      
+      <li>
+        <a href="/" aria-current="page">
+          <span class="bs-nav__no">01</span>
+          <span class="bs-nav__zh">文章</span>
+          <span class="bs-nav__en">Posts</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives/">
+          <span class="bs-nav__no">02</span>
+          <span class="bs-nav__zh">归档</span>
+          <span class="bs-nav__en">Archive</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/">
+          <span class="bs-nav__no">03</span>
+          <span class="bs-nav__zh">分类</span>
+          <span class="bs-nav__en">Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/">
+          <span class="bs-nav__no">04</span>
+          <span class="bs-nav__zh">标签</span>
+          <span class="bs-nav__en">Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about/">
+          <span class="bs-nav__no">05</span>
+          <span class="bs-nav__zh">关于</span>
+          <span class="bs-nav__en">About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">
+          <span class="bs-nav__no">06</span>
+          <span class="bs-nav__zh">GitHub</span>
+          <span class="bs-nav__en">Code ↗</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+  <div class="bs-tools">
+    <button class="bs-tool bs-tool--search" type="button" data-search-open aria-label="搜索">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <kbd>⌘K</kbd>
+    </button>
+    <button class="bs-tool bs-tool--theme" type="button" data-theme-toggle aria-label="切换深浅色">
+      <span class="bs-halfdot" aria-hidden="true"></span>
+    </button>
+    <button class="bs-tool bs-tool--menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="bs-nav">
+      <span class="bs-burger" aria-hidden="true"></span><span class="bs-sr">菜单</span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<article class="bs-post" data-font="sans">
+  <header class="bs-phead">
+    <div class="bs-phead__text">
+      <p class="bs-kicker">NO.11 · <a href="/categories/Linux-%E4%B8%8E%E5%B7%A5%E5%85%B7/">Linux 与工具</a></p>
+      <h1 class="bs-phead__title">Linux、Shell 与正则表达式：文本处理三件套</h1>
+      <p class="bs-phead__desc">Linux（Ubuntu）系统管理、Shell 脚本编程与正则表达式语法笔记，涵盖文件权限、进程管理、crontab、条件循环、awk 文本处理与正则元字符速查。</p>
+      <dl class="bs-phead__meta">
+        <div><dt>发布 DATE</dt><dd><time datetime="2026-07-10T02:00:00.000Z">2026.07.10</time></dd></div>
+        <div><dt>字数 WORDS</dt><dd>891</dd></div>
+        <div><dt>阅读 READ</dt><dd>2 分钟</dd></div>
+      </dl>
+    </div>
+    <figure class="bs-phead__cover" aria-hidden="true">
+      <svg class="bs-gen" viewBox="0 0 1200 800" preserveAspectRatio="xMinYMid slice" role="img" aria-label="Linux、Shell 与正则表达式：文本处理三件套">
+<defs><clipPath id="gfn1lmo"><rect x="506.1" y="0" width="693.9" height="800"/></clipPath></defs>
+<rect class="bs-gen__w" width="1200" height="800"/>
+<text class="bs-gen__glyph bs-gen__b" x="312.6" y="688">L</text>
+<g clip-path="url(#gfn1lmo)"><rect class="bs-gen__b" width="1200" height="800"/><path d="M20.5 20.5h.01M61.5 20.5h.01M102.5 20.5h.01M143.5 20.5h.01M184.5 20.5h.01M225.5 20.5h.01M266.5 20.5h.01M307.5 20.5h.01M348.5 20.5h.01M389.5 20.5h.01M430.5 20.5h.01M471.5 20.5h.01M512.5 20.5h.01M553.5 20.5h.01M594.5 20.5h.01M635.5 20.5h.01M676.5 20.5h.01M717.5 20.5h.01M758.5 20.5h.01M799.5 20.5h.01M840.5 20.5h.01M881.5 20.5h.01M922.5 20.5h.01M963.5 20.5h.01M1004.5 20.5h.01M1045.5 20.5h.01M1086.5 20.5h.01M1127.5 20.5h.01M1168.5 20.5h.01M20.5 61.5h.01M61.5 61.5h.01M102.5 61.5h.01M143.5 61.5h.01M184.5 61.5h.01M225.5 61.5h.01M266.5 61.5h.01M307.5 61.5h.01M348.5 61.5h.01M389.5 61.5h.01M430.5 61.5h.01M471.5 61.5h.01M512.5 61.5h.01M553.5 61.5h.01M594.5 61.5h.01M635.5 61.5h.01M676.5 61.5h.01M717.5 61.5h.01M758.5 61.5h.01M799.5 61.5h.01M840.5 61.5h.01M881.5 61.5h.01M922.5 61.5h.01M963.5 61.5h.01M1004.5 61.5h.01M1045.5 61.5h.01M1086.5 61.5h.01M1127.5 61.5h.01M1168.5 61.5h.01M20.5 102.5h.01M61.5 102.5h.01M102.5 102.5h.01M143.5 102.5h.01M184.5 102.5h.01M225.5 102.5h.01M266.5 102.5h.01M307.5 102.5h.01M348.5 102.5h.01M389.5 102.5h.01M430.5 102.5h.01M471.5 102.5h.01M512.5 102.5h.01M553.5 102.5h.01M594.5 102.5h.01M635.5 102.5h.01M676.5 102.5h.01M717.5 102.5h.01M758.5 102.5h.01M799.5 102.5h.01M840.5 102.5h.01M881.5 102.5h.01M922.5 102.5h.01M963.5 102.5h.01M1004.5 102.5h.01M1045.5 102.5h.01M1086.5 102.5h.01M1127.5 102.5h.01M1168.5 102.5h.01M20.5 143.5h.01M61.5 143.5h.01M102.5 143.5h.01M143.5 143.5h.01M184.5 143.5h.01M225.5 143.5h.01M266.5 143.5h.01M307.5 143.5h.01M348.5 143.5h.01M389.5 143.5h.01M430.5 143.5h.01M471.5 143.5h.01M512.5 143.5h.01M553.5 143.5h.01M594.5 143.5h.01M635.5 143.5h.01M676.5 143.5h.01M717.5 143.5h.01M758.5 143.5h.01M799.5 143.5h.01M840.5 143.5h.01M881.5 143.5h.01M922.5 143.5h.01M963.5 143.5h.01M1004.5 143.5h.01M1045.5 143.5h.01M1086.5 143.5h.01M1127.5 143.5h.01M1168.5 143.5h.01M20.5 184.5h.01M61.5 184.5h.01M102.5 184.5h.01M143.5 184.5h.01M184.5 184.5h.01M225.5 184.5h.01M266.5 184.5h.01M307.5 184.5h.01M348.5 184.5h.01M389.5 184.5h.01M430.5 184.5h.01M471.5 184.5h.01M512.5 184.5h.01M553.5 184.5h.01M594.5 184.5h.01M635.5 184.5h.01M676.5 184.5h.01M717.5 184.5h.01M758.5 184.5h.01M799.5 184.5h.01M840.5 184.5h.01M881.5 184.5h.01M922.5 184.5h.01M963.5 184.5h.01M1004.5 184.5h.01M1045.5 184.5h.01M1086.5 184.5h.01M1127.5 184.5h.01M1168.5 184.5h.01M20.5 225.5h.01M61.5 225.5h.01M102.5 225.5h.01M143.5 225.5h.01M184.5 225.5h.01M225.5 225.5h.01M266.5 225.5h.01M307.5 225.5h.01M348.5 225.5h.01M389.5 225.5h.01M430.5 225.5h.01M471.5 225.5h.01M512.5 225.5h.01M553.5 225.5h.01M594.5 225.5h.01M635.5 225.5h.01M676.5 225.5h.01M717.5 225.5h.01M758.5 225.5h.01M799.5 225.5h.01M840.5 225.5h.01M881.5 225.5h.01M922.5 225.5h.01M963.5 225.5h.01M1004.5 225.5h.01M1045.5 225.5h.01M1086.5 225.5h.01M1127.5 225.5h.01M1168.5 225.5h.01M20.5 266.5h.01M61.5 266.5h.01M102.5 266.5h.01M143.5 266.5h.01M184.5 266.5h.01M225.5 266.5h.01M266.5 266.5h.01M307.5 266.5h.01M348.5 266.5h.01M389.5 266.5h.01M430.5 266.5h.01M471.5 266.5h.01M512.5 266.5h.01M553.5 266.5h.01M594.5 266.5h.01M635.5 266.5h.01M676.5 266.5h.01M717.5 266.5h.01M758.5 266.5h.01M799.5 266.5h.01M840.5 266.5h.01M881.5 266.5h.01M922.5 266.5h.01M963.5 266.5h.01M1004.5 266.5h.01M1045.5 266.5h.01M1086.5 266.5h.01M1127.5 266.5h.01M1168.5 266.5h.01M20.5 307.5h.01M61.5 307.5h.01M102.5 307.5h.01M143.5 307.5h.01M184.5 307.5h.01M225.5 307.5h.01M266.5 307.5h.01M307.5 307.5h.01M348.5 307.5h.01M389.5 307.5h.01M430.5 307.5h.01M471.5 307.5h.01M512.5 307.5h.01M553.5 307.5h.01M594.5 307.5h.01M635.5 307.5h.01M676.5 307.5h.01M717.5 307.5h.01M758.5 307.5h.01M799.5 307.5h.01M840.5 307.5h.01M881.5 307.5h.01M922.5 307.5h.01M963.5 307.5h.01M1004.5 307.5h.01M1045.5 307.5h.01M1086.5 307.5h.01M1127.5 307.5h.01M1168.5 307.5h.01M20.5 348.5h.01M61.5 348.5h.01M102.5 348.5h.01M143.5 348.5h.01M184.5 348.5h.01M225.5 348.5h.01M266.5 348.5h.01M307.5 348.5h.01M348.5 348.5h.01M389.5 348.5h.01M430.5 348.5h.01M471.5 348.5h.01M512.5 348.5h.01M553.5 348.5h.01M594.5 348.5h.01M635.5 348.5h.01M676.5 348.5h.01M717.5 348.5h.01M758.5 348.5h.01M799.5 348.5h.01M840.5 348.5h.01M881.5 348.5h.01M922.5 348.5h.01M963.5 348.5h.01M1004.5 348.5h.01M1045.5 348.5h.01M1086.5 348.5h.01M1127.5 348.5h.01M1168.5 348.5h.01M20.5 389.5h.01M61.5 389.5h.01M102.5 389.5h.01M143.5 389.5h.01M184.5 389.5h.01M225.5 389.5h.01M266.5 389.5h.01M307.5 389.5h.01M348.5 389.5h.01M389.5 389.5h.01M430.5 389.5h.01M471.5 389.5h.01M512.5 389.5h.01M553.5 389.5h.01M594.5 389.5h.01M635.5 389.5h.01M676.5 389.5h.01M717.5 389.5h.01M758.5 389.5h.01M799.5 389.5h.01M840.5 389.5h.01M881.5 389.5h.01M922.5 389.5h.01M963.5 389.5h.01M1004.5 389.5h.01M1045.5 389.5h.01M1086.5 389.5h.01M1127.5 389.5h.01M1168.5 389.5h.01M20.5 430.5h.01M61.5 430.5h.01M102.5 430.5h.01M143.5 430.5h.01M184.5 430.5h.01M225.5 430.5h.01M266.5 430.5h.01M307.5 430.5h.01M348.5 430.5h.01M389.5 430.5h.01M430.5 430.5h.01M471.5 430.5h.01M512.5 430.5h.01M553.5 430.5h.01M594.5 430.5h.01M635.5 430.5h.01M676.5 430.5h.01M717.5 430.5h.01M758.5 430.5h.01M799.5 430.5h.01M840.5 430.5h.01M881.5 430.5h.01M922.5 430.5h.01M963.5 430.5h.01M1004.5 430.5h.01M1045.5 430.5h.01M1086.5 430.5h.01M1127.5 430.5h.01M1168.5 430.5h.01M20.5 471.5h.01M61.5 471.5h.01M102.5 471.5h.01M143.5 471.5h.01M184.5 471.5h.01M225.5 471.5h.01M266.5 471.5h.01M307.5 471.5h.01M348.5 471.5h.01M389.5 471.5h.01M430.5 471.5h.01M471.5 471.5h.01M512.5 471.5h.01M553.5 471.5h.01M594.5 471.5h.01M635.5 471.5h.01M676.5 471.5h.01M717.5 471.5h.01M758.5 471.5h.01M799.5 471.5h.01M840.5 471.5h.01M881.5 471.5h.01M922.5 471.5h.01M963.5 471.5h.01M1004.5 471.5h.01M1045.5 471.5h.01M1086.5 471.5h.01M1127.5 471.5h.01M1168.5 471.5h.01M20.5 512.5h.01M61.5 512.5h.01M102.5 512.5h.01M143.5 512.5h.01M184.5 512.5h.01M225.5 512.5h.01M266.5 512.5h.01M307.5 512.5h.01M348.5 512.5h.01M389.5 512.5h.01M430.5 512.5h.01M471.5 512.5h.01M512.5 512.5h.01M553.5 512.5h.01M594.5 512.5h.01M635.5 512.5h.01M676.5 512.5h.01M717.5 512.5h.01M758.5 512.5h.01M799.5 512.5h.01M840.5 512.5h.01M881.5 512.5h.01M922.5 512.5h.01M963.5 512.5h.01M1004.5 512.5h.01M1045.5 512.5h.01M1086.5 512.5h.01M1127.5 512.5h.01M1168.5 512.5h.01M20.5 553.5h.01M61.5 553.5h.01M102.5 553.5h.01M143.5 553.5h.01M184.5 553.5h.01M225.5 553.5h.01M266.5 553.5h.01M307.5 553.5h.01M348.5 553.5h.01M389.5 553.5h.01M430.5 553.5h.01M471.5 553.5h.01M512.5 553.5h.01M553.5 553.5h.01M594.5 553.5h.01M635.5 553.5h.01M676.5 553.5h.01M717.5 553.5h.01M758.5 553.5h.01M799.5 553.5h.01M840.5 553.5h.01M881.5 553.5h.01M922.5 553.5h.01M963.5 553.5h.01M1004.5 553.5h.01M1045.5 553.5h.01M1086.5 553.5h.01M1127.5 553.5h.01M1168.5 553.5h.01M20.5 594.5h.01M61.5 594.5h.01M102.5 594.5h.01M143.5 594.5h.01M184.5 594.5h.01M225.5 594.5h.01M266.5 594.5h.01M307.5 594.5h.01M348.5 594.5h.01M389.5 594.5h.01M430.5 594.5h.01M471.5 594.5h.01M512.5 594.5h.01M553.5 594.5h.01M594.5 594.5h.01M635.5 594.5h.01M676.5 594.5h.01M717.5 594.5h.01M758.5 594.5h.01M799.5 594.5h.01M840.5 594.5h.01M881.5 594.5h.01M922.5 594.5h.01M963.5 594.5h.01M1004.5 594.5h.01M1045.5 594.5h.01M1086.5 594.5h.01M1127.5 594.5h.01M1168.5 594.5h.01M20.5 635.5h.01M61.5 635.5h.01M102.5 635.5h.01M143.5 635.5h.01M184.5 635.5h.01M225.5 635.5h.01M266.5 635.5h.01M307.5 635.5h.01M348.5 635.5h.01M389.5 635.5h.01M430.5 635.5h.01M471.5 635.5h.01M512.5 635.5h.01M553.5 635.5h.01M594.5 635.5h.01M635.5 635.5h.01M676.5 635.5h.01M717.5 635.5h.01M758.5 635.5h.01M799.5 635.5h.01M840.5 635.5h.01M881.5 635.5h.01M922.5 635.5h.01M963.5 635.5h.01M1004.5 635.5h.01M1045.5 635.5h.01M1086.5 635.5h.01M1127.5 635.5h.01M1168.5 635.5h.01M20.5 676.5h.01M61.5 676.5h.01M102.5 676.5h.01M143.5 676.5h.01M184.5 676.5h.01M225.5 676.5h.01M266.5 676.5h.01M307.5 676.5h.01M348.5 676.5h.01M389.5 676.5h.01M430.5 676.5h.01M471.5 676.5h.01M512.5 676.5h.01M553.5 676.5h.01M594.5 676.5h.01M635.5 676.5h.01M676.5 676.5h.01M717.5 676.5h.01M758.5 676.5h.01M799.5 676.5h.01M840.5 676.5h.01M881.5 676.5h.01M922.5 676.5h.01M963.5 676.5h.01M1004.5 676.5h.01M1045.5 676.5h.01M1086.5 676.5h.01M1127.5 676.5h.01M1168.5 676.5h.01M20.5 717.5h.01M61.5 717.5h.01M102.5 717.5h.01M143.5 717.5h.01M184.5 717.5h.01M225.5 717.5h.01M266.5 717.5h.01M307.5 717.5h.01M348.5 717.5h.01M389.5 717.5h.01M430.5 717.5h.01M471.5 717.5h.01M512.5 717.5h.01M553.5 717.5h.01M594.5 717.5h.01M635.5 717.5h.01M676.5 717.5h.01M717.5 717.5h.01M758.5 717.5h.01M799.5 717.5h.01M840.5 717.5h.01M881.5 717.5h.01M922.5 717.5h.01M963.5 717.5h.01M1004.5 717.5h.01M1045.5 717.5h.01M1086.5 717.5h.01M1127.5 717.5h.01M1168.5 717.5h.01M20.5 758.5h.01M61.5 758.5h.01M102.5 758.5h.01M143.5 758.5h.01M184.5 758.5h.01M225.5 758.5h.01M266.5 758.5h.01M307.5 758.5h.01M348.5 758.5h.01M389.5 758.5h.01M430.5 758.5h.01M471.5 758.5h.01M512.5 758.5h.01M553.5 758.5h.01M594.5 758.5h.01M635.5 758.5h.01M676.5 758.5h.01M717.5 758.5h.01M758.5 758.5h.01M799.5 758.5h.01M840.5 758.5h.01M881.5 758.5h.01M922.5 758.5h.01M963.5 758.5h.01M1004.5 758.5h.01M1045.5 758.5h.01M1086.5 758.5h.01M1127.5 758.5h.01M1168.5 758.5h.01M20.5 799.5h.01M61.5 799.5h.01M102.5 799.5h.01M143.5 799.5h.01M184.5 799.5h.01M225.5 799.5h.01M266.5 799.5h.01M307.5 799.5h.01M348.5 799.5h.01M389.5 799.5h.01M430.5 799.5h.01M471.5 799.5h.01M512.5 799.5h.01M553.5 799.5h.01M594.5 799.5h.01M635.5 799.5h.01M676.5 799.5h.01M717.5 799.5h.01M758.5 799.5h.01M799.5 799.5h.01M840.5 799.5h.01M881.5 799.5h.01M922.5 799.5h.01M963.5 799.5h.01M1004.5 799.5h.01M1045.5 799.5h.01M1086.5 799.5h.01M1127.5 799.5h.01M1168.5 799.5h.01" class="bs-gen__e" stroke-width="5" stroke-linecap="round" fill="none" opacity=".55"/><text class="bs-gen__glyph bs-gen__w" x="312.6" y="688">L</text></g>
+<text class="bs-gen__label" x="40" y="64">NO.11 / 2026</text>
+</svg>
+    </figure>
+  </header>
+
+  <div class="bs-post__layout">
+    <aside class="bs-rail" aria-label="阅读进度与目录">
+      <div class="bs-rail__inner">
+        <a class="bs-progress" href="#top" data-to-top aria-label="回到顶部"><span class="bs-progress__fill"></span></a>
+        
+        <p class="bs-rail__label">目录 · CONTENTS</p>
+        <ol class="bs-toc"><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF"><span class="bs-toc-number">1.</span> <span class="bs-toc-text">学习路线</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%86%85%E5%AE%B9%E6%A6%82%E8%A7%88"><span class="bs-toc-number">2.</span> <span class="bs-toc-text">内容概览</span></a><ol class="bs-toc-child"><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#Linux%EF%BC%88Ubuntu%EF%BC%89%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86"><span class="bs-toc-number">2.1.</span> <span class="bs-toc-text">Linux（Ubuntu）系统管理</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#Shell-%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B"><span class="bs-toc-number">2.2.</span> <span class="bs-toc-text">Shell 脚本编程</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AF%AD%E6%B3%95"><span class="bs-toc-number">2.3.</span> <span class="bs-toc-text">正则表达式语法</span></a></li></ol></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5"><span class="bs-toc-number">3.</span> <span class="bs-toc-text">常用命令速查</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%AE%89%E5%85%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="bs-toc-number">4.</span> <span class="bs-toc-text">安全注意事项</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%AD%A6%E4%B9%A0%E5%BB%BA%E8%AE%AE"><span class="bs-toc-number">5.</span> <span class="bs-toc-text">学习建议</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%BB%93%E5%BA%93"><span class="bs-toc-number">6.</span> <span class="bs-toc-text">仓库</span></a></li></ol>
+        
+      </div>
+    </aside>
+    <div class="bs-prose" data-prose>
+      <p>嵌入式开发离不开 Linux。这份笔记整理三块内容：Linux（Ubuntu）系统管理基础、Shell 脚本编程、正则表达式语法，合起来就是日常开发中最常用的”文本处理三件套”。</p>
+<span id="more"></span>
+
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Linux 基础</span><br><span class="line">    ├── Ubuntu、终端和远程登录</span><br><span class="line">    ├── 文件系统与目录结构</span><br><span class="line">    ├── 用户、用户组和文件权限</span><br><span class="line">    ├── 软件包、服务和系统管理</span><br><span class="line">    ├── 进程、磁盘和网络</span><br><span class="line">    └── crontab 定时任务</span><br><span class="line">            ↓</span><br><span class="line">Shell 脚本</span><br><span class="line">    ├── 脚本格式与执行</span><br><span class="line">    ├── 变量、参数和运算符</span><br><span class="line">    ├── 条件判断与循环</span><br><span class="line">    ├── 函数和系统命令</span><br><span class="line">    └── cut、awk 等文本处理</span><br><span class="line">            ↓</span><br><span class="line">正则表达式</span><br><span class="line">    ├── 普通字符和元字符</span><br><span class="line">    ├── 字符集、范围和边界</span><br><span class="line">    ├── 量词、分组和选择</span><br><span class="line">    ├── 转义、字符类和反向引用</span><br><span class="line">    └── 与 grep、Shell 文本处理结合</span><br></pre></td></tr></table></figure>
+
+<h2 id="内容概览"><a href="#内容概览" class="headerlink" title="内容概览"></a>内容概览</h2><h3 id="Linux（Ubuntu）系统管理"><a href="#Linux（Ubuntu）系统管理" class="headerlink" title="Linux（Ubuntu）系统管理"></a>Linux（Ubuntu）系统管理</h3><ul>
+<li><strong>环境搭建</strong>：VMware + Ubuntu + Xshell 远程登录，理解 Linux 目录层级结构；</li>
+<li><strong>系统管理</strong>：<code>systemctl</code> 管理服务与开机自启、防火墙、APT 软件包管理器；</li>
+<li><strong>基本命令</strong>：<code>pwd</code>、<code>ls</code>、<code>cd</code>、<code>mkdir</code>、<code>cp</code>、<code>rm</code>、<code>mv</code>，输出重定向 <code>&gt;</code>、<code>&gt;&gt;</code> 与管道 <code>|</code>；</li>
+<li><strong>编辑器与用户</strong>：VI&#x2F;VIM 三种模式，<code>adduser</code>、<code>passwd</code>、<code>sudo</code> 等用户管理命令；</li>
+<li><strong>权限与搜索</strong>：<code>chmod</code>、<code>chown</code>、<code>chgrp</code> 管理权限，<code>find</code> 搜索，<code>grep</code> 过滤；</li>
+<li><strong>磁盘、进程与定时任务</strong>：<code>df</code>、<code>du</code>、<code>ps</code>、<code>kill</code>、<code>top</code>、<code>netstat</code>、<code>crontab</code>。</li>
+</ul>
+<h3 id="Shell-脚本编程"><a href="#Shell-脚本编程" class="headerlink" title="Shell 脚本编程"></a>Shell 脚本编程</h3><ul>
+<li>脚本格式与解释器声明，编写第一个 <code>helloworld.sh</code>；</li>
+<li>特殊变量：<code>$n</code>（位置参数）、<code>$#</code>（参数个数）、<code>$*</code>&#x2F;<code>$@</code>（所有参数）、<code>$?</code>（退出状态）；</li>
+<li>条件表达式判断字符串、整数和文件状态，<code>if</code> &#x2F; <code>case</code> 分支，<code>for</code> &#x2F; <code>while</code> 循环；</li>
+<li><code>basename</code>、<code>dirname</code> 等系统函数，自定义 Shell 函数；</li>
+<li><code>cut</code> 提取字段，<code>awk</code> 完成字段处理、过滤和格式化输出。</li>
+</ul>
+<h3 id="正则表达式语法"><a href="#正则表达式语法" class="headerlink" title="正则表达式语法"></a>正则表达式语法</h3><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>语法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>边界</td>
+<td><code>^</code>、<code>$</code>、<code>\b</code>、<code>\B</code></td>
+<td>行首、行尾与单词边界</td>
+</tr>
+<tr>
+<td>量词</td>
+<td><code>.</code>、<code>*</code>、<code>+</code>、<code>?</code>、<code>{n,m}</code></td>
+<td>重复次数控制</td>
+</tr>
+<tr>
+<td>分组</td>
+<td><code>(pattern)</code>、<code>(?:pattern)</code></td>
+<td>捕获与非捕获分组</td>
+</tr>
+<tr>
+<td>选择</td>
+<td>&#96;x</td>
+<td>y&#96;</td>
+</tr>
+<tr>
+<td>字符集</td>
+<td><code>[xyz]</code>、<code>[^xyz]</code>、<code>[a-z]</code></td>
+<td>字符集、排除集与范围</td>
+</tr>
+<tr>
+<td>字符类</td>
+<td><code>\d</code>、<code>\s</code>、<code>\w</code></td>
+<td>数字、空白、单词字符</td>
+</tr>
+<tr>
+<td>断言</td>
+<td><code>(?=pattern)</code>、<code>(?!pattern)</code></td>
+<td>正向 &#x2F; 负向先行断言</td>
+</tr>
+<tr>
+<td>引用</td>
+<td><code>\num</code></td>
+<td>反向引用，匹配重复内容</td>
+</tr>
+</tbody></table>
+<p>不同工具对正则的支持范围不同，实际使用时应以目标工具的语法实现为准。</p>
+<h2 id="常用命令速查"><a href="#常用命令速查" class="headerlink" title="常用命令速查"></a>常用命令速查</h2><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>命令</th>
+<th>主要用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>目录</td>
+<td><code>ls</code>、<code>cd</code>、<code>mkdir</code></td>
+<td>查看、切换和创建目录</td>
+</tr>
+<tr>
+<td>查看</td>
+<td><code>cat</code>、<code>less</code>、<code>tail</code></td>
+<td>查看文件内容</td>
+</tr>
+<tr>
+<td>文本</td>
+<td><code>grep</code>、<code>cut</code>、<code>awk</code></td>
+<td>搜索、截取和处理文本</td>
+</tr>
+<tr>
+<td>权限</td>
+<td><code>chmod</code>、<code>chown</code>、<code>chgrp</code></td>
+<td>修改权限、所有者和用户组</td>
+</tr>
+<tr>
+<td>进程</td>
+<td><code>ps</code>、<code>top</code>、<code>kill</code></td>
+<td>查看和管理进程</td>
+</tr>
+<tr>
+<td>压缩</td>
+<td><code>gzip</code>、<code>tar</code></td>
+<td>压缩、解压和归档</td>
+</tr>
+<tr>
+<td>服务</td>
+<td><code>systemctl</code></td>
+<td>管理系统服务</td>
+</tr>
+<tr>
+<td>定时</td>
+<td><code>crontab</code></td>
+<td>配置周期性任务</td>
+</tr>
+</tbody></table>
+<h2 id="安全注意事项"><a href="#安全注意事项" class="headerlink" title="安全注意事项"></a>安全注意事项</h2><ul>
+<li><code>rm</code>、权限修改和防火墙配置可能影响系统，执行前应确认目标；</li>
+<li>涉及 <code>sudo</code>、系统服务和用户管理的操作，建议先在虚拟机中验证；</li>
+<li>修改权限时遵循最小权限原则，避免无必要地使用 <code>777</code>；</li>
+<li>编写定时任务时确认脚本路径、环境变量、日志路径和执行用户。</li>
+</ul>
+<h2 id="学习建议"><a href="#学习建议" class="headerlink" title="学习建议"></a>学习建议</h2><ol>
+<li>先完成 Linux 文件、目录、权限和进程管理，再学习 Shell 自动化；</li>
+<li>每学习一个命令，都记录输入、输出、退出状态和常用参数；</li>
+<li>使用小规模测试文件验证 <code>grep</code>、<code>cut</code>、<code>awk</code> 和正则表达式；</li>
+<li>将多个命令通过管道、重定向和 Shell 函数组合成可复用脚本。</li>
+</ol>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ashleycurry/linux-shell-regex-notes">linux-shell-regex-notes</a></li>
+</ul>
+
+    </div>
+  </div>
+
+  <footer class="bs-pfoot">
+    
+    <ul class="bs-tags" aria-label="标签">
+      <li><a href="/tags/Linux/">#Linux</a></li><li><a href="/tags/Ubuntu/">#Ubuntu</a></li><li><a href="/tags/Shell/">#Shell</a></li><li><a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">#正则表达式</a></li><li><a href="/tags/grep/">#grep</a></li><li><a href="/tags/awk/">#awk</a></li>
+    </ul>
+    
+    <div class="bs-pfoot__grid">
+      
+      <p class="bs-license">
+        <span class="bs-kicker">LICENSE</span>
+        本文作者 XiaoGao，采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可。
+        转载请注明出处：<a href="https://xiaogao-code.github.io/2026/07/10/linux-shell-regex/">https:&#x2F;&#x2F;xiaogao-code.github.io&#x2F;2026&#x2F;07&#x2F;10&#x2F;linux-shell-regex&#x2F;</a>
+      </p>
+      
+      
+      
+    </div>
+  </footer>
+
+  <nav class="bs-pnav" aria-label="分页">
+    
+    <a class="bs-pnav__item bs-pnav__item--newer" href="/2026/07/22/linux-application-development/" rel="prev">
+      <span class="bs-kicker">← 较新 NEWER</span><span class="bs-pnav__t">Linux 应用层开发：从文件 I/O 到 epoll 高并发</span>
+    </a>
+    
+    
+    <a class="bs-pnav__item bs-pnav__item--older" href="/2026/06/28/freertos-learning-notes/" rel="next">
+      <span class="bs-kicker">较早 OLDER →</span><span class="bs-pnav__t">FreeRTOS 实时操作系统：从裸机到多任务调度</span>
+    </a>
+    
+  </nav>
+
+  
+</article>
+</main>
+
+<footer class="bs-footer">
+  <div class="bs-footer__white">
+    <a class="bs-brand bs-brand--footer" href="/">
+      <span class="bs-mark" aria-hidden="true"></span>
+      <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+    </a>
+    <p class="bs-footer__desc">嵌入式软件 / 机器人 / 计算机视觉 / LLM 应用的学习与实践笔记</p>
+    <ul class="bs-footer__social">
+      
+      <li><a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">GitHub</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+    </ul>
+    <p class="bs-footer__meta">
+      © 2026 XiaoGao
+       · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+      · 由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 与 <a href="https://github.com/LiuXiu233/hexo-theme-bisect" target="_blank" rel="noopener">Bisect</a> 主题驱动
+    </p>
+  </div>
+  <div class="bs-footer__blue">
+    
+<p class="bs-slogan bs-slogan--footer">
+  <span class="bs-slogan__zh">从寄存器到推理，把设备、数据与智能连起来。</span>
+  <span class="bs-slogan__en">Build close to the machine. Bring intelligence to the edge.</span>
+</p>
+
+
+    
+    <div class="bs-footer__actions">
+      
+      <a class="bs-btn bs-btn--line" href="#top" data-to-top>回到顶部 ↑</a>
+    </div>
+  </div>
+</footer>
+<script id="bs-config" type="application/json">{"root":"/","search":"/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
+
+<dialog class="bs-search" id="bs-search" aria-label="搜索文章或输入命令">
+  <form class="bs-search__bar" method="dialog" role="search">
+    <span class="bs-search__prompt" aria-hidden="true">&gt;</span>
+    <label class="bs-sr" for="bs-search-input">搜索文章或输入命令</label>
+    <input id="bs-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="搜索标题、正文、标签……  输入 &gt; 查看命令">
+    <button class="bs-search__close" type="submit" aria-label="关闭">esc</button>
+  </form>
+  <ol class="bs-search__list" id="bs-search-list" role="listbox" aria-label="结果"></ol>
+  <p class="bs-search__hint"><span>↑↓ 选择</span><span>↵ 打开</span><span>&gt;theme · &gt;random · &gt;top · &gt;archive</span></p>
+</dialog>
+
+<script type="module" src="/js/bisect.js"></script>
+</body>
+</html>

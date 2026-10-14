@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>C++ 学习笔记：类与对象、模板与 STL 的完整路线 | XiaoGao 的代码笔记</title>
+<meta name="description" content="按课程顺序整理的 C++ 学习笔记，覆盖入门基础、类和对象、内存管理、模板、STL 容器与模板进阶。">
+<meta name="keywords" content="嵌入式,STM32,FreeRTOS,ROS,OpenCV,机器人,Linux,C语言,Python">
+<meta name="author" content="XiaoGao">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f9fd">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1628">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://xiaogao-code.github.io/2026/03/18/cpp-learning-notes/">
+<meta name="description" content="按课程顺序整理的 C++ 学习笔记，覆盖入门基础、类和对象、内存管理、模板、STL 容器与模板进阶。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ 学习笔记：类与对象、模板与 STL 的完整路线">
+<meta property="og:url" content="https://xiaogao-code.github.io/2026/03/18/cpp-learning-notes/index.html">
+<meta property="og:site_name" content="XiaoGao 的代码笔记">
+<meta property="og:description" content="按课程顺序整理的 C++ 学习笔记，覆盖入门基础、类和对象、内存管理、模板、STL 容器与模板进阶。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-03-18T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-14T11:02:04.000Z">
+<meta property="article:author" content="XiaoGao">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="STL">
+<meta property="article:tag" content="内存管理">
+<meta property="article:tag" content="模板">
+<meta property="article:tag" content="面向对象">
+<meta name="twitter:card" content="summary_large_image">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('bs-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+    document.documentElement.classList.add('js');
+    addEventListener('pagereveal', function (e) {
+      if (e.viewTransition) { e.viewTransition.ready.catch(function () {}); e.viewTransition.finished.catch(function () {}); }
+    });
+  })();
+</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400..900&family=Noto+Sans+SC:wght@900&display=swap">
+
+<link rel="stylesheet" href="/css/bisect.css">
+<link rel="alternate" type="application/atom+xml" title="XiaoGao 的代码笔记" href="/atom.xml">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.xml"}}]},"eagerness":"moderate"}]}
+</script>
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="is-post">
+<a class="bs-skip" href="#main">跳到正文</a>
+<svg class="bs-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <!-- 列表里的图片统一压成深空—分界蓝—冰白三色调 -->
+  <filter id="bs-duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues=".059 .090 .957"/>
+      <feFuncG type="table" tableValues=".090 .278 .976"/>
+      <feFuncB type="table" tableValues=".165 .902 .992"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+
+<header class="bs-header" data-header>
+  <a class="bs-brand" href="/" aria-label="XiaoGao 的代码笔记 首页">
+    <span class="bs-mark" aria-hidden="true"></span>
+    <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+  </a>
+  <nav class="bs-nav" id="bs-nav" aria-label="主导航">
+    <ul>
+      
+      <li>
+        <a href="/" aria-current="page">
+          <span class="bs-nav__no">01</span>
+          <span class="bs-nav__zh">文章</span>
+          <span class="bs-nav__en">Posts</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives/">
+          <span class="bs-nav__no">02</span>
+          <span class="bs-nav__zh">归档</span>
+          <span class="bs-nav__en">Archive</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/">
+          <span class="bs-nav__no">03</span>
+          <span class="bs-nav__zh">分类</span>
+          <span class="bs-nav__en">Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/">
+          <span class="bs-nav__no">04</span>
+          <span class="bs-nav__zh">标签</span>
+          <span class="bs-nav__en">Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about/">
+          <span class="bs-nav__no">05</span>
+          <span class="bs-nav__zh">关于</span>
+          <span class="bs-nav__en">About</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">
+          <span class="bs-nav__no">06</span>
+          <span class="bs-nav__zh">GitHub</span>
+          <span class="bs-nav__en">Code ↗</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+  <div class="bs-tools">
+    <button class="bs-tool bs-tool--search" type="button" data-search-open aria-label="搜索">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <kbd>⌘K</kbd>
+    </button>
+    <button class="bs-tool bs-tool--theme" type="button" data-theme-toggle aria-label="切换深浅色">
+      <span class="bs-halfdot" aria-hidden="true"></span>
+    </button>
+    <button class="bs-tool bs-tool--menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="bs-nav">
+      <span class="bs-burger" aria-hidden="true"></span><span class="bs-sr">菜单</span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<article class="bs-post" data-font="sans">
+  <header class="bs-phead">
+    <div class="bs-phead__text">
+      <p class="bs-kicker">NO.02 · <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">编程语言</a></p>
+      <h1 class="bs-phead__title">C++ 学习笔记：类与对象、模板与 STL 的完整路线</h1>
+      <p class="bs-phead__desc">按课程顺序整理的 C++ 学习笔记，覆盖入门基础、类和对象、内存管理、模板、STL 容器与模板进阶。</p>
+      <dl class="bs-phead__meta">
+        <div><dt>发布 DATE</dt><dd><time datetime="2026-03-18T02:00:00.000Z">2026.03.18</time></dd></div>
+        <div><dt>字数 WORDS</dt><dd>955</dd></div>
+        <div><dt>阅读 READ</dt><dd>3 分钟</dd></div>
+      </dl>
+    </div>
+    <figure class="bs-phead__cover" aria-hidden="true">
+      <svg class="bs-gen" viewBox="0 0 1200 800" preserveAspectRatio="xMinYMid slice" role="img" aria-label="C++ 学习笔记：类与对象、模板与 STL 的完整路线">
+<defs><clipPath id="g3vcg35"><polygon points="511.1,0 1200,0 1200,800 794.2,800"/></clipPath></defs>
+<rect class="bs-gen__w" width="1200" height="800"/>
+<text class="bs-gen__glyph bs-gen__b" x="283" y="688">C</text>
+<g clip-path="url(#g3vcg35)"><rect class="bs-gen__b" width="1200" height="800"/><path d="M0 17H1200M0 34H1200M0 51H1200M0 68H1200M0 85H1200M0 102H1200M0 119H1200M0 136H1200M0 153H1200M0 170H1200M0 187H1200M0 204H1200M0 221H1200M0 238H1200M0 255H1200M0 272H1200M0 289H1200M0 306H1200M0 323H1200M0 340H1200M0 357H1200M0 374H1200M0 391H1200M0 408H1200M0 425H1200M0 442H1200M0 459H1200M0 476H1200M0 493H1200M0 510H1200M0 527H1200M0 544H1200M0 561H1200M0 578H1200M0 595H1200M0 612H1200M0 629H1200M0 646H1200M0 663H1200M0 680H1200M0 697H1200M0 714H1200M0 731H1200M0 748H1200M0 765H1200M0 782H1200M0 799H1200" class="bs-gen__e" stroke-width="1.5" fill="none" opacity=".35"/><text class="bs-gen__glyph bs-gen__w" x="283" y="688">C</text></g>
+<text class="bs-gen__label" x="40" y="64">NO.02 / 2026</text>
+</svg>
+    </figure>
+  </header>
+
+  <div class="bs-post__layout">
+    <aside class="bs-rail" aria-label="阅读进度与目录">
+      <div class="bs-rail__inner">
+        <a class="bs-progress" href="#top" data-to-top aria-label="回到顶部"><span class="bs-progress__fill"></span></a>
+        
+        <p class="bs-rail__label">目录 · CONTENTS</p>
+        <ol class="bs-toc"><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF"><span class="bs-toc-number">1.</span> <span class="bs-toc-text">学习路线</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E8%AF%BE%E7%A8%8B%E7%9B%AE%E5%BD%95"><span class="bs-toc-number">2.</span> <span class="bs-toc-text">课程目录</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E7%9F%A5%E8%AF%86%E9%87%8D%E7%82%B9"><span class="bs-toc-number">3.</span> <span class="bs-toc-text">知识重点</span></a><ol class="bs-toc-child"><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1"><span class="bs-toc-number">3.1.</span> <span class="bs-toc-text">类和对象</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="bs-toc-number">3.2.</span> <span class="bs-toc-text">内存管理</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#%E6%A8%A1%E6%9D%BF%E4%B8%8E%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B"><span class="bs-toc-number">3.3.</span> <span class="bs-toc-text">模板与泛型编程</span></a></li><li class="bs-toc-item bs-toc-level-3"><a class="bs-toc-link" href="#STL-%E4%B8%8E%E5%AE%B9%E5%99%A8"><span class="bs-toc-number">3.4.</span> <span class="bs-toc-text">STL 与容器</span></a></li></ol></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E9%80%9A%E7%94%A8%E7%BC%96%E8%AF%91%E6%96%B9%E5%BC%8F"><span class="bs-toc-number">4.</span> <span class="bs-toc-text">通用编译方式</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%90%8E%E7%BB%AD%E6%89%A9%E5%B1%95%E6%96%B9%E5%90%91"><span class="bs-toc-number">5.</span> <span class="bs-toc-text">后续扩展方向</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%BB%93%E5%BA%93"><span class="bs-toc-number">6.</span> <span class="bs-toc-text">仓库</span></a></li></ol>
+        
+      </div>
+    </aside>
+    <div class="bs-prose" data-prose>
+      <p>C++ 在 C 的基础上引入了面向对象、泛型编程和强大的标准库。这套笔记按课程顺序整理，内容覆盖 C++ 入门、面向对象、内存管理、模板和 STL 容器，目标是建立可持续扩展的 C++ 知识结构。</p>
+<span id="more"></span>
+
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">C++ 基础</span><br><span class="line">   ↓</span><br><span class="line">类和对象</span><br><span class="line">   ↓</span><br><span class="line">内存管理</span><br><span class="line">   ↓</span><br><span class="line">模板</span><br><span class="line">   ↓</span><br><span class="line">STL 简介</span><br><span class="line">   ↓</span><br><span class="line">string / vector / list / stack / queue</span><br><span class="line">   ↓</span><br><span class="line">模板进阶</span><br></pre></td></tr></table></figure>
+
+<p>建议先掌握语言基础和类的基本使用，再学习对象生命周期、资源管理和模板。完成 STL 容器部分后，应重点练习”能用、明理、能扩展”三个层次：先会使用接口，再理解底层结构，最后尝试实现或扩展组件。</p>
+<h2 id="课程目录"><a href="#课程目录" class="headerlink" title="课程目录"></a>课程目录</h2><table>
+<thead>
+<tr>
+<th>编号</th>
+<th>课件</th>
+<th>核心内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>001</td>
+<td>C++ 入门基础</td>
+<td>C++ 发展历史、标准版本、课程结构和参考资料</td>
+</tr>
+<tr>
+<td>002</td>
+<td>类和对象（上）</td>
+<td>类的定义、成员函数、访问限定符、封装和对象基础</td>
+</tr>
+<tr>
+<td>003</td>
+<td>类和对象（中）</td>
+<td>默认成员函数、构造函数、析构函数、拷贝构造和赋值</td>
+</tr>
+<tr>
+<td>004</td>
+<td>类和对象（下）</td>
+<td>初始化列表、隐式类型转换、static 成员、友元和内部类</td>
+</tr>
+<tr>
+<td>005</td>
+<td>内存管理</td>
+<td>C&#x2F;C++ 内存分布、动态内存、<code>malloc</code>&#x2F;<code>free</code> 与 <code>new</code>&#x2F;<code>delete</code></td>
+</tr>
+<tr>
+<td>006</td>
+<td>模板初阶</td>
+<td>泛型编程、函数模板、类模板和模板参数</td>
+</tr>
+<tr>
+<td>007</td>
+<td>STL 简介</td>
+<td>STL 组成、六大组件、学习方法和实际价值</td>
+</tr>
+<tr>
+<td>008</td>
+<td>string</td>
+<td><code>std::string</code>、常用接口、迭代器、范围 for 和 <code>auto</code></td>
+</tr>
+<tr>
+<td>009</td>
+<td>vector</td>
+<td>构造、迭代器、容量、空间管理、增删改查和常见接口</td>
+</tr>
+<tr>
+<td>010</td>
+<td>list</td>
+<td>双向链表容器、迭代器、容量、元素访问和插入删除</td>
+</tr>
+<tr>
+<td>011</td>
+<td>stack 和 queue</td>
+<td>栈、队列、适配器、最小栈、表达式求值和序列问题</td>
+</tr>
+<tr>
+<td>012</td>
+<td>模板进阶</td>
+<td>非类型模板参数、模板特化、偏特化和参数匹配</td>
+</tr>
+</tbody></table>
+<h2 id="知识重点"><a href="#知识重点" class="headerlink" title="知识重点"></a>知识重点</h2><h3 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h3><ul>
+<li>使用 <code>class</code> 定义数据和行为，理解封装、访问控制和成员函数；</li>
+<li>掌握构造函数、析构函数、拷贝构造和赋值运算符；</li>
+<li>理解编译器生成的默认成员函数，以及何时需要手动实现；</li>
+<li>使用初始化列表正确初始化引用、<code>const</code> 成员和没有默认构造函数的成员对象。</li>
+</ul>
+<h3 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h3><ul>
+<li>区分栈、堆、静态区、常量区和代码区；</li>
+<li>理解动态内存分配、释放和扩容；</li>
+<li>区分 C 风格的 <code>malloc/free</code> 与 C++ 风格的 <code>new/delete</code>；</li>
+<li>关注内存泄漏、悬空指针、重复释放和越界访问等问题。</li>
+</ul>
+<h3 id="模板与泛型编程"><a href="#模板与泛型编程" class="headerlink" title="模板与泛型编程"></a>模板与泛型编程</h3><ul>
+<li>使用函数模板和类模板编写类型无关的代码；</li>
+<li>理解模板实例化和参数推导，学习非类型模板参数、模板特化和偏特化；</li>
+<li>在复用性、可读性和编译复杂度之间进行权衡。</li>
+</ul>
+<h3 id="STL-与容器"><a href="#STL-与容器" class="headerlink" title="STL 与容器"></a>STL 与容器</h3><ul>
+<li>理解容器、迭代器、算法和函数对象等 STL 组件之间的关系；</li>
+<li>掌握 <code>string</code> 的字符串管理，理解 <code>vector</code> 的连续存储、<code>size</code>、<code>capacity</code>、<code>resize</code> 和 <code>reserve</code>；</li>
+<li>理解 <code>list</code> 的节点结构、迭代器和插入删除特点；</li>
+<li>使用 <code>stack</code> 和 <code>queue</code> 解决后进先出、先进先出等问题。</li>
+</ul>
+<h2 id="通用编译方式"><a href="#通用编译方式" class="headerlink" title="通用编译方式"></a>通用编译方式</h2><p>仓库当前以课件资料为主。如果添加 <code>.cpp</code> 示例，可以使用支持 C++11 或更高标准的编译器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -std=c++11 -Wall -Wextra -Wpedantic example.cpp -o example</span><br></pre></td></tr></table></figure>
+
+<p>对于使用较新语言特性的代码，可以将标准切换为 <code>-std=c++17</code>。</p>
+<h2 id="后续扩展方向"><a href="#后续扩展方向" class="headerlink" title="后续扩展方向"></a>后续扩展方向</h2><ul>
+<li>为每个章节增加独立的 <code>.cpp</code> 示例与 CMake 构建配置；</li>
+<li>增加单元测试和容器操作实验；</li>
+<li>增加复杂度、迭代器失效和异常安全笔记；</li>
+<li>补充现代 C++ 内容：智能指针、移动语义、lambda、并发和 ranges。</li>
+</ul>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ashleycurry/cpp-learning-notes">cpp-learning-notes</a></li>
+</ul>
+
+    </div>
+  </div>
+
+  <footer class="bs-pfoot">
+    
+    <ul class="bs-tags" aria-label="标签">
+      <li><a href="/tags/C/">#C++</a></li><li><a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">#面向对象</a></li><li><a href="/tags/STL/">#STL</a></li><li><a href="/tags/%E6%A8%A1%E6%9D%BF/">#模板</a></li><li><a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">#内存管理</a></li>
+    </ul>
+    
+    <div class="bs-pfoot__grid">
+      
+      <p class="bs-license">
+        <span class="bs-kicker">LICENSE</span>
+        本文作者 XiaoGao，采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可。
+        转载请注明出处：<a href="https://xiaogao-code.github.io/2026/03/18/cpp-learning-notes/">https:&#x2F;&#x2F;xiaogao-code.github.io&#x2F;2026&#x2F;03&#x2F;18&#x2F;cpp-learning-notes&#x2F;</a>
+      </p>
+      
+      
+      
+    </div>
+  </footer>
+
+  <nav class="bs-pnav" aria-label="分页">
+    
+    <a class="bs-pnav__item bs-pnav__item--newer" href="/2026/04/02/python-engineering-handbook/" rel="prev">
+      <span class="bs-kicker">← 较新 NEWER</span><span class="bs-pnav__t">Python 工程实践手册：13 个案例走完入门路径</span>
+    </a>
+    
+    
+    <a class="bs-pnav__item bs-pnav__item--older" href="/2026/03/05/c-systems-programming/" rel="next">
+      <span class="bs-kicker">较早 OLDER →</span><span class="bs-pnav__t">C 语言学习笔记：从语法基础到指针与内存</span>
+    </a>
+    
+  </nav>
+
+  
+</article>
+</main>
+
+<footer class="bs-footer">
+  <div class="bs-footer__white">
+    <a class="bs-brand bs-brand--footer" href="/">
+      <span class="bs-mark" aria-hidden="true"></span>
+      <span class="bs-brand__name">XiaoGao 的代码笔记</span>
+    </a>
+    <p class="bs-footer__desc">嵌入式软件 / 机器人 / 计算机视觉 / LLM 应用的学习与实践笔记</p>
+    <ul class="bs-footer__social">
+      
+      <li><a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">GitHub</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+    </ul>
+    <p class="bs-footer__meta">
+      © 2026 XiaoGao
+       · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+      · 由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 与 <a href="https://github.com/LiuXiu233/hexo-theme-bisect" target="_blank" rel="noopener">Bisect</a> 主题驱动
+    </p>
+  </div>
+  <div class="bs-footer__blue">
+    
+<p class="bs-slogan bs-slogan--footer">
+  <span class="bs-slogan__zh">从寄存器到推理，把设备、数据与智能连起来。</span>
+  <span class="bs-slogan__en">Build close to the machine. Bring intelligence to the edge.</span>
+</p>
+
+
+    
+    <div class="bs-footer__actions">
+      
+      <a class="bs-btn bs-btn--line" href="#top" data-to-top>回到顶部 ↑</a>
+    </div>
+  </div>
+</footer>
+<script id="bs-config" type="application/json">{"root":"/","search":"/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
+
+<dialog class="bs-search" id="bs-search" aria-label="搜索文章或输入命令">
+  <form class="bs-search__bar" method="dialog" role="search">
+    <span class="bs-search__prompt" aria-hidden="true">&gt;</span>
+    <label class="bs-sr" for="bs-search-input">搜索文章或输入命令</label>
+    <input id="bs-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="搜索标题、正文、标签……  输入 &gt; 查看命令">
+    <button class="bs-search__close" type="submit" aria-label="关闭">esc</button>
+  </form>
+  <ol class="bs-search__list" id="bs-search-list" role="listbox" aria-label="结果"></ol>
+  <p class="bs-search__hint"><span>↑↓ 选择</span><span>↵ 打开</span><span>&gt;theme · &gt;random · &gt;top · &gt;archive</span></p>
+</dialog>
+
+<script type="module" src="/js/bisect.js"></script>
+</body>
+</html>
