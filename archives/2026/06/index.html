@@ -11,6 +11,9 @@
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f9fd">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1628">
 <meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <link rel="canonical" href="https://ashleycurry.github.io/archives/2026/06/">
 <meta name="description" content="嵌入式软件 &#x2F; 机器人 &#x2F; 计算机视觉 &#x2F; LLM 应用的学习与实践笔记">
 <meta property="og:type" content="website">
@@ -19,9 +22,11 @@
 <meta property="og:site_name" content="XiaoGao 的代码笔记">
 <meta property="og:description" content="嵌入式软件 &#x2F; 机器人 &#x2F; 计算机视觉 &#x2F; LLM 应用的学习与实践笔记">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ashleycurry.github.io/img/og-cover.png">
 <meta property="article:author" content="XiaoGao">
 <meta property="article:tag" content="嵌入式,STM32,FreeRTOS,ROS,OpenCV,机器人,Linux,C语言,Python">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ashleycurry.github.io/img/og-cover.png">
 <script>
   (function () {
     try {
@@ -243,6 +248,9 @@
        · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
       · 由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 与 <a href="https://github.com/LiuXiu233/hexo-theme-bisect" target="_blank" rel="noopener">Bisect</a> 主题驱动
     </p>
+    <p class="bs-footer__meta">
+      总访问量 · <strong id="bs-visit-count">666</strong><span id="busuanzi_value_site_pv" hidden></span>
+    </p>
   </div>
   <div class="bs-footer__blue">
     
@@ -260,6 +268,23 @@
   </div>
 </footer>
 <script id="bs-config" type="application/json">{"root":"/","search":"/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script>
+  (function () {
+    var out = document.getElementById('bs-visit-count');
+    var src = document.getElementById('busuanzi_value_site_pv');
+    if (!out || !src) return;
+    var timer = setInterval(function () {
+      var n = parseInt(src.textContent, 10);
+      if (!isNaN(n)) {
+        clearInterval(timer);
+        out.textContent = (n + 666).toLocaleString('en-US');
+      }
+    }, 400);
+    setTimeout(function () { clearInterval(timer); }, 15000);
+  })();
+</script>
 
 <dialog class="bs-search" id="bs-search" aria-label="搜索文章或输入命令">
   <form class="bs-search__bar" method="dialog" role="search">
