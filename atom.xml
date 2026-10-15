@@ -219,6 +219,8 @@
     <category term="机器人" scheme="https://ashleycurry.github.io/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"/>
     
     
+    <category term="TF" scheme="https://ashleycurry.github.io/tags/TF/"/>
+    
     <category term="ROS2" scheme="https://ashleycurry.github.io/tags/ROS2/"/>
     
     <category term="Humble" scheme="https://ashleycurry.github.io/tags/Humble/"/>
@@ -228,8 +230,6 @@
     <category term="rclpy" scheme="https://ashleycurry.github.io/tags/rclpy/"/>
     
     <category term="rclcpp" scheme="https://ashleycurry.github.io/tags/rclcpp/"/>
-    
-    <category term="TF" scheme="https://ashleycurry.github.io/tags/TF/"/>
     
     <category term="URDF" scheme="https://ashleycurry.github.io/tags/URDF/"/>
     
@@ -254,8 +254,6 @@
     <category term="机器人" scheme="https://ashleycurry.github.io/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"/>
     
     
-    <category term="TF" scheme="https://ashleycurry.github.io/tags/TF/"/>
-    
     <category term="ROS" scheme="https://ashleycurry.github.io/tags/ROS/"/>
     
     <category term="catkin" scheme="https://ashleycurry.github.io/tags/catkin/"/>
@@ -265,6 +263,8 @@
     <category term="Topic" scheme="https://ashleycurry.github.io/tags/Topic/"/>
     
     <category term="Service" scheme="https://ashleycurry.github.io/tags/Service/"/>
+    
+    <category term="TF" scheme="https://ashleycurry.github.io/tags/TF/"/>
     
     <category term="Turtlesim" scheme="https://ashleycurry.github.io/tags/Turtlesim/"/>
     
