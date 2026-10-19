@@ -644,74 +644,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Java 工程实践手册：三阶段学习路线与案例体系</title>
-    <url>/2026/04/15/java-engineering-handbook/</url>
-    <content><![CDATA[<p>这份手册整理 Java 学习与工程实践的课程资料、源码案例和学习笔记，内容按三个阶段循序推进：阶段一为 Java 核心与 AI 开发基础；阶段二为 Java 核心与 AI 开发进阶；阶段三为 AI 赋能 Web 开发。源码案例按”一个知识点对应一个小案例”的风格编写，并配有中文注释，方便对照课件学习。</p>
-<span id="more"></span>
-
-<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">阶段一：Java 核心与 AI 开发基础</span><br><span class="line">    -&gt; 开发环境搭建与 IDEA 开发工具</span><br><span class="line">    -&gt; 基础语法、运算符、方法与流程控制</span><br><span class="line">    -&gt; 数组、面向对象基础与面向对象高级</span><br><span class="line">    -&gt; 常用 API、集合基础</span><br><span class="line">            |</span><br><span class="line">            v</span><br><span class="line">阶段二：Java 核心与 AI 开发进阶</span><br><span class="line">    -&gt; 集合高级（List / Set / Map 体系）</span><br><span class="line">    -&gt; Stream 流、异常、File 类与递归</span><br><span class="line">    -&gt; 常用 API、IO 流</span><br><span class="line">    -&gt; 多线程、网络编程、Java 高级技术</span><br><span class="line">            |</span><br><span class="line">            v</span><br><span class="line">阶段三：AI 赋能 Web 开发</span><br><span class="line">    -&gt; Web 基础知识、HTML + CSS、JavaScript、Vue3</span><br><span class="line">    -&gt; Maven、数据库、SpringBoot（JDBC / MyBatis）</span><br><span class="line">    -&gt; 后端 Web 实战（Tlias 智能学习辅助系统）</span><br><span class="line">    -&gt; 前端 Web 实战、项目部署（Linux）与 Docker</span><br></pre></td></tr></table></figure>
-
-<h2 id="资料与环境"><a href="#资料与环境" class="headerlink" title="资料与环境"></a>资料与环境</h2><ul>
-<li>课件目录：3 个阶段，48 份 PPTX 与 1 份 PDF，共 49 份；</li>
-<li>编程语言：Java（JDK 21）；</li>
-<li>开发工具：IntelliJ IDEA；</li>
-<li>工程组织：按阶段划分为独立 IDEA 工程，每个章节对应一个独立模块；</li>
-<li>源码包名：<code>com.myproject.*</code>。</li>
-</ul>
-<h2 id="阶段一：Java-核心与-AI-开发基础"><a href="#阶段一：Java-核心与-AI-开发基础" class="headerlink" title="阶段一：Java 核心与 AI 开发基础"></a>阶段一：Java 核心与 AI 开发基础</h2><p>从开发环境到面向对象高级，共 15 份课件，配套 Chapter_01 ~ Chapter_06 源码案例：</p>
-<ul>
-<li><strong>Chapter_01 环境搭建</strong>：Java 背景、JDK 安装、HelloWorld 与程序执行原理、IDEA 使用；</li>
-<li><strong>Chapter_02 基础语法</strong>：注释、字面量、变量与八种基本数据类型、运算符、方法与类型转换；</li>
-<li><strong>Chapter_03 流程控制</strong>：if &#x2F; switch 分支、for &#x2F; while &#x2F; do-while 循环、break &#x2F; continue、Random 猜数字游戏；</li>
-<li><strong>Chapter_04 数组</strong>：静态与动态初始化、元素访问、遍历应用（求和、最大值、反转）、二维数组；</li>
-<li><strong>Chapter_05 面向对象基础</strong>：类与对象、封装与权限修饰符、构造方法、this、static、标准 JavaBean；</li>
-<li><strong>Chapter_06 面向对象高级</strong>：继承与方法重写、抽象类、final、Object 类与 toString 重写。</li>
-</ul>
-<h2 id="阶段二：Java-核心与-AI-开发进阶"><a href="#阶段二：Java-核心与-AI-开发进阶" class="headerlink" title="阶段二：Java 核心与 AI 开发进阶"></a>阶段二：Java 核心与 AI 开发进阶</h2><ul>
-<li><strong>集合高级</strong>：ArrayList &#x2F; LinkedList 与 HashSet &#x2F; LinkedHashSet &#x2F; TreeSet 体系；</li>
-<li><strong>Stream 流</strong>：Lambda 表达式与流式操作；</li>
-<li><strong>异常</strong>：异常体系、处理方式与自定义异常；</li>
-<li><strong>File 类</strong>：常用 API 与递归；</li>
-<li><strong>常用 API</strong>：Math、System、包装类、BigDecimal 与 Arrays；</li>
-<li><strong>IO 流</strong>：字节流与字符流；</li>
-<li><strong>多线程</strong>：线程安全与同步、线程池；</li>
-<li><strong>网络编程</strong>：网络三要素、UDP 与 TCP 通信；</li>
-<li><strong>Java 高级技术</strong>：枚举、类加载器、反射、注解与动态代理。</li>
-</ul>
-<h2 id="阶段三：AI-赋能-Web-开发"><a href="#阶段三：AI-赋能-Web-开发" class="headerlink" title="阶段三：AI 赋能 Web 开发"></a>阶段三：AI 赋能 Web 开发</h2><p>从 Web 基础到完整项目部署：</p>
-<ul>
-<li><strong>Web 基础</strong>：HTML + CSS、JavaScript、Vue3、Web 服务器与静态资源；</li>
-<li><strong>后端基础</strong>：Maven 依赖管理、数据库、JDBC &#x2F; MyBatis &#x2F; MyBatisPlus；</li>
-<li><strong>SpringBoot</strong>：登录认证、AOP、Maven 高级、SpringBoot 原理与分层架构总结；</li>
-<li><strong>后端实战</strong>：Tlias 智能学习辅助系统（部门管理与员工管理：条件分页查询、新增、修改、删除、事务与文件上传）；</li>
-<li><strong>前端实战</strong>：Vue 工程化 + ElementPlus 的 Tlias 案例；</li>
-<li><strong>部署</strong>：Linux 项目部署与 Docker 容器化。</li>
-</ul>
-<h2 id="如何运行"><a href="#如何运行" class="headerlink" title="如何运行"></a>如何运行</h2><ul>
-<li>使用 IntelliJ IDEA 打开对应阶段的工程目录（例如 <code>src/Phase_001</code>）；</li>
-<li>工程默认使用 JDK 21，若本机 JDK 版本不同，可在 <code>File → Project Structure</code> 中调整 Project SDK；</li>
-<li>每个案例类都包含 <code>main</code> 方法，可右键直接运行；</li>
-<li>所有案例仅依赖 JDK 标准库，无需额外安装依赖。</li>
-</ul>
-<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
-<li><a href="https://github.com/Ashleycurry/java-engineering-handbook">java-engineering-handbook</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>编程语言</category>
-      </categories>
-      <tags>
-        <tag>面向对象</tag>
-        <tag>Java</tag>
-        <tag>SpringBoot</tag>
-        <tag>集合</tag>
-        <tag>Web开发</tag>
-        <tag>并发编程</tag>
-        <tag>AI 开发</tag>
-        <tag>工程实践</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>FreeRTOS 实时操作系统：从裸机到多任务调度</title>
     <url>/2026/06/28/freertos-learning-notes/</url>
     <content><![CDATA[<p>裸机程序写到一定程度，总会遇到”多个任务如何同时运行”的问题。这份笔记整理 FreeRTOS 的完整学习路径：从任务状态与调度器讲起，覆盖内核移植、任务管理、任务间通信，最后延伸到 Tickless 低功耗与五种堆内存管理方案。</p>
@@ -966,6 +898,228 @@
       </tags>
   </entry>
   <entry>
+    <title>Java 工程实践手册：三阶段学习路线与案例体系</title>
+    <url>/2026/04/15/java-engineering-handbook/</url>
+    <content><![CDATA[<p>这份手册整理 Java 学习与工程实践的课程资料、源码案例和学习笔记，内容按三个阶段循序推进：阶段一为 Java 核心与 AI 开发基础；阶段二为 Java 核心与 AI 开发进阶；阶段三为 AI 赋能 Web 开发。源码案例按”一个知识点对应一个小案例”的风格编写，并配有中文注释，方便对照课件学习。</p>
+<span id="more"></span>
+
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">阶段一：Java 核心与 AI 开发基础</span><br><span class="line">    -&gt; 开发环境搭建与 IDEA 开发工具</span><br><span class="line">    -&gt; 基础语法、运算符、方法与流程控制</span><br><span class="line">    -&gt; 数组、面向对象基础与面向对象高级</span><br><span class="line">    -&gt; 常用 API、集合基础</span><br><span class="line">            |</span><br><span class="line">            v</span><br><span class="line">阶段二：Java 核心与 AI 开发进阶</span><br><span class="line">    -&gt; 集合高级（List / Set / Map 体系）</span><br><span class="line">    -&gt; Stream 流、异常、File 类与递归</span><br><span class="line">    -&gt; 常用 API、IO 流</span><br><span class="line">    -&gt; 多线程、网络编程、Java 高级技术</span><br><span class="line">            |</span><br><span class="line">            v</span><br><span class="line">阶段三：AI 赋能 Web 开发</span><br><span class="line">    -&gt; Web 基础知识、HTML + CSS、JavaScript、Vue3</span><br><span class="line">    -&gt; Maven、数据库、SpringBoot（JDBC / MyBatis）</span><br><span class="line">    -&gt; 后端 Web 实战（Tlias 智能学习辅助系统）</span><br><span class="line">    -&gt; 前端 Web 实战、项目部署（Linux）与 Docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="资料与环境"><a href="#资料与环境" class="headerlink" title="资料与环境"></a>资料与环境</h2><ul>
+<li>课件目录：3 个阶段，48 份 PPTX 与 1 份 PDF，共 49 份；</li>
+<li>编程语言：Java（JDK 21）；</li>
+<li>开发工具：IntelliJ IDEA；</li>
+<li>工程组织：按阶段划分为独立 IDEA 工程，每个章节对应一个独立模块；</li>
+<li>源码包名：<code>com.myproject.*</code>。</li>
+</ul>
+<h2 id="阶段一：Java-核心与-AI-开发基础"><a href="#阶段一：Java-核心与-AI-开发基础" class="headerlink" title="阶段一：Java 核心与 AI 开发基础"></a>阶段一：Java 核心与 AI 开发基础</h2><p>从开发环境到面向对象高级，共 15 份课件，配套 Chapter_01 ~ Chapter_06 源码案例：</p>
+<ul>
+<li><strong>Chapter_01 环境搭建</strong>：Java 背景、JDK 安装、HelloWorld 与程序执行原理、IDEA 使用；</li>
+<li><strong>Chapter_02 基础语法</strong>：注释、字面量、变量与八种基本数据类型、运算符、方法与类型转换；</li>
+<li><strong>Chapter_03 流程控制</strong>：if &#x2F; switch 分支、for &#x2F; while &#x2F; do-while 循环、break &#x2F; continue、Random 猜数字游戏；</li>
+<li><strong>Chapter_04 数组</strong>：静态与动态初始化、元素访问、遍历应用（求和、最大值、反转）、二维数组；</li>
+<li><strong>Chapter_05 面向对象基础</strong>：类与对象、封装与权限修饰符、构造方法、this、static、标准 JavaBean；</li>
+<li><strong>Chapter_06 面向对象高级</strong>：继承与方法重写、抽象类、final、Object 类与 toString 重写。</li>
+</ul>
+<h2 id="阶段二：Java-核心与-AI-开发进阶"><a href="#阶段二：Java-核心与-AI-开发进阶" class="headerlink" title="阶段二：Java 核心与 AI 开发进阶"></a>阶段二：Java 核心与 AI 开发进阶</h2><ul>
+<li><strong>集合高级</strong>：ArrayList &#x2F; LinkedList 与 HashSet &#x2F; LinkedHashSet &#x2F; TreeSet 体系；</li>
+<li><strong>Stream 流</strong>：Lambda 表达式与流式操作；</li>
+<li><strong>异常</strong>：异常体系、处理方式与自定义异常；</li>
+<li><strong>File 类</strong>：常用 API 与递归；</li>
+<li><strong>常用 API</strong>：Math、System、包装类、BigDecimal 与 Arrays；</li>
+<li><strong>IO 流</strong>：字节流与字符流；</li>
+<li><strong>多线程</strong>：线程安全与同步、线程池；</li>
+<li><strong>网络编程</strong>：网络三要素、UDP 与 TCP 通信；</li>
+<li><strong>Java 高级技术</strong>：枚举、类加载器、反射、注解与动态代理。</li>
+</ul>
+<h2 id="阶段三：AI-赋能-Web-开发"><a href="#阶段三：AI-赋能-Web-开发" class="headerlink" title="阶段三：AI 赋能 Web 开发"></a>阶段三：AI 赋能 Web 开发</h2><p>从 Web 基础到完整项目部署：</p>
+<ul>
+<li><strong>Web 基础</strong>：HTML + CSS、JavaScript、Vue3、Web 服务器与静态资源；</li>
+<li><strong>后端基础</strong>：Maven 依赖管理、数据库、JDBC &#x2F; MyBatis &#x2F; MyBatisPlus；</li>
+<li><strong>SpringBoot</strong>：登录认证、AOP、Maven 高级、SpringBoot 原理与分层架构总结；</li>
+<li><strong>后端实战</strong>：Tlias 智能学习辅助系统（部门管理与员工管理：条件分页查询、新增、修改、删除、事务与文件上传）；</li>
+<li><strong>前端实战</strong>：Vue 工程化 + ElementPlus 的 Tlias 案例；</li>
+<li><strong>部署</strong>：Linux 项目部署与 Docker 容器化。</li>
+</ul>
+<h2 id="如何运行"><a href="#如何运行" class="headerlink" title="如何运行"></a>如何运行</h2><ul>
+<li>使用 IntelliJ IDEA 打开对应阶段的工程目录（例如 <code>src/Phase_001</code>）；</li>
+<li>工程默认使用 JDK 21，若本机 JDK 版本不同，可在 <code>File → Project Structure</code> 中调整 Project SDK；</li>
+<li>每个案例类都包含 <code>main</code> 方法，可右键直接运行；</li>
+<li>所有案例仅依赖 JDK 标准库，无需额外安装依赖。</li>
+</ul>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a href="https://github.com/Ashleycurry/java-engineering-handbook">java-engineering-handbook</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>编程语言</category>
+      </categories>
+      <tags>
+        <tag>面向对象</tag>
+        <tag>Java</tag>
+        <tag>SpringBoot</tag>
+        <tag>集合</tag>
+        <tag>Web开发</tag>
+        <tag>并发编程</tag>
+        <tag>AI 开发</tag>
+        <tag>工程实践</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux、Shell 与正则表达式：文本处理三件套</title>
+    <url>/2026/07/10/linux-shell-regex/</url>
+    <content><![CDATA[<p>嵌入式开发离不开 Linux。这份笔记整理三块内容：Linux（Ubuntu）系统管理基础、Shell 脚本编程、正则表达式语法，合起来就是日常开发中最常用的”文本处理三件套”。</p>
+<span id="more"></span>
+
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Linux 基础</span><br><span class="line">    ├── Ubuntu、终端和远程登录</span><br><span class="line">    ├── 文件系统与目录结构</span><br><span class="line">    ├── 用户、用户组和文件权限</span><br><span class="line">    ├── 软件包、服务和系统管理</span><br><span class="line">    ├── 进程、磁盘和网络</span><br><span class="line">    └── crontab 定时任务</span><br><span class="line">            ↓</span><br><span class="line">Shell 脚本</span><br><span class="line">    ├── 脚本格式与执行</span><br><span class="line">    ├── 变量、参数和运算符</span><br><span class="line">    ├── 条件判断与循环</span><br><span class="line">    ├── 函数和系统命令</span><br><span class="line">    └── cut、awk 等文本处理</span><br><span class="line">            ↓</span><br><span class="line">正则表达式</span><br><span class="line">    ├── 普通字符和元字符</span><br><span class="line">    ├── 字符集、范围和边界</span><br><span class="line">    ├── 量词、分组和选择</span><br><span class="line">    ├── 转义、字符类和反向引用</span><br><span class="line">    └── 与 grep、Shell 文本处理结合</span><br></pre></td></tr></table></figure>
+
+<h2 id="内容概览"><a href="#内容概览" class="headerlink" title="内容概览"></a>内容概览</h2><h3 id="Linux（Ubuntu）系统管理"><a href="#Linux（Ubuntu）系统管理" class="headerlink" title="Linux（Ubuntu）系统管理"></a>Linux（Ubuntu）系统管理</h3><ul>
+<li><strong>环境搭建</strong>：VMware + Ubuntu + Xshell 远程登录，理解 Linux 目录层级结构；</li>
+<li><strong>系统管理</strong>：<code>systemctl</code> 管理服务与开机自启、防火墙、APT 软件包管理器；</li>
+<li><strong>基本命令</strong>：<code>pwd</code>、<code>ls</code>、<code>cd</code>、<code>mkdir</code>、<code>cp</code>、<code>rm</code>、<code>mv</code>，输出重定向 <code>&gt;</code>、<code>&gt;&gt;</code> 与管道 <code>|</code>；</li>
+<li><strong>编辑器与用户</strong>：VI&#x2F;VIM 三种模式，<code>adduser</code>、<code>passwd</code>、<code>sudo</code> 等用户管理命令；</li>
+<li><strong>权限与搜索</strong>：<code>chmod</code>、<code>chown</code>、<code>chgrp</code> 管理权限，<code>find</code> 搜索，<code>grep</code> 过滤；</li>
+<li><strong>磁盘、进程与定时任务</strong>：<code>df</code>、<code>du</code>、<code>ps</code>、<code>kill</code>、<code>top</code>、<code>netstat</code>、<code>crontab</code>。</li>
+</ul>
+<h3 id="Shell-脚本编程"><a href="#Shell-脚本编程" class="headerlink" title="Shell 脚本编程"></a>Shell 脚本编程</h3><ul>
+<li>脚本格式与解释器声明，编写第一个 <code>helloworld.sh</code>；</li>
+<li>特殊变量：<code>$n</code>（位置参数）、<code>$#</code>（参数个数）、<code>$*</code>&#x2F;<code>$@</code>（所有参数）、<code>$?</code>（退出状态）；</li>
+<li>条件表达式判断字符串、整数和文件状态，<code>if</code> &#x2F; <code>case</code> 分支，<code>for</code> &#x2F; <code>while</code> 循环；</li>
+<li><code>basename</code>、<code>dirname</code> 等系统函数，自定义 Shell 函数；</li>
+<li><code>cut</code> 提取字段，<code>awk</code> 完成字段处理、过滤和格式化输出。</li>
+</ul>
+<h3 id="正则表达式语法"><a href="#正则表达式语法" class="headerlink" title="正则表达式语法"></a>正则表达式语法</h3><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>语法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>边界</td>
+<td><code>^</code>、<code>$</code>、<code>\b</code>、<code>\B</code></td>
+<td>行首、行尾与单词边界</td>
+</tr>
+<tr>
+<td>量词</td>
+<td><code>.</code>、<code>*</code>、<code>+</code>、<code>?</code>、<code>{n,m}</code></td>
+<td>重复次数控制</td>
+</tr>
+<tr>
+<td>分组</td>
+<td><code>(pattern)</code>、<code>(?:pattern)</code></td>
+<td>捕获与非捕获分组</td>
+</tr>
+<tr>
+<td>选择</td>
+<td>&#96;x</td>
+<td>y&#96;</td>
+</tr>
+<tr>
+<td>字符集</td>
+<td><code>[xyz]</code>、<code>[^xyz]</code>、<code>[a-z]</code></td>
+<td>字符集、排除集与范围</td>
+</tr>
+<tr>
+<td>字符类</td>
+<td><code>\d</code>、<code>\s</code>、<code>\w</code></td>
+<td>数字、空白、单词字符</td>
+</tr>
+<tr>
+<td>断言</td>
+<td><code>(?=pattern)</code>、<code>(?!pattern)</code></td>
+<td>正向 &#x2F; 负向先行断言</td>
+</tr>
+<tr>
+<td>引用</td>
+<td><code>\num</code></td>
+<td>反向引用，匹配重复内容</td>
+</tr>
+</tbody></table>
+<p>不同工具对正则的支持范围不同，实际使用时应以目标工具的语法实现为准。</p>
+<h2 id="常用命令速查"><a href="#常用命令速查" class="headerlink" title="常用命令速查"></a>常用命令速查</h2><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>命令</th>
+<th>主要用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>目录</td>
+<td><code>ls</code>、<code>cd</code>、<code>mkdir</code></td>
+<td>查看、切换和创建目录</td>
+</tr>
+<tr>
+<td>查看</td>
+<td><code>cat</code>、<code>less</code>、<code>tail</code></td>
+<td>查看文件内容</td>
+</tr>
+<tr>
+<td>文本</td>
+<td><code>grep</code>、<code>cut</code>、<code>awk</code></td>
+<td>搜索、截取和处理文本</td>
+</tr>
+<tr>
+<td>权限</td>
+<td><code>chmod</code>、<code>chown</code>、<code>chgrp</code></td>
+<td>修改权限、所有者和用户组</td>
+</tr>
+<tr>
+<td>进程</td>
+<td><code>ps</code>、<code>top</code>、<code>kill</code></td>
+<td>查看和管理进程</td>
+</tr>
+<tr>
+<td>压缩</td>
+<td><code>gzip</code>、<code>tar</code></td>
+<td>压缩、解压和归档</td>
+</tr>
+<tr>
+<td>服务</td>
+<td><code>systemctl</code></td>
+<td>管理系统服务</td>
+</tr>
+<tr>
+<td>定时</td>
+<td><code>crontab</code></td>
+<td>配置周期性任务</td>
+</tr>
+</tbody></table>
+<h2 id="安全注意事项"><a href="#安全注意事项" class="headerlink" title="安全注意事项"></a>安全注意事项</h2><ul>
+<li><code>rm</code>、权限修改和防火墙配置可能影响系统，执行前应确认目标；</li>
+<li>涉及 <code>sudo</code>、系统服务和用户管理的操作，建议先在虚拟机中验证；</li>
+<li>修改权限时遵循最小权限原则，避免无必要地使用 <code>777</code>；</li>
+<li>编写定时任务时确认脚本路径、环境变量、日志路径和执行用户。</li>
+</ul>
+<h2 id="学习建议"><a href="#学习建议" class="headerlink" title="学习建议"></a>学习建议</h2><ol>
+<li>先完成 Linux 文件、目录、权限和进程管理，再学习 Shell 自动化；</li>
+<li>每学习一个命令，都记录输入、输出、退出状态和常用参数；</li>
+<li>使用小规模测试文件验证 <code>grep</code>、<code>cut</code>、<code>awk</code> 和正则表达式；</li>
+<li>将多个命令通过管道、重定向和 Shell 函数组合成可复用脚本。</li>
+</ol>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a href="https://github.com/Ashleycurry/linux-shell-regex-notes">linux-shell-regex-notes</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Linux 与工具</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Ubuntu</tag>
+        <tag>Shell</tag>
+        <tag>正则表达式</tag>
+        <tag>grep</tag>
+        <tag>awk</tag>
+        <tag>sed</tag>
+        <tag>crontab</tag>
+        <tag>系统管理</tag>
+        <tag>文本处理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OpenCV 计算机视觉：从像素到特征匹配的十二课</title>
     <url>/2026/08/27/opencv-computer-vision/</url>
     <content><![CDATA[<p>计算机视觉的第一课，是学会”看”像素。这份笔记配套 12 份课件与逐章可运行的 Python 源码，从图片视频加载开始，经颜色空间、几何变换、滤波、边缘检测、形态学、阈值与轮廓，最终到达 ORB 特征匹配与 Harris 角点检测。</p>
@@ -1128,237 +1282,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Linux、Shell 与正则表达式：文本处理三件套</title>
-    <url>/2026/07/10/linux-shell-regex/</url>
-    <content><![CDATA[<p>嵌入式开发离不开 Linux。这份笔记整理三块内容：Linux（Ubuntu）系统管理基础、Shell 脚本编程、正则表达式语法，合起来就是日常开发中最常用的”文本处理三件套”。</p>
-<span id="more"></span>
-
-<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">Linux 基础</span><br><span class="line">    ├── Ubuntu、终端和远程登录</span><br><span class="line">    ├── 文件系统与目录结构</span><br><span class="line">    ├── 用户、用户组和文件权限</span><br><span class="line">    ├── 软件包、服务和系统管理</span><br><span class="line">    ├── 进程、磁盘和网络</span><br><span class="line">    └── crontab 定时任务</span><br><span class="line">            ↓</span><br><span class="line">Shell 脚本</span><br><span class="line">    ├── 脚本格式与执行</span><br><span class="line">    ├── 变量、参数和运算符</span><br><span class="line">    ├── 条件判断与循环</span><br><span class="line">    ├── 函数和系统命令</span><br><span class="line">    └── cut、awk 等文本处理</span><br><span class="line">            ↓</span><br><span class="line">正则表达式</span><br><span class="line">    ├── 普通字符和元字符</span><br><span class="line">    ├── 字符集、范围和边界</span><br><span class="line">    ├── 量词、分组和选择</span><br><span class="line">    ├── 转义、字符类和反向引用</span><br><span class="line">    └── 与 grep、Shell 文本处理结合</span><br></pre></td></tr></table></figure>
-
-<h2 id="内容概览"><a href="#内容概览" class="headerlink" title="内容概览"></a>内容概览</h2><h3 id="Linux（Ubuntu）系统管理"><a href="#Linux（Ubuntu）系统管理" class="headerlink" title="Linux（Ubuntu）系统管理"></a>Linux（Ubuntu）系统管理</h3><ul>
-<li><strong>环境搭建</strong>：VMware + Ubuntu + Xshell 远程登录，理解 Linux 目录层级结构；</li>
-<li><strong>系统管理</strong>：<code>systemctl</code> 管理服务与开机自启、防火墙、APT 软件包管理器；</li>
-<li><strong>基本命令</strong>：<code>pwd</code>、<code>ls</code>、<code>cd</code>、<code>mkdir</code>、<code>cp</code>、<code>rm</code>、<code>mv</code>，输出重定向 <code>&gt;</code>、<code>&gt;&gt;</code> 与管道 <code>|</code>；</li>
-<li><strong>编辑器与用户</strong>：VI&#x2F;VIM 三种模式，<code>adduser</code>、<code>passwd</code>、<code>sudo</code> 等用户管理命令；</li>
-<li><strong>权限与搜索</strong>：<code>chmod</code>、<code>chown</code>、<code>chgrp</code> 管理权限，<code>find</code> 搜索，<code>grep</code> 过滤；</li>
-<li><strong>磁盘、进程与定时任务</strong>：<code>df</code>、<code>du</code>、<code>ps</code>、<code>kill</code>、<code>top</code>、<code>netstat</code>、<code>crontab</code>。</li>
-</ul>
-<h3 id="Shell-脚本编程"><a href="#Shell-脚本编程" class="headerlink" title="Shell 脚本编程"></a>Shell 脚本编程</h3><ul>
-<li>脚本格式与解释器声明，编写第一个 <code>helloworld.sh</code>；</li>
-<li>特殊变量：<code>$n</code>（位置参数）、<code>$#</code>（参数个数）、<code>$*</code>&#x2F;<code>$@</code>（所有参数）、<code>$?</code>（退出状态）；</li>
-<li>条件表达式判断字符串、整数和文件状态，<code>if</code> &#x2F; <code>case</code> 分支，<code>for</code> &#x2F; <code>while</code> 循环；</li>
-<li><code>basename</code>、<code>dirname</code> 等系统函数，自定义 Shell 函数；</li>
-<li><code>cut</code> 提取字段，<code>awk</code> 完成字段处理、过滤和格式化输出。</li>
-</ul>
-<h3 id="正则表达式语法"><a href="#正则表达式语法" class="headerlink" title="正则表达式语法"></a>正则表达式语法</h3><table>
-<thead>
-<tr>
-<th>类别</th>
-<th>语法</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>边界</td>
-<td><code>^</code>、<code>$</code>、<code>\b</code>、<code>\B</code></td>
-<td>行首、行尾与单词边界</td>
-</tr>
-<tr>
-<td>量词</td>
-<td><code>.</code>、<code>*</code>、<code>+</code>、<code>?</code>、<code>{n,m}</code></td>
-<td>重复次数控制</td>
-</tr>
-<tr>
-<td>分组</td>
-<td><code>(pattern)</code>、<code>(?:pattern)</code></td>
-<td>捕获与非捕获分组</td>
-</tr>
-<tr>
-<td>选择</td>
-<td>&#96;x</td>
-<td>y&#96;</td>
-</tr>
-<tr>
-<td>字符集</td>
-<td><code>[xyz]</code>、<code>[^xyz]</code>、<code>[a-z]</code></td>
-<td>字符集、排除集与范围</td>
-</tr>
-<tr>
-<td>字符类</td>
-<td><code>\d</code>、<code>\s</code>、<code>\w</code></td>
-<td>数字、空白、单词字符</td>
-</tr>
-<tr>
-<td>断言</td>
-<td><code>(?=pattern)</code>、<code>(?!pattern)</code></td>
-<td>正向 &#x2F; 负向先行断言</td>
-</tr>
-<tr>
-<td>引用</td>
-<td><code>\num</code></td>
-<td>反向引用，匹配重复内容</td>
-</tr>
-</tbody></table>
-<p>不同工具对正则的支持范围不同，实际使用时应以目标工具的语法实现为准。</p>
-<h2 id="常用命令速查"><a href="#常用命令速查" class="headerlink" title="常用命令速查"></a>常用命令速查</h2><table>
-<thead>
-<tr>
-<th>类别</th>
-<th>命令</th>
-<th>主要用途</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>目录</td>
-<td><code>ls</code>、<code>cd</code>、<code>mkdir</code></td>
-<td>查看、切换和创建目录</td>
-</tr>
-<tr>
-<td>查看</td>
-<td><code>cat</code>、<code>less</code>、<code>tail</code></td>
-<td>查看文件内容</td>
-</tr>
-<tr>
-<td>文本</td>
-<td><code>grep</code>、<code>cut</code>、<code>awk</code></td>
-<td>搜索、截取和处理文本</td>
-</tr>
-<tr>
-<td>权限</td>
-<td><code>chmod</code>、<code>chown</code>、<code>chgrp</code></td>
-<td>修改权限、所有者和用户组</td>
-</tr>
-<tr>
-<td>进程</td>
-<td><code>ps</code>、<code>top</code>、<code>kill</code></td>
-<td>查看和管理进程</td>
-</tr>
-<tr>
-<td>压缩</td>
-<td><code>gzip</code>、<code>tar</code></td>
-<td>压缩、解压和归档</td>
-</tr>
-<tr>
-<td>服务</td>
-<td><code>systemctl</code></td>
-<td>管理系统服务</td>
-</tr>
-<tr>
-<td>定时</td>
-<td><code>crontab</code></td>
-<td>配置周期性任务</td>
-</tr>
-</tbody></table>
-<h2 id="安全注意事项"><a href="#安全注意事项" class="headerlink" title="安全注意事项"></a>安全注意事项</h2><ul>
-<li><code>rm</code>、权限修改和防火墙配置可能影响系统，执行前应确认目标；</li>
-<li>涉及 <code>sudo</code>、系统服务和用户管理的操作，建议先在虚拟机中验证；</li>
-<li>修改权限时遵循最小权限原则，避免无必要地使用 <code>777</code>；</li>
-<li>编写定时任务时确认脚本路径、环境变量、日志路径和执行用户。</li>
-</ul>
-<h2 id="学习建议"><a href="#学习建议" class="headerlink" title="学习建议"></a>学习建议</h2><ol>
-<li>先完成 Linux 文件、目录、权限和进程管理，再学习 Shell 自动化；</li>
-<li>每学习一个命令，都记录输入、输出、退出状态和常用参数；</li>
-<li>使用小规模测试文件验证 <code>grep</code>、<code>cut</code>、<code>awk</code> 和正则表达式；</li>
-<li>将多个命令通过管道、重定向和 Shell 函数组合成可复用脚本。</li>
-</ol>
-<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
-<li><a href="https://github.com/Ashleycurry/linux-shell-regex-notes">linux-shell-regex-notes</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Linux 与工具</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>Ubuntu</tag>
-        <tag>Shell</tag>
-        <tag>正则表达式</tag>
-        <tag>grep</tag>
-        <tag>awk</tag>
-        <tag>sed</tag>
-        <tag>crontab</tag>
-        <tag>系统管理</tag>
-        <tag>文本处理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>家庭收支记账软件：用整数&quot;分&quot;守护货币精度</title>
-    <url>/2026/09/15/personal-finance-manager/</url>
-    <content><![CDATA[<p>写记账软件最容易踩的坑，是用 <code>double</code> 存金额。这个家庭收支记账软件把”货币精度”当作第一设计问题：内部用 <code>int64_t</code> 保存”分”，所有运算完成后再格式化显示，顺便演示了一个 C 语言项目如何用四层架构把职责拆干净。</p>
-<span id="more"></span>
-
-<h2 id="功能特性"><a href="#功能特性" class="headerlink" title="功能特性"></a>功能特性</h2><ul>
-<li>初始账户余额 1000.00；</li>
-<li>登记收入与支出，记录说明；</li>
-<li><strong>余额校验</strong>：支出超过当前余额时拒绝操作并提示余额不足；</li>
-<li>查看每笔收支金额、交易后的账户余额和说明；</li>
-<li>没有交易记录时显示空记录提示；</li>
-<li>退出前 <code>y/n</code> 确认，菜单、金额、说明全部格式校验；</li>
-<li>交易记录用动态数组管理，运行期间持续追加。</li>
-</ul>
-<h2 id="四层模块架构"><a href="#四层模块架构" class="headerlink" title="四层模块架构"></a>四层模块架构</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">personal-finance-manager/</span><br><span class="line">├── src/</span><br><span class="line">│   ├── main.c              # 程序入口</span><br><span class="line">│   ├── app/                # 应用层：流程编排</span><br><span class="line">│   ├── domain/             # 领域层：账户与业务规则</span><br><span class="line">│   ├── shared/             # 共享层：金额解析与格式化</span><br><span class="line">│   └── ui/                 # 界面层：输入读取与展示</span><br><span class="line">└── docs/                   # 需求文档</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th>模块</th>
-<th>职责</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>src/app/</code></td>
-<td>应用流程编排，连接账户业务、输入和展示</td>
-</tr>
-<tr>
-<td><code>src/domain/</code></td>
-<td>账户、交易记录和收支业务规则</td>
-</tr>
-<tr>
-<td><code>src/shared/</code></td>
-<td>金额解析与格式化等通用能力</td>
-</tr>
-<tr>
-<td><code>src/ui/</code></td>
-<td>控制台输入读取、校验和输出</td>
-</tr>
-</tbody></table>
-<p>UI 层不直接修改账户内部状态，领域层负责账户余额与交易记录的一致性——这条边界是分层设计里最值得体会的部分。</p>
-<h2 id="金额安全：没有-double-的记账本"><a href="#金额安全：没有-double-的记账本" class="headerlink" title="金额安全：没有 double 的记账本"></a>金额安全：没有 double 的记账本</h2><p>程序没有使用 <code>double</code> 保存余额，而是用 <code>int64_t</code> 保存”分”：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">用户输入 100.50  →  内部保存 10050  →  运算后再格式化为两位小数</span><br></pre></td></tr></table></figure>
-
-<p>这样所有加减运算都是整数运算，从根本上避免了浮点误差在账目上累积。</p>
-<h2 id="工程化设计"><a href="#工程化设计" class="headerlink" title="工程化设计"></a>工程化设计</h2><ul>
-<li><strong>输入校验</strong>：菜单范围、金额格式、正数约束、小数位数、说明长度、确认输入，避免直接使用不安全的 <code>scanf</code>；</li>
-<li><strong>资源管理</strong>：交易记录动态数组容量不足时自动扩容，退出前释放账户持有的动态内存；</li>
-<li>编译开启 <code>-Wall -Wextra -Wpedantic</code>，GCC 与 Clang 均可零警告构建。</li>
-</ul>
-<h2 id="编译运行"><a href="#编译运行" class="headerlink" title="编译运行"></a>编译运行</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gcc -std=c11 -Wall -Wextra -Wpedantic -Isrc \</span><br><span class="line">    src/main.c src/app/finance_app.c \</span><br><span class="line">    src/domain/finance_account.c src/shared/money.c \</span><br><span class="line">    src/ui/console_input.c src/ui/console_view.c \</span><br><span class="line">    -o finance-manager</span><br></pre></td></tr></table></figure>
-
-<h2 id="后续扩展方向"><a href="#后续扩展方向" class="headerlink" title="后续扩展方向"></a>后续扩展方向</h2><ul>
-<li>增加文件或数据库持久化；</li>
-<li>按日期、类型和说明查询交易记录，增加月度统计；</li>
-<li>增加预算和分类管理、单元测试以及 CMake 构建流程。</li>
-</ul>
-<p>数据目前只保存在运行期间，退出即丢失——这也是一个很好的练习起点：补上文件持久化，它就从玩具变成了真能用的工具。</p>
-<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
-<li><a href="https://github.com/Ashleycurry/personal-finance-manager">personal-finance-manager</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>项目实战</category>
-      </categories>
-      <tags>
-        <tag>C语言</tag>
-        <tag>分层架构</tag>
-        <tag>动态数组</tag>
-        <tag>输入校验</tag>
-        <tag>模块化设计</tag>
-        <tag>整数运算</tag>
-        <tag>金额精度</tag>
-        <tag>数据持久化</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python 工程实践手册：13 个案例走完入门路径</title>
     <url>/2026/04/02/python-engineering-handbook/</url>
     <content><![CDATA[<p>Python 是自动化、数据处理和 AI 应用的通用语言。这份手册整理了从环境搭建到 NumPy 的 13 个课程主题，每个章节都对应一个可运行的案例脚本，强调”先理解基础概念，再通过小案例练习，最后形成清晰、可维护、可复用的代码习惯”。</p>
@@ -1472,6 +1395,83 @@
         <tag>异常处理</tag>
         <tag>模块与包</tag>
         <tag>pip</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>家庭收支记账软件：用整数&quot;分&quot;守护货币精度</title>
+    <url>/2026/09/15/personal-finance-manager/</url>
+    <content><![CDATA[<p>写记账软件最容易踩的坑，是用 <code>double</code> 存金额。这个家庭收支记账软件把”货币精度”当作第一设计问题：内部用 <code>int64_t</code> 保存”分”，所有运算完成后再格式化显示，顺便演示了一个 C 语言项目如何用四层架构把职责拆干净。</p>
+<span id="more"></span>
+
+<h2 id="功能特性"><a href="#功能特性" class="headerlink" title="功能特性"></a>功能特性</h2><ul>
+<li>初始账户余额 1000.00；</li>
+<li>登记收入与支出，记录说明；</li>
+<li><strong>余额校验</strong>：支出超过当前余额时拒绝操作并提示余额不足；</li>
+<li>查看每笔收支金额、交易后的账户余额和说明；</li>
+<li>没有交易记录时显示空记录提示；</li>
+<li>退出前 <code>y/n</code> 确认，菜单、金额、说明全部格式校验；</li>
+<li>交易记录用动态数组管理，运行期间持续追加。</li>
+</ul>
+<h2 id="四层模块架构"><a href="#四层模块架构" class="headerlink" title="四层模块架构"></a>四层模块架构</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">personal-finance-manager/</span><br><span class="line">├── src/</span><br><span class="line">│   ├── main.c              # 程序入口</span><br><span class="line">│   ├── app/                # 应用层：流程编排</span><br><span class="line">│   ├── domain/             # 领域层：账户与业务规则</span><br><span class="line">│   ├── shared/             # 共享层：金额解析与格式化</span><br><span class="line">│   └── ui/                 # 界面层：输入读取与展示</span><br><span class="line">└── docs/                   # 需求文档</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>src/app/</code></td>
+<td>应用流程编排，连接账户业务、输入和展示</td>
+</tr>
+<tr>
+<td><code>src/domain/</code></td>
+<td>账户、交易记录和收支业务规则</td>
+</tr>
+<tr>
+<td><code>src/shared/</code></td>
+<td>金额解析与格式化等通用能力</td>
+</tr>
+<tr>
+<td><code>src/ui/</code></td>
+<td>控制台输入读取、校验和输出</td>
+</tr>
+</tbody></table>
+<p>UI 层不直接修改账户内部状态，领域层负责账户余额与交易记录的一致性——这条边界是分层设计里最值得体会的部分。</p>
+<h2 id="金额安全：没有-double-的记账本"><a href="#金额安全：没有-double-的记账本" class="headerlink" title="金额安全：没有 double 的记账本"></a>金额安全：没有 double 的记账本</h2><p>程序没有使用 <code>double</code> 保存余额，而是用 <code>int64_t</code> 保存”分”：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">用户输入 100.50  →  内部保存 10050  →  运算后再格式化为两位小数</span><br></pre></td></tr></table></figure>
+
+<p>这样所有加减运算都是整数运算，从根本上避免了浮点误差在账目上累积。</p>
+<h2 id="工程化设计"><a href="#工程化设计" class="headerlink" title="工程化设计"></a>工程化设计</h2><ul>
+<li><strong>输入校验</strong>：菜单范围、金额格式、正数约束、小数位数、说明长度、确认输入，避免直接使用不安全的 <code>scanf</code>；</li>
+<li><strong>资源管理</strong>：交易记录动态数组容量不足时自动扩容，退出前释放账户持有的动态内存；</li>
+<li>编译开启 <code>-Wall -Wextra -Wpedantic</code>，GCC 与 Clang 均可零警告构建。</li>
+</ul>
+<h2 id="编译运行"><a href="#编译运行" class="headerlink" title="编译运行"></a>编译运行</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gcc -std=c11 -Wall -Wextra -Wpedantic -Isrc \</span><br><span class="line">    src/main.c src/app/finance_app.c \</span><br><span class="line">    src/domain/finance_account.c src/shared/money.c \</span><br><span class="line">    src/ui/console_input.c src/ui/console_view.c \</span><br><span class="line">    -o finance-manager</span><br></pre></td></tr></table></figure>
+
+<h2 id="后续扩展方向"><a href="#后续扩展方向" class="headerlink" title="后续扩展方向"></a>后续扩展方向</h2><ul>
+<li>增加文件或数据库持久化；</li>
+<li>按日期、类型和说明查询交易记录，增加月度统计；</li>
+<li>增加预算和分类管理、单元测试以及 CMake 构建流程。</li>
+</ul>
+<p>数据目前只保存在运行期间，退出即丢失——这也是一个很好的练习起点：补上文件持久化，它就从玩具变成了真能用的工具。</p>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a href="https://github.com/Ashleycurry/personal-finance-manager">personal-finance-manager</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>项目实战</category>
+      </categories>
+      <tags>
+        <tag>C语言</tag>
+        <tag>分层架构</tag>
+        <tag>动态数组</tag>
+        <tag>输入校验</tag>
+        <tag>模块化设计</tag>
+        <tag>整数运算</tag>
+        <tag>金额精度</tag>
+        <tag>数据持久化</tag>
       </tags>
   </entry>
   <entry>
@@ -1815,197 +1815,6 @@
       </tags>
   </entry>
   <entry>
-    <title>STM32 单片机开发笔记：从寄存器到物联网通信</title>
-    <url>/2026/06/15/stm32-mcu-development-notes/</url>
-    <content><![CDATA[<p>STM32 是嵌入式开发的主战场。这份笔记覆盖基础外设、通信协议、存储器、低功耗、实时系统和工程开发流程，从寄存器与 HAL 库双视角出发，一路延伸到 CAN、以太网、Wi-Fi、蓝牙和 LoRa 等物联网通信。</p>
-<span id="more"></span>
-
-<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">STM32 基础</span><br><span class="line">    ├── ARM 内核、STM32 系列和开发工具</span><br><span class="line">    ├── 最小系统、开发板和工程创建</span><br><span class="line">    ├── GPIO、时钟和 HAL 库</span><br><span class="line">    ├── 中断、USART、I2C 和定时器</span><br><span class="line">    ├── DMA、ADC、SPI 和外部存储</span><br><span class="line">    └── FSMC、LCD 和寄存器映射</span><br><span class="line">            ↓</span><br><span class="line">STM32 高级通信</span><br><span class="line">    ├── CAN 总线</span><br><span class="line">    ├── W5500 以太网</span><br><span class="line">    ├── ESP32-C3 Wi-Fi</span><br><span class="line">    ├── ESP32-C3 Bluetooth LE</span><br><span class="line">    └── LoRa 节点与网关</span><br><span class="line">            ↓</span><br><span class="line">STM32 系统扩展</span><br><span class="line">    ├── 电源管理与低功耗</span><br><span class="line">    ├── RTC 与备份寄存器</span><br><span class="line">    ├── 闹钟唤醒和掉电保持</span><br><span class="line">    ├── 独立看门狗与窗口看门狗</span><br><span class="line">    └── HAL 工程结构、编译过程和程序状态</span><br></pre></td></tr></table></figure>
-
-<h2 id="基础篇：外设与开发流程"><a href="#基础篇：外设与开发流程" class="headerlink" title="基础篇：外设与开发流程"></a>基础篇：外设与开发流程</h2><ol>
-<li><strong>芯片与工程环境</strong>：ARM 内核介绍、STM32 系列命名规则、Keil MDK &#x2F; STM32CubeMX &#x2F; ST-LINK 工具链、最小系统与第一个工程；</li>
-<li><strong>GPIO 与寄存器</strong>：工作模式、端口配置和数据寄存器（<code>GPIOx_CRL/CRH/IDR/ODR/BSRR/BRR/LCKR</code>），寄存器方式实现流水灯；</li>
-<li><strong>系统架构与时钟</strong>：STM32 总体架构与时钟树；</li>
-<li><strong>HAL 库开发</strong>：CubeMX 生成 HAL 工程，理解自动生成代码和用户代码的组织方式；</li>
-<li><strong>中断</strong>：中断体系、NVIC、外部中断控制器与按键检测案例；</li>
-<li><strong>USART 串口通信</strong>：并行&#x2F;串行、单工&#x2F;半双工&#x2F;全双工、同步&#x2F;异步，轮询与中断接收，<code>printf</code> 重定向；</li>
-<li><strong>I2C 通信</strong>：通过 M24C02 案例学习软件模拟 I2C 与硬件 I2C；</li>
-<li><strong>定时器</strong>：SysTick、基本&#x2F;通用&#x2F;高级定时器，PWM 呼吸灯与频率、占空比测量；</li>
-<li><strong>DMA</strong>：ROM 到 RAM、RAM 到串口的数据传输；</li>
-<li><strong>ADC</strong>：逐次逼近型 ADC 原理、单通道采集与多通道采集；</li>
-<li><strong>SPI 与 Flash</strong>：W25Q32 读写，软件模拟 SPI 与硬件 SPI；</li>
-<li><strong>存储器与 FSMC</strong>：存储器映射、FSMC 扩展外部 SRAM、8080 时序控制 LCD。</li>
-</ol>
-<h2 id="高级篇：物联网通信"><a href="#高级篇：物联网通信" class="headerlink" title="高级篇：物联网通信"></a>高级篇：物联网通信</h2><ul>
-<li><strong>CAN 通信</strong>：物理层、协议层、数据帧与总线仲裁，环回静默模式测试与双节点通信；</li>
-<li><strong>以太网与 W5500</strong>：OSI 七层模型、TCP&#x2F;IP 四层模型，TCP 服务端&#x2F;客户端、UDP 通信与简易 Web 服务器；</li>
-<li><strong>Wi-Fi 与 ESP32-C3</strong>：ESP-AT 固件与 AT 指令，STM32 与 ESP32-C3 串口交互，建立 TCP 通信；</li>
-<li><strong>Bluetooth LE</strong>：BLE 协议栈（PHY &#x2F; LL &#x2F; HCI &#x2F; GAP &#x2F; ATT &#x2F; GATT）、广播扫描与透传模式数据收发；</li>
-<li><strong>LoRa</strong>：E220-400M22S 模块、普通节点与网关搭建，验证节点到网关的数据传输。</li>
-</ul>
-<h2 id="扩展篇：系统级功能"><a href="#扩展篇：系统级功能" class="headerlink" title="扩展篇：系统级功能"></a>扩展篇：系统级功能</h2><ul>
-<li><strong>电源控制与低功耗</strong>：睡眠、停机、待机三种低功耗模式与唤醒源管理；</li>
-<li><strong>RTC 与备份域</strong>：掉电继续运行、备份寄存器保存数据、闹钟唤醒待机模式；</li>
-<li><strong>看门狗</strong>：独立看门狗与窗口看门狗的工作方式和触发条件；</li>
-<li><strong>HAL 工程与编译流程</strong>：<code>startup_stm32f103xe.s</code>、<code>system_stm32f1xx.c</code>、<code>HAL_Init()</code> 初始化流程与 Keil MDK 编译过程。</li>
-</ul>
-<h2 id="开发方式对比"><a href="#开发方式对比" class="headerlink" title="开发方式对比"></a>开发方式对比</h2><table>
-<thead>
-<tr>
-<th>方式</th>
-<th>主要特点</th>
-<th>学习重点</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>寄存器开发</td>
-<td>直接操作外设寄存器，接近芯片硬件</td>
-<td>地址、位域、时序和参考手册</td>
-</tr>
-<tr>
-<td>HAL 库开发</td>
-<td>使用 ST 提供的抽象接口，提高开发效率</td>
-<td>CubeMX 配置、回调、状态和生成代码</td>
-</tr>
-<tr>
-<td>混合开发</td>
-<td>在 HAL 工程中针对关键功能使用寄存器</td>
-<td>抽象层边界、时序控制和可维护性</td>
-</tr>
-</tbody></table>
-<h2 id="推荐学习顺序"><a href="#推荐学习顺序" class="headerlink" title="推荐学习顺序"></a>推荐学习顺序</h2><ol>
-<li>完成基础篇中的 GPIO、时钟、HAL 和第一个下载运行工程；</li>
-<li>按 USART、I2C、SPI 的顺序学习常用片上通信接口；</li>
-<li>学习中断、定时器、DMA 和 ADC，建立事件驱动与数据搬运能力；</li>
-<li>学习存储器映射、FSMC 和 LCD，理解外部设备扩展；</li>
-<li>进入高级篇，依次学习 CAN、以太网、Wi-Fi、蓝牙和 LoRa；</li>
-<li>最后学习扩展篇中的低功耗、RTC、备份域、看门狗和 HAL 工程分析。</li>
-</ol>
-<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
-<li><a href="https://github.com/Ashleycurry/stm32-mcu-development-notes">stm32-mcu-development-notes</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>嵌入式开发</category>
-      </categories>
-      <tags>
-        <tag>STM32</tag>
-        <tag>HAL</tag>
-        <tag>寄存器</tag>
-        <tag>CAN</tag>
-        <tag>LoRa</tag>
-        <tag>物联网</tag>
-        <tag>GPIO</tag>
-        <tag>中断系统</tag>
-        <tag>DMA</tag>
-        <tag>通信协议</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>双轴步进电机同步运动控制：Sync_CalcParams 与 AVR446 梯形加减速</title>
-    <url>/2026/10/10/sync-calc-params-motion-control/</url>
-    <content><![CDATA[<p>两轴各走各的梯形曲线，步数不同就会不同时停。这个项目用一个漂亮的数学观察解决了同步问题：只要两轴的 <code>speed/accel</code>、<code>speed/decel</code> 相同，三段运动时间就完全一致——于是把从轴参数按步数比例统一缩放即可。全整数运算，无浮点、无查表。</p>
-<span id="more"></span>
-
-<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">┌───────────────────────────┐   TCP :5000    ┌───────────────────────────┐</span><br><span class="line">│  Python 上位机            │ &lt;============&gt; │  ESP8266（TCP 透传）      │</span><br><span class="line">│  指令下发 / 轨迹可视化    │                └─────────────┬─────────────┘</span><br><span class="line">└───────────────────────────┘                              │ USART3 115200</span><br><span class="line">                                                           v</span><br><span class="line">┌──────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│                          STM32F103VET6                              │</span><br><span class="line">│                                                                      │</span><br><span class="line">│  USART3 中断（IDLE 帧判定）→ 指令解析（8 参数）                      │</span><br><span class="line">│      → Sync_CalcParams 双轴同步算法（参数缩放）                      │</span><br><span class="line">│      → MSD_Move1 / MSD_Move2 同时启动                                │</span><br><span class="line">│                                                                      │</span><br><span class="line">│  TIM3 中断 → 电机 1 脉冲（加速 / 匀速 / 减速状态机）                │</span><br><span class="line">│  TIM4 中断 → 电机 2 脉冲（加速 / 匀速 / 减速状态机）                │</span><br><span class="line">│                                                                      │</span><br><span class="line">│  USART1 115200 → 调试信息打印                                        │</span><br><span class="line">└──────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
-
-<h2 id="核心算法一：Sync-CalcParams-双轴同步"><a href="#核心算法一：Sync-CalcParams-双轴同步" class="headerlink" title="核心算法一：Sync_CalcParams 双轴同步"></a>核心算法一：Sync_CalcParams 双轴同步</h2><p><strong>问题</strong>：两轴各自独立执行梯形加减速时，若步数不同，就会在不同时刻停止，无法同步到达。</p>
-<p><strong>原理</strong>：梯形速度曲线的关键时间参数为：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">t_accel = speed / accel      （加速段时间）</span><br><span class="line">t_decel = speed / decel      （减速段时间）</span><br></pre></td></tr></table></figure>
-
-<p>只要两轴的 <code>speed/accel</code>、<code>speed/decel</code> 相同，三段运动时间就完全一致。因此选出步数较多的轴为<strong>主轴</strong>（参数不变），<strong>从轴</strong>的速度与加&#x2F;减速度统一乘以步数比例：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">ratio       = steps_slave / steps_master</span><br><span class="line">speed_slave = speed_master × ratio</span><br><span class="line">accel_slave = accel_master × ratio</span><br><span class="line">decel_slave = decel_master × ratio</span><br></pre></td></tr></table></figure>
-
-<p><code>ratio</code> 在时间公式中被约去：<code>t = (speed×ratio) / (accel×ratio) = speed / accel</code>，从轴在时间轴上与主轴完全对齐。步数相差多少，缩放比例就是多少，与方向无关。</p>
-<p><strong>示例</strong>：<code>2000 200 200 75 | 1000 200 200 75</code></p>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th align="right">电机 1（主轴）</th>
-<th align="right">电机 2（从轴，缩放后）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>步数</td>
-<td align="right">2000</td>
-<td align="right">1000</td>
-</tr>
-<tr>
-<td>速度</td>
-<td align="right">75</td>
-<td align="right">75 × 0.5 &#x3D; <strong>37</strong></td>
-</tr>
-<tr>
-<td>加速度</td>
-<td align="right">200</td>
-<td align="right">200 × 0.5 &#x3D; <strong>100</strong></td>
-</tr>
-<tr>
-<td>减速度</td>
-<td align="right">200</td>
-<td align="right">200 × 0.5 &#x3D; <strong>100</strong></td>
-</tr>
-</tbody></table>
-<p>电机 2 以一半的速度、一半的加速度走一半的路程，与电机 1 同时出发、同时到达。</p>
-<p><strong>工程保护</strong>：缩放乘法用 32 位中间量防溢出，缩放结果下限钳位为 1 杜绝除零，步数为 0 的轴跳过计算，步数取绝对值比较（方向不影响同步）。</p>
-<h2 id="核心算法二：AVR446-整数梯形加减速"><a href="#核心算法二：AVR446-整数梯形加减速" class="headerlink" title="核心算法二：AVR446 整数梯形加减速"></a>核心算法二：AVR446 整数梯形加减速</h2><p>速度规划基于 Atmel AVR446 应用笔记的整数算法，全部整数乘除与平方根查算：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">min_delay  = A_T_x100 / speed                            # 最高速度最小脉冲间隔</span><br><span class="line">step_delay = T1_FREQ_148 × sqrt(A_SQ / accel) / 100      # 加速度首步脉冲间隔</span><br><span class="line">max_s_lim  = speed² / (A_x20000 × accel / 100)           # 达到最高速度所需步数</span><br><span class="line">accel_lim  = step × decel / (accel + decel)              # 开始减速的临界步数</span><br></pre></td></tr></table></figure>
-
-<p>定时器中断内以递推方式逼近理论速度曲线：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">new_delay = delay - (2 × delay + rest) / (4 × accel_count + 1)</span><br><span class="line">rest      = (2 × delay + rest) % (4 × accel_count + 1)</span><br></pre></td></tr></table></figure>
-
-<p>余数 <code>rest</code> 携带到下一次迭代，使整数运算不产生累计误差：</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">STOP ──&gt; ACCEL ──&gt; RUN ──&gt; DECEL ──&gt; STOP</span><br><span class="line">  启动     加速段      匀速段     减速段     到达目标步数</span><br></pre></td></tr></table></figure>
-
-<p>每个脉冲下降沿完成一次状态评估与延时更新（软件步进计数），保证双轴脉冲互不干扰。</p>
-<h2 id="通信协议"><a href="#通信协议" class="headerlink" title="通信协议"></a>通信协议</h2><p>文本指令协议：8 个整数、空格分隔、<code>\r\n</code> 结尾，以 IDLE 空闲中断判定帧结束，无帧头帧尾开销。</p>
-<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">step1 accel1 decel1 speed1 step2 accel2 decel2 speed2</span><br><span class="line"></span><br><span class="line">示例：2000 200 200 75 1000 200 200 75</span><br></pre></td></tr></table></figure>
-
-<p>用户只需给出两轴各自步数与主轴速度参数，从轴参数由固件自动按比例缩放。</p>
-<h2 id="硬件与软件"><a href="#硬件与软件" class="headerlink" title="硬件与软件"></a>硬件与软件</h2><table>
-<thead>
-<tr>
-<th>器件</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>MCU</td>
-<td>STM32F103VET6（Cortex-M3，72 MHz，512 KB Flash）</td>
-</tr>
-<tr>
-<td>执行机构</td>
-<td>微步细分步进电机驱动器 ×2（PUL &#x2F; DIR &#x2F; ENA）</td>
-</tr>
-<tr>
-<td>无线模块</td>
-<td>ESP8266（AT 固件，STA 模式 TCP 客户端）</td>
-</tr>
-</tbody></table>
-<p><strong>固件架构</strong>：裸机前后台——中断负责实时脉冲输出与串口不定长帧接收，主循环负责指令解析与运动调度，全程无阻塞延时。双定时器独立中断通道（TIM3&#x2F;TIM4）驱动两轴，时基精度 1 µs；DWT 周期计数器实现微秒级精确延时；ESP8266 检测到 <code>CLOSED</code> 后自动重连。</p>
-<p><strong>Python 上位机</strong>（<code>server.py</code>）：TCP 服务器（端口 5000）+ Matplotlib 实时可视化——按脉冲当量（默认 2000 步&#x2F;cm）换算位移，实时绘制双轴位置与运动轨迹，移动记录持久化，后台线程打印 STM32 调试信息。</p>
-<h2 id="一个值得记住的细节"><a href="#一个值得记住的细节" class="headerlink" title="一个值得记住的细节"></a>一个值得记住的细节</h2><p>两轴步数相差越悬殊，从轴速度越低；低速时梯形曲线可能退化为纯加减速（无匀速段），但<strong>时间同步仍然成立</strong>——因为同步的前提是时间参数比例一致，而不是速度曲线形状一致。这个不变量是整套算法能够成立的关键。</p>
-<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
-<li><a href="https://github.com/Ashleycurry/sync-calc-params-motion-control">sync-calc-params-motion-control</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>机器人</category>
-      </categories>
-      <tags>
-        <tag>STM32</tag>
-        <tag>步进电机</tag>
-        <tag>运动控制</tag>
-        <tag>AVR446</tag>
-        <tag>ESP8266</tag>
-        <tag>上位机</tag>
-        <tag>梯形加减速</tag>
-        <tag>整数算法</tag>
-        <tag>Wi-Fi通信</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>STM32 灰度循迹小车：8 路传感器 + PID + 舵机转向</title>
     <url>/2026/09/22/stm32-grayscale-trace-car/</url>
     <content><![CDATA[<p>一条黑线、一台小车、一套完整闭环。这个项目用一颗 72MHz 的 STM32F103C8T6，把 8 路灰度传感器、加权位置误差、抗饱和 PID、舵机转向和双后轮调速串成了一条 200Hz 的控制链路，是嵌入式入门到进阶的完整实战参考。</p>
@@ -2263,6 +2072,197 @@
         <tag>SysTick</tag>
         <tag>分时调度</tag>
         <tag>USART</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>双轴步进电机同步运动控制：Sync_CalcParams 与 AVR446 梯形加减速</title>
+    <url>/2026/10/10/sync-calc-params-motion-control/</url>
+    <content><![CDATA[<p>两轴各走各的梯形曲线，步数不同就会不同时停。这个项目用一个漂亮的数学观察解决了同步问题：只要两轴的 <code>speed/accel</code>、<code>speed/decel</code> 相同，三段运动时间就完全一致——于是把从轴参数按步数比例统一缩放即可。全整数运算，无浮点、无查表。</p>
+<span id="more"></span>
+
+<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">┌───────────────────────────┐   TCP :5000    ┌───────────────────────────┐</span><br><span class="line">│  Python 上位机            │ &lt;============&gt; │  ESP8266（TCP 透传）      │</span><br><span class="line">│  指令下发 / 轨迹可视化    │                └─────────────┬─────────────┘</span><br><span class="line">└───────────────────────────┘                              │ USART3 115200</span><br><span class="line">                                                           v</span><br><span class="line">┌──────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│                          STM32F103VET6                              │</span><br><span class="line">│                                                                      │</span><br><span class="line">│  USART3 中断（IDLE 帧判定）→ 指令解析（8 参数）                      │</span><br><span class="line">│      → Sync_CalcParams 双轴同步算法（参数缩放）                      │</span><br><span class="line">│      → MSD_Move1 / MSD_Move2 同时启动                                │</span><br><span class="line">│                                                                      │</span><br><span class="line">│  TIM3 中断 → 电机 1 脉冲（加速 / 匀速 / 减速状态机）                │</span><br><span class="line">│  TIM4 中断 → 电机 2 脉冲（加速 / 匀速 / 减速状态机）                │</span><br><span class="line">│                                                                      │</span><br><span class="line">│  USART1 115200 → 调试信息打印                                        │</span><br><span class="line">└──────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="核心算法一：Sync-CalcParams-双轴同步"><a href="#核心算法一：Sync-CalcParams-双轴同步" class="headerlink" title="核心算法一：Sync_CalcParams 双轴同步"></a>核心算法一：Sync_CalcParams 双轴同步</h2><p><strong>问题</strong>：两轴各自独立执行梯形加减速时，若步数不同，就会在不同时刻停止，无法同步到达。</p>
+<p><strong>原理</strong>：梯形速度曲线的关键时间参数为：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">t_accel = speed / accel      （加速段时间）</span><br><span class="line">t_decel = speed / decel      （减速段时间）</span><br></pre></td></tr></table></figure>
+
+<p>只要两轴的 <code>speed/accel</code>、<code>speed/decel</code> 相同，三段运动时间就完全一致。因此选出步数较多的轴为<strong>主轴</strong>（参数不变），<strong>从轴</strong>的速度与加&#x2F;减速度统一乘以步数比例：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">ratio       = steps_slave / steps_master</span><br><span class="line">speed_slave = speed_master × ratio</span><br><span class="line">accel_slave = accel_master × ratio</span><br><span class="line">decel_slave = decel_master × ratio</span><br></pre></td></tr></table></figure>
+
+<p><code>ratio</code> 在时间公式中被约去：<code>t = (speed×ratio) / (accel×ratio) = speed / accel</code>，从轴在时间轴上与主轴完全对齐。步数相差多少，缩放比例就是多少，与方向无关。</p>
+<p><strong>示例</strong>：<code>2000 200 200 75 | 1000 200 200 75</code></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th align="right">电机 1（主轴）</th>
+<th align="right">电机 2（从轴，缩放后）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>步数</td>
+<td align="right">2000</td>
+<td align="right">1000</td>
+</tr>
+<tr>
+<td>速度</td>
+<td align="right">75</td>
+<td align="right">75 × 0.5 &#x3D; <strong>37</strong></td>
+</tr>
+<tr>
+<td>加速度</td>
+<td align="right">200</td>
+<td align="right">200 × 0.5 &#x3D; <strong>100</strong></td>
+</tr>
+<tr>
+<td>减速度</td>
+<td align="right">200</td>
+<td align="right">200 × 0.5 &#x3D; <strong>100</strong></td>
+</tr>
+</tbody></table>
+<p>电机 2 以一半的速度、一半的加速度走一半的路程，与电机 1 同时出发、同时到达。</p>
+<p><strong>工程保护</strong>：缩放乘法用 32 位中间量防溢出，缩放结果下限钳位为 1 杜绝除零，步数为 0 的轴跳过计算，步数取绝对值比较（方向不影响同步）。</p>
+<h2 id="核心算法二：AVR446-整数梯形加减速"><a href="#核心算法二：AVR446-整数梯形加减速" class="headerlink" title="核心算法二：AVR446 整数梯形加减速"></a>核心算法二：AVR446 整数梯形加减速</h2><p>速度规划基于 Atmel AVR446 应用笔记的整数算法，全部整数乘除与平方根查算：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">min_delay  = A_T_x100 / speed                            # 最高速度最小脉冲间隔</span><br><span class="line">step_delay = T1_FREQ_148 × sqrt(A_SQ / accel) / 100      # 加速度首步脉冲间隔</span><br><span class="line">max_s_lim  = speed² / (A_x20000 × accel / 100)           # 达到最高速度所需步数</span><br><span class="line">accel_lim  = step × decel / (accel + decel)              # 开始减速的临界步数</span><br></pre></td></tr></table></figure>
+
+<p>定时器中断内以递推方式逼近理论速度曲线：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">new_delay = delay - (2 × delay + rest) / (4 × accel_count + 1)</span><br><span class="line">rest      = (2 × delay + rest) % (4 × accel_count + 1)</span><br></pre></td></tr></table></figure>
+
+<p>余数 <code>rest</code> 携带到下一次迭代，使整数运算不产生累计误差：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">STOP ──&gt; ACCEL ──&gt; RUN ──&gt; DECEL ──&gt; STOP</span><br><span class="line">  启动     加速段      匀速段     减速段     到达目标步数</span><br></pre></td></tr></table></figure>
+
+<p>每个脉冲下降沿完成一次状态评估与延时更新（软件步进计数），保证双轴脉冲互不干扰。</p>
+<h2 id="通信协议"><a href="#通信协议" class="headerlink" title="通信协议"></a>通信协议</h2><p>文本指令协议：8 个整数、空格分隔、<code>\r\n</code> 结尾，以 IDLE 空闲中断判定帧结束，无帧头帧尾开销。</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">step1 accel1 decel1 speed1 step2 accel2 decel2 speed2</span><br><span class="line"></span><br><span class="line">示例：2000 200 200 75 1000 200 200 75</span><br></pre></td></tr></table></figure>
+
+<p>用户只需给出两轴各自步数与主轴速度参数，从轴参数由固件自动按比例缩放。</p>
+<h2 id="硬件与软件"><a href="#硬件与软件" class="headerlink" title="硬件与软件"></a>硬件与软件</h2><table>
+<thead>
+<tr>
+<th>器件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MCU</td>
+<td>STM32F103VET6（Cortex-M3，72 MHz，512 KB Flash）</td>
+</tr>
+<tr>
+<td>执行机构</td>
+<td>微步细分步进电机驱动器 ×2（PUL &#x2F; DIR &#x2F; ENA）</td>
+</tr>
+<tr>
+<td>无线模块</td>
+<td>ESP8266（AT 固件，STA 模式 TCP 客户端）</td>
+</tr>
+</tbody></table>
+<p><strong>固件架构</strong>：裸机前后台——中断负责实时脉冲输出与串口不定长帧接收，主循环负责指令解析与运动调度，全程无阻塞延时。双定时器独立中断通道（TIM3&#x2F;TIM4）驱动两轴，时基精度 1 µs；DWT 周期计数器实现微秒级精确延时；ESP8266 检测到 <code>CLOSED</code> 后自动重连。</p>
+<p><strong>Python 上位机</strong>（<code>server.py</code>）：TCP 服务器（端口 5000）+ Matplotlib 实时可视化——按脉冲当量（默认 2000 步&#x2F;cm）换算位移，实时绘制双轴位置与运动轨迹，移动记录持久化，后台线程打印 STM32 调试信息。</p>
+<h2 id="一个值得记住的细节"><a href="#一个值得记住的细节" class="headerlink" title="一个值得记住的细节"></a>一个值得记住的细节</h2><p>两轴步数相差越悬殊，从轴速度越低；低速时梯形曲线可能退化为纯加减速（无匀速段），但<strong>时间同步仍然成立</strong>——因为同步的前提是时间参数比例一致，而不是速度曲线形状一致。这个不变量是整套算法能够成立的关键。</p>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a href="https://github.com/Ashleycurry/sync-calc-params-motion-control">sync-calc-params-motion-control</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>机器人</category>
+      </categories>
+      <tags>
+        <tag>STM32</tag>
+        <tag>步进电机</tag>
+        <tag>运动控制</tag>
+        <tag>AVR446</tag>
+        <tag>ESP8266</tag>
+        <tag>上位机</tag>
+        <tag>梯形加减速</tag>
+        <tag>整数算法</tag>
+        <tag>Wi-Fi通信</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>STM32 单片机开发笔记：从寄存器到物联网通信</title>
+    <url>/2026/06/15/stm32-mcu-development-notes/</url>
+    <content><![CDATA[<p>STM32 是嵌入式开发的主战场。这份笔记覆盖基础外设、通信协议、存储器、低功耗、实时系统和工程开发流程，从寄存器与 HAL 库双视角出发，一路延伸到 CAN、以太网、Wi-Fi、蓝牙和 LoRa 等物联网通信。</p>
+<span id="more"></span>
+
+<h2 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h2><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">STM32 基础</span><br><span class="line">    ├── ARM 内核、STM32 系列和开发工具</span><br><span class="line">    ├── 最小系统、开发板和工程创建</span><br><span class="line">    ├── GPIO、时钟和 HAL 库</span><br><span class="line">    ├── 中断、USART、I2C 和定时器</span><br><span class="line">    ├── DMA、ADC、SPI 和外部存储</span><br><span class="line">    └── FSMC、LCD 和寄存器映射</span><br><span class="line">            ↓</span><br><span class="line">STM32 高级通信</span><br><span class="line">    ├── CAN 总线</span><br><span class="line">    ├── W5500 以太网</span><br><span class="line">    ├── ESP32-C3 Wi-Fi</span><br><span class="line">    ├── ESP32-C3 Bluetooth LE</span><br><span class="line">    └── LoRa 节点与网关</span><br><span class="line">            ↓</span><br><span class="line">STM32 系统扩展</span><br><span class="line">    ├── 电源管理与低功耗</span><br><span class="line">    ├── RTC 与备份寄存器</span><br><span class="line">    ├── 闹钟唤醒和掉电保持</span><br><span class="line">    ├── 独立看门狗与窗口看门狗</span><br><span class="line">    └── HAL 工程结构、编译过程和程序状态</span><br></pre></td></tr></table></figure>
+
+<h2 id="基础篇：外设与开发流程"><a href="#基础篇：外设与开发流程" class="headerlink" title="基础篇：外设与开发流程"></a>基础篇：外设与开发流程</h2><ol>
+<li><strong>芯片与工程环境</strong>：ARM 内核介绍、STM32 系列命名规则、Keil MDK &#x2F; STM32CubeMX &#x2F; ST-LINK 工具链、最小系统与第一个工程；</li>
+<li><strong>GPIO 与寄存器</strong>：工作模式、端口配置和数据寄存器（<code>GPIOx_CRL/CRH/IDR/ODR/BSRR/BRR/LCKR</code>），寄存器方式实现流水灯；</li>
+<li><strong>系统架构与时钟</strong>：STM32 总体架构与时钟树；</li>
+<li><strong>HAL 库开发</strong>：CubeMX 生成 HAL 工程，理解自动生成代码和用户代码的组织方式；</li>
+<li><strong>中断</strong>：中断体系、NVIC、外部中断控制器与按键检测案例；</li>
+<li><strong>USART 串口通信</strong>：并行&#x2F;串行、单工&#x2F;半双工&#x2F;全双工、同步&#x2F;异步，轮询与中断接收，<code>printf</code> 重定向；</li>
+<li><strong>I2C 通信</strong>：通过 M24C02 案例学习软件模拟 I2C 与硬件 I2C；</li>
+<li><strong>定时器</strong>：SysTick、基本&#x2F;通用&#x2F;高级定时器，PWM 呼吸灯与频率、占空比测量；</li>
+<li><strong>DMA</strong>：ROM 到 RAM、RAM 到串口的数据传输；</li>
+<li><strong>ADC</strong>：逐次逼近型 ADC 原理、单通道采集与多通道采集；</li>
+<li><strong>SPI 与 Flash</strong>：W25Q32 读写，软件模拟 SPI 与硬件 SPI；</li>
+<li><strong>存储器与 FSMC</strong>：存储器映射、FSMC 扩展外部 SRAM、8080 时序控制 LCD。</li>
+</ol>
+<h2 id="高级篇：物联网通信"><a href="#高级篇：物联网通信" class="headerlink" title="高级篇：物联网通信"></a>高级篇：物联网通信</h2><ul>
+<li><strong>CAN 通信</strong>：物理层、协议层、数据帧与总线仲裁，环回静默模式测试与双节点通信；</li>
+<li><strong>以太网与 W5500</strong>：OSI 七层模型、TCP&#x2F;IP 四层模型，TCP 服务端&#x2F;客户端、UDP 通信与简易 Web 服务器；</li>
+<li><strong>Wi-Fi 与 ESP32-C3</strong>：ESP-AT 固件与 AT 指令，STM32 与 ESP32-C3 串口交互，建立 TCP 通信；</li>
+<li><strong>Bluetooth LE</strong>：BLE 协议栈（PHY &#x2F; LL &#x2F; HCI &#x2F; GAP &#x2F; ATT &#x2F; GATT）、广播扫描与透传模式数据收发；</li>
+<li><strong>LoRa</strong>：E220-400M22S 模块、普通节点与网关搭建，验证节点到网关的数据传输。</li>
+</ul>
+<h2 id="扩展篇：系统级功能"><a href="#扩展篇：系统级功能" class="headerlink" title="扩展篇：系统级功能"></a>扩展篇：系统级功能</h2><ul>
+<li><strong>电源控制与低功耗</strong>：睡眠、停机、待机三种低功耗模式与唤醒源管理；</li>
+<li><strong>RTC 与备份域</strong>：掉电继续运行、备份寄存器保存数据、闹钟唤醒待机模式；</li>
+<li><strong>看门狗</strong>：独立看门狗与窗口看门狗的工作方式和触发条件；</li>
+<li><strong>HAL 工程与编译流程</strong>：<code>startup_stm32f103xe.s</code>、<code>system_stm32f1xx.c</code>、<code>HAL_Init()</code> 初始化流程与 Keil MDK 编译过程。</li>
+</ul>
+<h2 id="开发方式对比"><a href="#开发方式对比" class="headerlink" title="开发方式对比"></a>开发方式对比</h2><table>
+<thead>
+<tr>
+<th>方式</th>
+<th>主要特点</th>
+<th>学习重点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>寄存器开发</td>
+<td>直接操作外设寄存器，接近芯片硬件</td>
+<td>地址、位域、时序和参考手册</td>
+</tr>
+<tr>
+<td>HAL 库开发</td>
+<td>使用 ST 提供的抽象接口，提高开发效率</td>
+<td>CubeMX 配置、回调、状态和生成代码</td>
+</tr>
+<tr>
+<td>混合开发</td>
+<td>在 HAL 工程中针对关键功能使用寄存器</td>
+<td>抽象层边界、时序控制和可维护性</td>
+</tr>
+</tbody></table>
+<h2 id="推荐学习顺序"><a href="#推荐学习顺序" class="headerlink" title="推荐学习顺序"></a>推荐学习顺序</h2><ol>
+<li>完成基础篇中的 GPIO、时钟、HAL 和第一个下载运行工程；</li>
+<li>按 USART、I2C、SPI 的顺序学习常用片上通信接口；</li>
+<li>学习中断、定时器、DMA 和 ADC，建立事件驱动与数据搬运能力；</li>
+<li>学习存储器映射、FSMC 和 LCD，理解外部设备扩展；</li>
+<li>进入高级篇，依次学习 CAN、以太网、Wi-Fi、蓝牙和 LoRa；</li>
+<li>最后学习扩展篇中的低功耗、RTC、备份域、看门狗和 HAL 工程分析。</li>
+</ol>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a href="https://github.com/Ashleycurry/stm32-mcu-development-notes">stm32-mcu-development-notes</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>嵌入式开发</category>
+      </categories>
+      <tags>
+        <tag>STM32</tag>
+        <tag>HAL</tag>
+        <tag>寄存器</tag>
+        <tag>CAN</tag>
+        <tag>LoRa</tag>
+        <tag>物联网</tag>
+        <tag>GPIO</tag>
+        <tag>中断系统</tag>
+        <tag>DMA</tag>
+        <tag>通信协议</tag>
       </tags>
   </entry>
 </search>

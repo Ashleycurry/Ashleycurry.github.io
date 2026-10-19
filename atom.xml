@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>XiaoGao 的代码笔记</title>
+  <title>XiaoGao 的个人博客</title>
   
   <subtitle>从寄存器到推理，把设备、数据与智能连起来。</subtitle>
   <link href="https://xiaogao-code.space/atom.xml" rel="self"/>
