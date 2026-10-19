@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ashleycurry.github.io/sitemap.xml
+Sitemap: https://xiaogao-code.space/sitemap.xml
