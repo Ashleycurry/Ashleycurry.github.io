@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>#学习路线 | XiaoGao 的个人博客</title>
+<meta name="description" content="嵌入式软件 / 机器人 / 计算机视觉 / LLM 应用的学习与实践笔记">
+<meta name="keywords" content="嵌入式,STM32,机器人,计算机视觉,OpenCV,LLM,ROS,FreeRTOS,运动控制,硬件设计,PCB,C语言,C++,Python,Java,Linux,数据结构与算法,大模型应用,学习笔记">
+<meta name="author" content="XiaoGao">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f9fd">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1628">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="canonical" href="https://xiaogao-code.space/tags/%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/">
+<meta name="description" content="嵌入式软件 &#x2F; 机器人 &#x2F; 计算机视觉 &#x2F; LLM 应用的学习与实践笔记">
+<meta property="og:type" content="website">
+<meta property="og:title" content="XiaoGao 的个人博客">
+<meta property="og:url" content="https://xiaogao-code.space/tags/%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/index.html">
+<meta property="og:site_name" content="XiaoGao 的个人博客">
+<meta property="og:description" content="嵌入式软件 &#x2F; 机器人 &#x2F; 计算机视觉 &#x2F; LLM 应用的学习与实践笔记">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xiaogao-code.space/img/og-cover.png">
+<meta property="article:author" content="XiaoGao">
+<meta property="article:tag" content="嵌入式,STM32,机器人,计算机视觉,OpenCV,LLM,ROS,FreeRTOS,运动控制,硬件设计,PCB,C语言,C++,Python,Java,Linux,数据结构与算法,大模型应用,学习笔记">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xiaogao-code.space/img/og-cover.png">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('bs-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+    document.documentElement.classList.add('js');
+    addEventListener('pagereveal', function (e) {
+      if (e.viewTransition) { e.viewTransition.ready.catch(function () {}); e.viewTransition.finished.catch(function () {}); }
+    });
+  })();
+</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400..900&family=Noto+Sans+SC:wght@900&display=swap">
+
+<link rel="stylesheet" href="/css/bisect.css">
+<link rel="alternate" type="application/atom+xml" title="XiaoGao 的个人博客" href="/atom.xml">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.xml"}}]},"eagerness":"moderate"}]}
+</script>
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="is-page">
+<a class="bs-skip" href="#main">跳到正文</a>
+<svg class="bs-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <!-- 列表里的图片统一压成深空—分界蓝—冰白三色调 -->
+  <filter id="bs-duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues=".059 .090 .957"/>
+      <feFuncG type="table" tableValues=".090 .278 .976"/>
+      <feFuncB type="table" tableValues=".165 .902 .992"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+
+<header class="bs-header" data-header>
+  <a class="bs-brand" href="/" aria-label="XiaoGao 的个人博客 首页">
+    <span class="bs-mark" aria-hidden="true"></span>
+    <span class="bs-brand__name">XiaoGao 的个人博客</span>
+  </a>
+  <nav class="bs-nav" id="bs-nav" aria-label="主导航">
+    <ul>
+      
+      <li>
+        <a href="/">
+          <span class="bs-nav__no">01</span>
+          <span class="bs-nav__zh">文章</span>
+          <span class="bs-nav__en">Posts</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives/">
+          <span class="bs-nav__no">02</span>
+          <span class="bs-nav__zh">归档</span>
+          <span class="bs-nav__en">Archive</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/">
+          <span class="bs-nav__no">03</span>
+          <span class="bs-nav__zh">分类</span>
+          <span class="bs-nav__en">Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/" aria-current="page">
+          <span class="bs-nav__no">04</span>
+          <span class="bs-nav__zh">标签</span>
+          <span class="bs-nav__en">Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about/">
+          <span class="bs-nav__no">05</span>
+          <span class="bs-nav__zh">个人介绍</span>
+          <span class="bs-nav__en">Profile</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">
+          <span class="bs-nav__no">06</span>
+          <span class="bs-nav__zh">GitHub</span>
+          <span class="bs-nav__en">Code ↗</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+  <div class="bs-tools">
+    <button class="bs-tool bs-tool--search" type="button" data-search-open aria-label="搜索">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <kbd>⌘K</kbd>
+    </button>
+    <button class="bs-tool bs-tool--theme" type="button" data-theme-toggle aria-label="切换深浅色">
+      <span class="bs-halfdot" aria-hidden="true"></span>
+    </button>
+    <button class="bs-tool bs-tool--menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="bs-nav">
+      <span class="bs-burger" aria-hidden="true"></span><span class="bs-sr">菜单</span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1"><header class="bs-pagehead">
+  <div class="bs-pagehead__white">
+    <p class="bs-kicker">TAG · 标签</p>
+    <h1 class="bs-pagehead__title">#学习路线</h1>
+    <p class="bs-pagehead__lead">带有这个标签的文章有 2 篇。 <a href="/tags/">查看全部标签 →</a></p>
+  </div>
+  <div class="bs-pagehead__blue" aria-hidden="true">
+    <span class="bs-pagehead__en">TAG</span>
+    <span class="bs-pagehead__big">2</span>
+  </div>
+</header>
+
+<section class="bs-index">
+  
+<div class="bs-years">
+
+  <section class="bs-year" data-year="2026" id="y2026">
+    <h3 class="bs-year__label"><span class="bs-year__num">2026</span><span class="bs-year__count">2 篇</span></h3>
+    
+    <ol class="bs-rows">
+      
+<li class="bs-row" data-cats="嵌入式开发">
+  <a class="bs-row__link" href="/2026/10/22/embedded-roadmap/">
+    <span class="bs-row__no" data-meta=" · 2026.10.22 · 嵌入式开发 · 906 字">NO.24</span>
+    <span class="bs-row__main">
+      <span class="bs-row__title">嵌入式学习路线图：9 个仓库串成一条从电路到系统的主线</span>
+      <span class="bs-row__desc">一个不存放课程文件的索引仓库——把分散在 9 个独立仓库中的嵌入式笔记按「语言 → 硬件 → 系统」三阶段串联，给出可执行的阅读路径与统一的仓库…</span>
+    </span>
+    <span class="bs-row__cats">嵌入式开发</span>
+    <span class="bs-row__date"><time datetime="2026-10-22T02:00:00.000Z">2026.10.22</time></span>
+    <span class="bs-row__len">906 字</span>
+    <span class="bs-row__thumb" aria-hidden="true"><svg class="bs-gen" viewBox="0 0 1200 800" preserveAspectRatio="xMinYMid slice" role="img" aria-label="嵌入式学习路线图：9 个仓库串成一条从电路到系统的主线">
+<defs><clipPath id="g-nu910b"><circle cx="919.9" cy="401.2" r="444.2"/></clipPath></defs>
+<rect class="bs-gen__w" width="1200" height="800"/>
+<text class="bs-gen__glyph bs-gen__b" x="242.5" y="688">嵌</text>
+<g clip-path="url(#g-nu910b)"><rect class="bs-gen__b" width="1200" height="800"/><path d="M21.5 21.5h.01M64.5 21.5h.01M107.5 21.5h.01M150.5 21.5h.01M193.5 21.5h.01M236.5 21.5h.01M279.5 21.5h.01M322.5 21.5h.01M365.5 21.5h.01M408.5 21.5h.01M451.5 21.5h.01M494.5 21.5h.01M537.5 21.5h.01M580.5 21.5h.01M623.5 21.5h.01M666.5 21.5h.01M709.5 21.5h.01M752.5 21.5h.01M795.5 21.5h.01M838.5 21.5h.01M881.5 21.5h.01M924.5 21.5h.01M967.5 21.5h.01M1010.5 21.5h.01M1053.5 21.5h.01M1096.5 21.5h.01M1139.5 21.5h.01M1182.5 21.5h.01M21.5 64.5h.01M64.5 64.5h.01M107.5 64.5h.01M150.5 64.5h.01M193.5 64.5h.01M236.5 64.5h.01M279.5 64.5h.01M322.5 64.5h.01M365.5 64.5h.01M408.5 64.5h.01M451.5 64.5h.01M494.5 64.5h.01M537.5 64.5h.01M580.5 64.5h.01M623.5 64.5h.01M666.5 64.5h.01M709.5 64.5h.01M752.5 64.5h.01M795.5 64.5h.01M838.5 64.5h.01M881.5 64.5h.01M924.5 64.5h.01M967.5 64.5h.01M1010.5 64.5h.01M1053.5 64.5h.01M1096.5 64.5h.01M1139.5 64.5h.01M1182.5 64.5h.01M21.5 107.5h.01M64.5 107.5h.01M107.5 107.5h.01M150.5 107.5h.01M193.5 107.5h.01M236.5 107.5h.01M279.5 107.5h.01M322.5 107.5h.01M365.5 107.5h.01M408.5 107.5h.01M451.5 107.5h.01M494.5 107.5h.01M537.5 107.5h.01M580.5 107.5h.01M623.5 107.5h.01M666.5 107.5h.01M709.5 107.5h.01M752.5 107.5h.01M795.5 107.5h.01M838.5 107.5h.01M881.5 107.5h.01M924.5 107.5h.01M967.5 107.5h.01M1010.5 107.5h.01M1053.5 107.5h.01M1096.5 107.5h.01M1139.5 107.5h.01M1182.5 107.5h.01M21.5 150.5h.01M64.5 150.5h.01M107.5 150.5h.01M150.5 150.5h.01M193.5 150.5h.01M236.5 150.5h.01M279.5 150.5h.01M322.5 150.5h.01M365.5 150.5h.01M408.5 150.5h.01M451.5 150.5h.01M494.5 150.5h.01M537.5 150.5h.01M580.5 150.5h.01M623.5 150.5h.01M666.5 150.5h.01M709.5 150.5h.01M752.5 150.5h.01M795.5 150.5h.01M838.5 150.5h.01M881.5 150.5h.01M924.5 150.5h.01M967.5 150.5h.01M1010.5 150.5h.01M1053.5 150.5h.01M1096.5 150.5h.01M1139.5 150.5h.01M1182.5 150.5h.01M21.5 193.5h.01M64.5 193.5h.01M107.5 193.5h.01M150.5 193.5h.01M193.5 193.5h.01M236.5 193.5h.01M279.5 193.5h.01M322.5 193.5h.01M365.5 193.5h.01M408.5 193.5h.01M451.5 193.5h.01M494.5 193.5h.01M537.5 193.5h.01M580.5 193.5h.01M623.5 193.5h.01M666.5 193.5h.01M709.5 193.5h.01M752.5 193.5h.01M795.5 193.5h.01M838.5 193.5h.01M881.5 193.5h.01M924.5 193.5h.01M967.5 193.5h.01M1010.5 193.5h.01M1053.5 193.5h.01M1096.5 193.5h.01M1139.5 193.5h.01M1182.5 193.5h.01M21.5 236.5h.01M64.5 236.5h.01M107.5 236.5h.01M150.5 236.5h.01M193.5 236.5h.01M236.5 236.5h.01M279.5 236.5h.01M322.5 236.5h.01M365.5 236.5h.01M408.5 236.5h.01M451.5 236.5h.01M494.5 236.5h.01M537.5 236.5h.01M580.5 236.5h.01M623.5 236.5h.01M666.5 236.5h.01M709.5 236.5h.01M752.5 236.5h.01M795.5 236.5h.01M838.5 236.5h.01M881.5 236.5h.01M924.5 236.5h.01M967.5 236.5h.01M1010.5 236.5h.01M1053.5 236.5h.01M1096.5 236.5h.01M1139.5 236.5h.01M1182.5 236.5h.01M21.5 279.5h.01M64.5 279.5h.01M107.5 279.5h.01M150.5 279.5h.01M193.5 279.5h.01M236.5 279.5h.01M279.5 279.5h.01M322.5 279.5h.01M365.5 279.5h.01M408.5 279.5h.01M451.5 279.5h.01M494.5 279.5h.01M537.5 279.5h.01M580.5 279.5h.01M623.5 279.5h.01M666.5 279.5h.01M709.5 279.5h.01M752.5 279.5h.01M795.5 279.5h.01M838.5 279.5h.01M881.5 279.5h.01M924.5 279.5h.01M967.5 279.5h.01M1010.5 279.5h.01M1053.5 279.5h.01M1096.5 279.5h.01M1139.5 279.5h.01M1182.5 279.5h.01M21.5 322.5h.01M64.5 322.5h.01M107.5 322.5h.01M150.5 322.5h.01M193.5 322.5h.01M236.5 322.5h.01M279.5 322.5h.01M322.5 322.5h.01M365.5 322.5h.01M408.5 322.5h.01M451.5 322.5h.01M494.5 322.5h.01M537.5 322.5h.01M580.5 322.5h.01M623.5 322.5h.01M666.5 322.5h.01M709.5 322.5h.01M752.5 322.5h.01M795.5 322.5h.01M838.5 322.5h.01M881.5 322.5h.01M924.5 322.5h.01M967.5 322.5h.01M1010.5 322.5h.01M1053.5 322.5h.01M1096.5 322.5h.01M1139.5 322.5h.01M1182.5 322.5h.01M21.5 365.5h.01M64.5 365.5h.01M107.5 365.5h.01M150.5 365.5h.01M193.5 365.5h.01M236.5 365.5h.01M279.5 365.5h.01M322.5 365.5h.01M365.5 365.5h.01M408.5 365.5h.01M451.5 365.5h.01M494.5 365.5h.01M537.5 365.5h.01M580.5 365.5h.01M623.5 365.5h.01M666.5 365.5h.01M709.5 365.5h.01M752.5 365.5h.01M795.5 365.5h.01M838.5 365.5h.01M881.5 365.5h.01M924.5 365.5h.01M967.5 365.5h.01M1010.5 365.5h.01M1053.5 365.5h.01M1096.5 365.5h.01M1139.5 365.5h.01M1182.5 365.5h.01M21.5 408.5h.01M64.5 408.5h.01M107.5 408.5h.01M150.5 408.5h.01M193.5 408.5h.01M236.5 408.5h.01M279.5 408.5h.01M322.5 408.5h.01M365.5 408.5h.01M408.5 408.5h.01M451.5 408.5h.01M494.5 408.5h.01M537.5 408.5h.01M580.5 408.5h.01M623.5 408.5h.01M666.5 408.5h.01M709.5 408.5h.01M752.5 408.5h.01M795.5 408.5h.01M838.5 408.5h.01M881.5 408.5h.01M924.5 408.5h.01M967.5 408.5h.01M1010.5 408.5h.01M1053.5 408.5h.01M1096.5 408.5h.01M1139.5 408.5h.01M1182.5 408.5h.01M21.5 451.5h.01M64.5 451.5h.01M107.5 451.5h.01M150.5 451.5h.01M193.5 451.5h.01M236.5 451.5h.01M279.5 451.5h.01M322.5 451.5h.01M365.5 451.5h.01M408.5 451.5h.01M451.5 451.5h.01M494.5 451.5h.01M537.5 451.5h.01M580.5 451.5h.01M623.5 451.5h.01M666.5 451.5h.01M709.5 451.5h.01M752.5 451.5h.01M795.5 451.5h.01M838.5 451.5h.01M881.5 451.5h.01M924.5 451.5h.01M967.5 451.5h.01M1010.5 451.5h.01M1053.5 451.5h.01M1096.5 451.5h.01M1139.5 451.5h.01M1182.5 451.5h.01M21.5 494.5h.01M64.5 494.5h.01M107.5 494.5h.01M150.5 494.5h.01M193.5 494.5h.01M236.5 494.5h.01M279.5 494.5h.01M322.5 494.5h.01M365.5 494.5h.01M408.5 494.5h.01M451.5 494.5h.01M494.5 494.5h.01M537.5 494.5h.01M580.5 494.5h.01M623.5 494.5h.01M666.5 494.5h.01M709.5 494.5h.01M752.5 494.5h.01M795.5 494.5h.01M838.5 494.5h.01M881.5 494.5h.01M924.5 494.5h.01M967.5 494.5h.01M1010.5 494.5h.01M1053.5 494.5h.01M1096.5 494.5h.01M1139.5 494.5h.01M1182.5 494.5h.01M21.5 537.5h.01M64.5 537.5h.01M107.5 537.5h.01M150.5 537.5h.01M193.5 537.5h.01M236.5 537.5h.01M279.5 537.5h.01M322.5 537.5h.01M365.5 537.5h.01M408.5 537.5h.01M451.5 537.5h.01M494.5 537.5h.01M537.5 537.5h.01M580.5 537.5h.01M623.5 537.5h.01M666.5 537.5h.01M709.5 537.5h.01M752.5 537.5h.01M795.5 537.5h.01M838.5 537.5h.01M881.5 537.5h.01M924.5 537.5h.01M967.5 537.5h.01M1010.5 537.5h.01M1053.5 537.5h.01M1096.5 537.5h.01M1139.5 537.5h.01M1182.5 537.5h.01M21.5 580.5h.01M64.5 580.5h.01M107.5 580.5h.01M150.5 580.5h.01M193.5 580.5h.01M236.5 580.5h.01M279.5 580.5h.01M322.5 580.5h.01M365.5 580.5h.01M408.5 580.5h.01M451.5 580.5h.01M494.5 580.5h.01M537.5 580.5h.01M580.5 580.5h.01M623.5 580.5h.01M666.5 580.5h.01M709.5 580.5h.01M752.5 580.5h.01M795.5 580.5h.01M838.5 580.5h.01M881.5 580.5h.01M924.5 580.5h.01M967.5 580.5h.01M1010.5 580.5h.01M1053.5 580.5h.01M1096.5 580.5h.01M1139.5 580.5h.01M1182.5 580.5h.01M21.5 623.5h.01M64.5 623.5h.01M107.5 623.5h.01M150.5 623.5h.01M193.5 623.5h.01M236.5 623.5h.01M279.5 623.5h.01M322.5 623.5h.01M365.5 623.5h.01M408.5 623.5h.01M451.5 623.5h.01M494.5 623.5h.01M537.5 623.5h.01M580.5 623.5h.01M623.5 623.5h.01M666.5 623.5h.01M709.5 623.5h.01M752.5 623.5h.01M795.5 623.5h.01M838.5 623.5h.01M881.5 623.5h.01M924.5 623.5h.01M967.5 623.5h.01M1010.5 623.5h.01M1053.5 623.5h.01M1096.5 623.5h.01M1139.5 623.5h.01M1182.5 623.5h.01M21.5 666.5h.01M64.5 666.5h.01M107.5 666.5h.01M150.5 666.5h.01M193.5 666.5h.01M236.5 666.5h.01M279.5 666.5h.01M322.5 666.5h.01M365.5 666.5h.01M408.5 666.5h.01M451.5 666.5h.01M494.5 666.5h.01M537.5 666.5h.01M580.5 666.5h.01M623.5 666.5h.01M666.5 666.5h.01M709.5 666.5h.01M752.5 666.5h.01M795.5 666.5h.01M838.5 666.5h.01M881.5 666.5h.01M924.5 666.5h.01M967.5 666.5h.01M1010.5 666.5h.01M1053.5 666.5h.01M1096.5 666.5h.01M1139.5 666.5h.01M1182.5 666.5h.01M21.5 709.5h.01M64.5 709.5h.01M107.5 709.5h.01M150.5 709.5h.01M193.5 709.5h.01M236.5 709.5h.01M279.5 709.5h.01M322.5 709.5h.01M365.5 709.5h.01M408.5 709.5h.01M451.5 709.5h.01M494.5 709.5h.01M537.5 709.5h.01M580.5 709.5h.01M623.5 709.5h.01M666.5 709.5h.01M709.5 709.5h.01M752.5 709.5h.01M795.5 709.5h.01M838.5 709.5h.01M881.5 709.5h.01M924.5 709.5h.01M967.5 709.5h.01M1010.5 709.5h.01M1053.5 709.5h.01M1096.5 709.5h.01M1139.5 709.5h.01M1182.5 709.5h.01M21.5 752.5h.01M64.5 752.5h.01M107.5 752.5h.01M150.5 752.5h.01M193.5 752.5h.01M236.5 752.5h.01M279.5 752.5h.01M322.5 752.5h.01M365.5 752.5h.01M408.5 752.5h.01M451.5 752.5h.01M494.5 752.5h.01M537.5 752.5h.01M580.5 752.5h.01M623.5 752.5h.01M666.5 752.5h.01M709.5 752.5h.01M752.5 752.5h.01M795.5 752.5h.01M838.5 752.5h.01M881.5 752.5h.01M924.5 752.5h.01M967.5 752.5h.01M1010.5 752.5h.01M1053.5 752.5h.01M1096.5 752.5h.01M1139.5 752.5h.01M1182.5 752.5h.01M21.5 795.5h.01M64.5 795.5h.01M107.5 795.5h.01M150.5 795.5h.01M193.5 795.5h.01M236.5 795.5h.01M279.5 795.5h.01M322.5 795.5h.01M365.5 795.5h.01M408.5 795.5h.01M451.5 795.5h.01M494.5 795.5h.01M537.5 795.5h.01M580.5 795.5h.01M623.5 795.5h.01M666.5 795.5h.01M709.5 795.5h.01M752.5 795.5h.01M795.5 795.5h.01M838.5 795.5h.01M881.5 795.5h.01M924.5 795.5h.01M967.5 795.5h.01M1010.5 795.5h.01M1053.5 795.5h.01M1096.5 795.5h.01M1139.5 795.5h.01M1182.5 795.5h.01" class="bs-gen__e" stroke-width="5" stroke-linecap="round" fill="none" opacity=".55"/><text class="bs-gen__glyph bs-gen__w" x="242.5" y="688">嵌</text></g>
+<text class="bs-gen__label" x="40" y="64">NO.24 / 2026</text>
+</svg></span>
+  </a>
+</li>
+
+<li class="bs-row" data-cats="人工智能">
+  <a class="bs-row__link" href="/2026/10/21/ai-foundations-handbook/">
+    <span class="bs-row__no" data-meta=" · 2026.10.21 · 人工智能 · 1,180 字">NO.23</span>
+    <span class="bs-row__main">
+      <span class="bs-row__title">AI 基础手册：37 篇笔记从线性代数走到知识图谱</span>
+      <span class="bs-row__desc">37 篇可逐行验算的中文 AI 笔记，7 个板块、30 万字、258 个块级公式——从数学基础、经典机器学习、神经网络到深度学习之外的图模型与知…</span>
+    </span>
+    <span class="bs-row__cats">人工智能</span>
+    <span class="bs-row__date"><time datetime="2026-10-21T02:00:00.000Z">2026.10.21</time></span>
+    <span class="bs-row__len">1,180 字</span>
+    <span class="bs-row__thumb" aria-hidden="true"><svg class="bs-gen" viewBox="0 0 1200 800" preserveAspectRatio="xMinYMid slice" role="img" aria-label="AI 基础手册：37 篇笔记从线性代数走到知识图谱">
+<defs><clipPath id="gy753km"><rect x="0" y="388.7" width="1200" height="411.3"/></clipPath></defs>
+<rect class="bs-gen__w" width="1200" height="800"/>
+<text class="bs-gen__glyph bs-gen__b" x="217.6" y="688">A</text>
+<g clip-path="url(#gy753km)"><rect class="bs-gen__b" width="1200" height="800"/><path d="M0 23H1200M0 46H1200M0 69H1200M0 92H1200M0 115H1200M0 138H1200M0 161H1200M0 184H1200M0 207H1200M0 230H1200M0 253H1200M0 276H1200M0 299H1200M0 322H1200M0 345H1200M0 368H1200M0 391H1200M0 414H1200M0 437H1200M0 460H1200M0 483H1200M0 506H1200M0 529H1200M0 552H1200M0 575H1200M0 598H1200M0 621H1200M0 644H1200M0 667H1200M0 690H1200M0 713H1200M0 736H1200M0 759H1200M0 782H1200" class="bs-gen__e" stroke-width="1.5" fill="none" opacity=".35"/><text class="bs-gen__glyph bs-gen__w" x="217.6" y="688">A</text></g>
+<text class="bs-gen__label" x="40" y="64">NO.23 / 2026</text>
+</svg></span>
+  </a>
+</li>
+
+    </ol>
+    
+  </section>
+
+</div>
+
+  
+</section>
+</main>
+
+<footer class="bs-footer">
+  <div class="bs-footer__white">
+    <a class="bs-brand bs-brand--footer" href="/">
+      <span class="bs-mark" aria-hidden="true"></span>
+      <span class="bs-brand__name">XiaoGao 的个人博客</span>
+    </a>
+    <p class="bs-footer__desc">嵌入式软件 / 机器人 / 计算机视觉 / LLM 应用的学习与实践笔记</p>
+    <ul class="bs-footer__social">
+      
+      <li><a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">GitHub</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+    </ul>
+    <p class="bs-footer__meta">
+      © 2026 XiaoGao
+       · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+      · 由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 与 <a href="https://github.com/LiuXiu233/hexo-theme-bisect" target="_blank" rel="noopener">Bisect</a> 主题驱动
+    </p>
+    <p class="bs-footer__meta">
+      总访问量 · <strong id="bs-visit-count">666</strong><span id="busuanzi_value_site_pv" hidden></span>
+    </p>
+  </div>
+  <div class="bs-footer__blue">
+    
+<p class="bs-slogan bs-slogan--footer">
+  <span class="bs-slogan__zh">从寄存器到推理，把设备、数据与智能连起来。</span>
+  <span class="bs-slogan__en">Build close to the machine. Bring intelligence to the edge.</span>
+</p>
+
+
+    
+    <div class="bs-footer__actions">
+      
+      <a class="bs-btn bs-btn--line" href="#top" data-to-top>回到顶部 ↑</a>
+    </div>
+  </div>
+</footer>
+<script id="bs-config" type="application/json">{"root":"/","search":"/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script>
+  (function () {
+    var out = document.getElementById('bs-visit-count');
+    var src = document.getElementById('busuanzi_value_site_pv');
+    if (!out || !src) return;
+    var timer = setInterval(function () {
+      var n = parseInt(src.textContent, 10);
+      if (!isNaN(n)) {
+        clearInterval(timer);
+        out.textContent = (n + 666).toLocaleString('en-US');
+      }
+    }, 400);
+    setTimeout(function () { clearInterval(timer); }, 15000);
+  })();
+</script>
+
+<dialog class="bs-search" id="bs-search" aria-label="搜索文章或输入命令">
+  <form class="bs-search__bar" method="dialog" role="search">
+    <span class="bs-search__prompt" aria-hidden="true">&gt;</span>
+    <label class="bs-sr" for="bs-search-input">搜索文章或输入命令</label>
+    <input id="bs-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="搜索标题、正文、标签……  输入 &gt; 查看命令">
+    <button class="bs-search__close" type="submit" aria-label="关闭">esc</button>
+  </form>
+  <ol class="bs-search__list" id="bs-search-list" role="listbox" aria-label="结果"></ol>
+  <p class="bs-search__hint"><span>↑↓ 选择</span><span>↵ 打开</span><span>&gt;theme · &gt;random · &gt;top · &gt;archive</span></p>
+</dialog>
+
+<script type="module" src="/js/bisect.js"></script>
+</body>
+</html>

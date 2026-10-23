@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LeetCode 面试经典 150 题：按专题推进的 C++ 题解 | XiaoGao 的个人博客</title>
+<meta name="description" content="按专题组织的 LeetCode 面试经典 150 题 C++ 题解——先完成数组与字符串 24 题，再推进双指针与滑动窗口，用「一个专题一组模板」的方式积累，而不是按题号散着刷。">
+<meta name="keywords" content="嵌入式,STM32,机器人,计算机视觉,OpenCV,LLM,ROS,FreeRTOS,运动控制,硬件设计,PCB,C语言,C++,Python,Java,Linux,数据结构与算法,大模型应用,学习笔记">
+<meta name="author" content="XiaoGao">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f9fd">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1628">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="canonical" href="https://xiaogao-code.space/2026/04/10/leetcode-interview-150-cpp/">
+<meta name="description" content="按专题组织的 LeetCode 面试经典 150 题 C++ 题解——先完成数组与字符串 24 题，再推进双指针与滑动窗口，用「一个专题一组模板」的方式积累，而不是按题号散着刷。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode 面试经典 150 题：按专题推进的 C++ 题解">
+<meta property="og:url" content="https://xiaogao-code.space/2026/04/10/leetcode-interview-150-cpp/index.html">
+<meta property="og:site_name" content="XiaoGao 的个人博客">
+<meta property="og:description" content="按专题组织的 LeetCode 面试经典 150 题 C++ 题解——先完成数组与字符串 24 题，再推进双指针与滑动窗口，用「一个专题一组模板」的方式积累，而不是按题号散着刷。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xiaogao-code.space/img/og-cover.png">
+<meta property="article:published_time" content="2026-04-10T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-23T06:11:40.000Z">
+<meta property="article:author" content="XiaoGao">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="LeetCode">
+<meta property="article:tag" content="双指针">
+<meta property="article:tag" content="数组">
+<meta property="article:tag" content="滑动窗口">
+<meta property="article:tag" content="面试">
+<meta property="article:tag" content="题解">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xiaogao-code.space/img/og-cover.png">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('bs-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+    document.documentElement.classList.add('js');
+    addEventListener('pagereveal', function (e) {
+      if (e.viewTransition) { e.viewTransition.ready.catch(function () {}); e.viewTransition.finished.catch(function () {}); }
+    });
+  })();
+</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400..900&family=Noto+Sans+SC:wght@900&display=swap">
+
+<link rel="stylesheet" href="/css/bisect.css">
+<link rel="alternate" type="application/atom+xml" title="XiaoGao 的个人博客" href="/atom.xml">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.xml"}}]},"eagerness":"moderate"}]}
+</script>
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="is-post">
+<a class="bs-skip" href="#main">跳到正文</a>
+<svg class="bs-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <!-- 列表里的图片统一压成深空—分界蓝—冰白三色调 -->
+  <filter id="bs-duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues=".059 .090 .957"/>
+      <feFuncG type="table" tableValues=".090 .278 .976"/>
+      <feFuncB type="table" tableValues=".165 .902 .992"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+
+<header class="bs-header" data-header>
+  <a class="bs-brand" href="/" aria-label="XiaoGao 的个人博客 首页">
+    <span class="bs-mark" aria-hidden="true"></span>
+    <span class="bs-brand__name">XiaoGao 的个人博客</span>
+  </a>
+  <nav class="bs-nav" id="bs-nav" aria-label="主导航">
+    <ul>
+      
+      <li>
+        <a href="/" aria-current="page">
+          <span class="bs-nav__no">01</span>
+          <span class="bs-nav__zh">文章</span>
+          <span class="bs-nav__en">Posts</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives/">
+          <span class="bs-nav__no">02</span>
+          <span class="bs-nav__zh">归档</span>
+          <span class="bs-nav__en">Archive</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/">
+          <span class="bs-nav__no">03</span>
+          <span class="bs-nav__zh">分类</span>
+          <span class="bs-nav__en">Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/">
+          <span class="bs-nav__no">04</span>
+          <span class="bs-nav__zh">标签</span>
+          <span class="bs-nav__en">Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about/">
+          <span class="bs-nav__no">05</span>
+          <span class="bs-nav__zh">个人介绍</span>
+          <span class="bs-nav__en">Profile</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">
+          <span class="bs-nav__no">06</span>
+          <span class="bs-nav__zh">GitHub</span>
+          <span class="bs-nav__en">Code ↗</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+  <div class="bs-tools">
+    <button class="bs-tool bs-tool--search" type="button" data-search-open aria-label="搜索">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <kbd>⌘K</kbd>
+    </button>
+    <button class="bs-tool bs-tool--theme" type="button" data-theme-toggle aria-label="切换深浅色">
+      <span class="bs-halfdot" aria-hidden="true"></span>
+    </button>
+    <button class="bs-tool bs-tool--menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="bs-nav">
+      <span class="bs-burger" aria-hidden="true"></span><span class="bs-sr">菜单</span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<article class="bs-post" data-font="sans">
+  <header class="bs-phead">
+    <div class="bs-phead__text">
+      <p class="bs-kicker">NO.04 · <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a></p>
+      <h1 class="bs-phead__title">LeetCode 面试经典 150 题：按专题推进的 C++ 题解</h1>
+      <p class="bs-phead__desc">按专题组织的 LeetCode 面试经典 150 题 C++ 题解——先完成数组与字符串 24 题，再推进双指针与滑动窗口，用「一个专题一组模板」的方式积累，而不是按题号散着刷。</p>
+      <dl class="bs-phead__meta">
+        <div><dt>发布 DATE</dt><dd><time datetime="2026-04-10T02:00:00.000Z">2026.04.10</time></dd></div>
+        <div><dt>字数 WORDS</dt><dd>772</dd></div>
+        <div><dt>阅读 READ</dt><dd>2 分钟</dd></div>
+      </dl>
+    </div>
+    <figure class="bs-phead__cover" aria-hidden="true">
+      <svg class="bs-gen" viewBox="0 0 1200 800" preserveAspectRatio="xMinYMid slice" role="img" aria-label="LeetCode 面试经典 150 题：按专题推进的 C++ 题解">
+<defs><clipPath id="g8pqlb8"><rect x="698.3" y="0" width="501.7" height="800"/></clipPath></defs>
+<rect class="bs-gen__w" width="1200" height="800"/>
+<text class="bs-gen__glyph bs-gen__b" x="190.7" y="688">L</text>
+<g clip-path="url(#g8pqlb8)"><rect class="bs-gen__b" width="1200" height="800"/><path d="M0 14H1200M0 28H1200M0 42H1200M0 56H1200M0 70H1200M0 84H1200M0 98H1200M0 112H1200M0 126H1200M0 140H1200M0 154H1200M0 168H1200M0 182H1200M0 196H1200M0 210H1200M0 224H1200M0 238H1200M0 252H1200M0 266H1200M0 280H1200M0 294H1200M0 308H1200M0 322H1200M0 336H1200M0 350H1200M0 364H1200M0 378H1200M0 392H1200M0 406H1200M0 420H1200M0 434H1200M0 448H1200M0 462H1200M0 476H1200M0 490H1200M0 504H1200M0 518H1200M0 532H1200M0 546H1200M0 560H1200M0 574H1200M0 588H1200M0 602H1200M0 616H1200M0 630H1200M0 644H1200M0 658H1200M0 672H1200M0 686H1200M0 700H1200M0 714H1200M0 728H1200M0 742H1200M0 756H1200M0 770H1200M0 784H1200M0 798H1200" class="bs-gen__e" stroke-width="1.5" fill="none" opacity=".35"/><text class="bs-gen__glyph bs-gen__w" x="190.7" y="688">L</text></g>
+<text class="bs-gen__label" x="40" y="64">NO.04 / 2026</text>
+</svg>
+    </figure>
+  </header>
+
+  <div class="bs-post__layout">
+    <aside class="bs-rail" aria-label="阅读进度与目录">
+      <div class="bs-rail__inner">
+        <a class="bs-progress" href="#top" data-to-top aria-label="回到顶部"><span class="bs-progress__fill"></span></a>
+        
+        <p class="bs-rail__label">目录 · CONTENTS</p>
+        <ol class="bs-toc"><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%84%E7%BB%87%E6%96%B9%E5%BC%8F"><span class="bs-toc-number">1.</span> <span class="bs-toc-text">目录组织方式</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E7%9B%AE%E5%89%8D%E7%9A%84%E8%BF%9B%E5%BA%A6"><span class="bs-toc-number">2.</span> <span class="bs-toc-text">目前的进度</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8C%89%E4%B8%93%E9%A2%98%E6%8E%A8%E8%BF%9B"><span class="bs-toc-number">3.</span> <span class="bs-toc-text">为什么按专题推进</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%B8%80%E4%B8%AA%E5%80%BC%E5%BE%97%E8%AE%B0%E4%BD%8F%E7%9A%84%E7%BB%86%E8%8A%82"><span class="bs-toc-number">4.</span> <span class="bs-toc-text">一个值得记住的细节</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%BB%93%E5%BA%93"><span class="bs-toc-number">5.</span> <span class="bs-toc-text">仓库</span></a></li></ol>
+        
+      </div>
+    </aside>
+    <div class="bs-prose" data-prose>
+      <p>刷题最大的浪费不是不会做，而是做完就忘。按题号散着刷，每道题都是一个孤立事件；按专题成组地刷，一组题共用一套模板——记住一组，就记住了一类。</p>
+<p>这个仓库就是按这个思路组织的：<code>面试经典150题/C++/</code> 下按专题分目录，题解从数组与字符串开始，一组一组往下推进。</p>
+<span id="more"></span>
+
+<h2 id="目录组织方式"><a href="#目录组织方式" class="headerlink" title="目录组织方式"></a>目录组织方式</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">面试经典150题/C++/</span><br><span class="line">├── 01_数组-字符串/      24 题</span><br><span class="line">├── 02_双指针/           5 题</span><br><span class="line">└── 03_滑动窗口/         3 题</span><br></pre></td></tr></table></figure>
+
+<p>文件名形如 <code>001_88.合并两个有序数组.cpp</code>：<strong>序号 + LeetCode 题号 + 题名</strong>。序号只表示在当前专题内的推进顺序，与难度无关；题号保证任何一个文件都能立刻对应回 LeetCode 原题。</p>
+<h2 id="目前的进度"><a href="#目前的进度" class="headerlink" title="目前的进度"></a>目前的进度</h2><table>
+<thead>
+<tr>
+<th>专题</th>
+<th align="right">题数</th>
+<th>代表题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数组-字符串</td>
+<td align="right">24</td>
+<td>88 合并两个有序数组、26&#x2F;80 删除重复项、121&#x2F;122 买卖股票、55&#x2F;45 跳跃游戏、42 接雨水、12&#x2F;13 罗马数字互转、151 反转字符串中的单词</td>
+</tr>
+<tr>
+<td>双指针</td>
+<td align="right">5</td>
+<td>125 验证回文串、392 判断子序列、167 两数之和 Ⅱ、11 盛最多水的容器、15 三数之和</td>
+</tr>
+<tr>
+<td>滑动窗口</td>
+<td align="right">3</td>
+<td>209 长度最小的子数组、3 无重复字符的最长子串、30 串联所有单词的子串</td>
+</tr>
+</tbody></table>
+<h2 id="为什么按专题推进"><a href="#为什么按专题推进" class="headerlink" title="为什么按专题推进"></a>为什么按专题推进</h2><p><strong>数组-字符串</strong>是专题的起点：一是题目基数最大（面试经典 150 题里占四分之一），二是它是双指针、滑动窗口、前缀和等技巧的「地基」。24 道题刷下来，反复出现的模式很清晰——</p>
+<ul>
+<li>原地修改类（27 移除元素、26&#x2F;80 删除重复项）：快慢指针一个模板通吃，80 题只是多记一个计数；</li>
+<li>递推类（121&#x2F;122 买卖股票、55&#x2F;45 跳跃游戏）：I 与 II 之间只差一个状态定义；</li>
+<li>双端推进类（42 接雨水）：左右指针从两端向中间走，维护两侧最大值。</li>
+</ul>
+<p><strong>双指针</strong>专题则是一条递进链：125 验证回文串是单串相向而行；167 两数之和 Ⅱ 把相向双指针用到「有序数组找目标」；11 盛最多水的容器引入「移动较短边」的贪心依据；15 三数之和 &#x3D; 排序 + 固定一个 + 167 的模板复用。五道题其实是同一套指针移动逻辑的不同外衣。</p>
+<p><strong>滑动窗口</strong>是三题定式：209 是「窗口和 ≥ target 的最短长度」，3 是「无重复字符的最长窗口」，30 是「定长窗口 + 哈希计数」。固定右端、收缩左端的骨架在三题里完全一致，差异只在窗口合法性的判定条件。</p>
+<h2 id="一个值得记住的细节"><a href="#一个值得记住的细节" class="headerlink" title="一个值得记住的细节"></a>一个值得记住的细节</h2><p>文件名里的连续序号不只是排序，它记录了<strong>当时的推进路径</strong>。回头看目录，等于看到自己每个专题的思考顺序——哪个专题卡得久、哪类题重复出现，一目了然。</p>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ashleycurry/Leetcode_List">Leetcode_List</a></li>
+</ul>
+
+    </div>
+  </div>
+
+  <footer class="bs-pfoot">
+    
+    <ul class="bs-tags" aria-label="标签">
+      <li><a href="/tags/C/">#C++</a></li><li><a href="/tags/LeetCode/">#LeetCode</a></li><li><a href="/tags/%E9%A2%98%E8%A7%A3/">#题解</a></li><li><a href="/tags/%E6%95%B0%E7%BB%84/">#数组</a></li><li><a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">#双指针</a></li><li><a href="/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/">#滑动窗口</a></li><li><a href="/tags/%E9%9D%A2%E8%AF%95/">#面试</a></li>
+    </ul>
+    
+    <div class="bs-pfoot__grid">
+      
+      <p class="bs-license">
+        <span class="bs-kicker">LICENSE</span>
+        本文作者 XiaoGao，采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可。
+        转载请注明出处：<a href="https://xiaogao-code.space/2026/04/10/leetcode-interview-150-cpp/">https:&#x2F;&#x2F;xiaogao-code.space&#x2F;2026&#x2F;04&#x2F;10&#x2F;leetcode-interview-150-cpp&#x2F;</a>
+      </p>
+      
+      
+      
+    </div>
+  </footer>
+
+  <nav class="bs-pnav" aria-label="分页">
+    
+    <a class="bs-pnav__item bs-pnav__item--newer" href="/2026/04/15/java-engineering-handbook/" rel="prev">
+      <span class="bs-kicker">← 较新 NEWER</span><span class="bs-pnav__t">Java 工程实践手册：三阶段学习路线与案例体系</span>
+    </a>
+    
+    
+    <a class="bs-pnav__item bs-pnav__item--older" href="/2026/04/02/python-engineering-handbook/" rel="next">
+      <span class="bs-kicker">较早 OLDER →</span><span class="bs-pnav__t">Python 工程实践手册：13 个案例走完入门路径</span>
+    </a>
+    
+  </nav>
+
+  
+</article>
+</main>
+
+<footer class="bs-footer">
+  <div class="bs-footer__white">
+    <a class="bs-brand bs-brand--footer" href="/">
+      <span class="bs-mark" aria-hidden="true"></span>
+      <span class="bs-brand__name">XiaoGao 的个人博客</span>
+    </a>
+    <p class="bs-footer__desc">嵌入式软件 / 机器人 / 计算机视觉 / LLM 应用的学习与实践笔记</p>
+    <ul class="bs-footer__social">
+      
+      <li><a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">GitHub</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+    </ul>
+    <p class="bs-footer__meta">
+      © 2026 XiaoGao
+       · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+      · 由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 与 <a href="https://github.com/LiuXiu233/hexo-theme-bisect" target="_blank" rel="noopener">Bisect</a> 主题驱动
+    </p>
+    <p class="bs-footer__meta">
+      总访问量 · <strong id="bs-visit-count">666</strong><span id="busuanzi_value_site_pv" hidden></span>
+    </p>
+  </div>
+  <div class="bs-footer__blue">
+    
+<p class="bs-slogan bs-slogan--footer">
+  <span class="bs-slogan__zh">从寄存器到推理，把设备、数据与智能连起来。</span>
+  <span class="bs-slogan__en">Build close to the machine. Bring intelligence to the edge.</span>
+</p>
+
+
+    
+    <div class="bs-footer__actions">
+      
+      <a class="bs-btn bs-btn--line" href="#top" data-to-top>回到顶部 ↑</a>
+    </div>
+  </div>
+</footer>
+<script id="bs-config" type="application/json">{"root":"/","search":"/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script>
+  (function () {
+    var out = document.getElementById('bs-visit-count');
+    var src = document.getElementById('busuanzi_value_site_pv');
+    if (!out || !src) return;
+    var timer = setInterval(function () {
+      var n = parseInt(src.textContent, 10);
+      if (!isNaN(n)) {
+        clearInterval(timer);
+        out.textContent = (n + 666).toLocaleString('en-US');
+      }
+    }, 400);
+    setTimeout(function () { clearInterval(timer); }, 15000);
+  })();
+</script>
+
+<dialog class="bs-search" id="bs-search" aria-label="搜索文章或输入命令">
+  <form class="bs-search__bar" method="dialog" role="search">
+    <span class="bs-search__prompt" aria-hidden="true">&gt;</span>
+    <label class="bs-sr" for="bs-search-input">搜索文章或输入命令</label>
+    <input id="bs-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="搜索标题、正文、标签……  输入 &gt; 查看命令">
+    <button class="bs-search__close" type="submit" aria-label="关闭">esc</button>
+  </form>
+  <ol class="bs-search__list" id="bs-search-list" role="listbox" aria-label="结果"></ol>
+  <p class="bs-search__hint"><span>↑↓ 选择</span><span>↵ 打开</span><span>&gt;theme · &gt;random · &gt;top · &gt;archive</span></p>
+</dialog>
+
+<script type="module" src="/js/bisect.js"></script>
+</body>
+</html>

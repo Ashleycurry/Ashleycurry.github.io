@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>嵌入式学习路线图：9 个仓库串成一条从电路到系统的主线 | XiaoGao 的个人博客</title>
+<meta name="description" content="一个不存放课程文件的索引仓库——把分散在 9 个独立仓库中的嵌入式笔记按「语言 → 硬件 → 系统」三阶段串联，给出可执行的阅读路径与统一的仓库约定。">
+<meta name="keywords" content="嵌入式,STM32,机器人,计算机视觉,OpenCV,LLM,ROS,FreeRTOS,运动控制,硬件设计,PCB,C语言,C++,Python,Java,Linux,数据结构与算法,大模型应用,学习笔记">
+<meta name="author" content="XiaoGao">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f9fd">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e1628">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="canonical" href="https://xiaogao-code.space/2026/10/22/embedded-roadmap/">
+<meta name="description" content="一个不存放课程文件的索引仓库——把分散在 9 个独立仓库中的嵌入式笔记按「语言 → 硬件 → 系统」三阶段串联，给出可执行的阅读路径与统一的仓库约定。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式学习路线图：9 个仓库串成一条从电路到系统的主线">
+<meta property="og:url" content="https://xiaogao-code.space/2026/10/22/embedded-roadmap/index.html">
+<meta property="og:site_name" content="XiaoGao 的个人博客">
+<meta property="og:description" content="一个不存放课程文件的索引仓库——把分散在 9 个独立仓库中的嵌入式笔记按「语言 → 硬件 → 系统」三阶段串联，给出可执行的阅读路径与统一的仓库约定。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xiaogao-code.space/img/og-cover.png">
+<meta property="article:published_time" content="2026-10-22T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-23T06:11:10.000Z">
+<meta property="article:author" content="XiaoGao">
+<meta property="article:tag" content="FreeRTOS">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="STM32">
+<meta property="article:tag" content="学习路线">
+<meta property="article:tag" content="嵌入式">
+<meta property="article:tag" content="硬件基础">
+<meta property="article:tag" content="索引仓库">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xiaogao-code.space/img/og-cover.png">
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('bs-theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+    document.documentElement.classList.add('js');
+    addEventListener('pagereveal', function (e) {
+      if (e.viewTransition) { e.viewTransition.ready.catch(function () {}); e.viewTransition.finished.catch(function () {}); }
+    });
+  })();
+</script>
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400..900&family=Noto+Sans+SC:wght@900&display=swap">
+
+<link rel="stylesheet" href="/css/bisect.css">
+<link rel="alternate" type="application/atom+xml" title="XiaoGao 的个人博客" href="/atom.xml">
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/*.xml"}}]},"eagerness":"moderate"}]}
+</script>
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+<body class="is-post">
+<a class="bs-skip" href="#main">跳到正文</a>
+<svg class="bs-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <!-- 列表里的图片统一压成深空—分界蓝—冰白三色调 -->
+  <filter id="bs-duotone" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values=".2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  .2126 .7152 .0722 0 0  0 0 0 1 0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues=".059 .090 .957"/>
+      <feFuncG type="table" tableValues=".090 .278 .976"/>
+      <feFuncB type="table" tableValues=".165 .902 .992"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+
+<header class="bs-header" data-header>
+  <a class="bs-brand" href="/" aria-label="XiaoGao 的个人博客 首页">
+    <span class="bs-mark" aria-hidden="true"></span>
+    <span class="bs-brand__name">XiaoGao 的个人博客</span>
+  </a>
+  <nav class="bs-nav" id="bs-nav" aria-label="主导航">
+    <ul>
+      
+      <li>
+        <a href="/" aria-current="page">
+          <span class="bs-nav__no">01</span>
+          <span class="bs-nav__zh">文章</span>
+          <span class="bs-nav__en">Posts</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/archives/">
+          <span class="bs-nav__no">02</span>
+          <span class="bs-nav__zh">归档</span>
+          <span class="bs-nav__en">Archive</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/categories/">
+          <span class="bs-nav__no">03</span>
+          <span class="bs-nav__zh">分类</span>
+          <span class="bs-nav__en">Categories</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/tags/">
+          <span class="bs-nav__no">04</span>
+          <span class="bs-nav__zh">标签</span>
+          <span class="bs-nav__en">Tags</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/about/">
+          <span class="bs-nav__no">05</span>
+          <span class="bs-nav__zh">个人介绍</span>
+          <span class="bs-nav__en">Profile</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">
+          <span class="bs-nav__no">06</span>
+          <span class="bs-nav__zh">GitHub</span>
+          <span class="bs-nav__en">Code ↗</span>
+        </a>
+      </li>
+      
+    </ul>
+  </nav>
+  <div class="bs-tools">
+    <button class="bs-tool bs-tool--search" type="button" data-search-open aria-label="搜索">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+      <kbd>⌘K</kbd>
+    </button>
+    <button class="bs-tool bs-tool--theme" type="button" data-theme-toggle aria-label="切换深浅色">
+      <span class="bs-halfdot" aria-hidden="true"></span>
+    </button>
+    <button class="bs-tool bs-tool--menu" type="button" data-menu-toggle aria-expanded="false" aria-controls="bs-nav">
+      <span class="bs-burger" aria-hidden="true"></span><span class="bs-sr">菜单</span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<article class="bs-post" data-font="sans">
+  <header class="bs-phead">
+    <div class="bs-phead__text">
+      <p class="bs-kicker">NO.24 · <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BC%80%E5%8F%91/">嵌入式开发</a></p>
+      <h1 class="bs-phead__title">嵌入式学习路线图：9 个仓库串成一条从电路到系统的主线</h1>
+      <p class="bs-phead__desc">一个不存放课程文件的索引仓库——把分散在 9 个独立仓库中的嵌入式笔记按「语言 → 硬件 → 系统」三阶段串联，给出可执行的阅读路径与统一的仓库约定。</p>
+      <dl class="bs-phead__meta">
+        <div><dt>发布 DATE</dt><dd><time datetime="2026-10-22T02:00:00.000Z">2026.10.22</time></dd></div>
+        <div><dt>字数 WORDS</dt><dd>906</dd></div>
+        <div><dt>阅读 READ</dt><dd>2 分钟</dd></div>
+      </dl>
+    </div>
+    <figure class="bs-phead__cover" aria-hidden="true">
+      <svg class="bs-gen" viewBox="0 0 1200 800" preserveAspectRatio="xMinYMid slice" role="img" aria-label="嵌入式学习路线图：9 个仓库串成一条从电路到系统的主线">
+<defs><clipPath id="g-nu910b"><circle cx="919.9" cy="401.2" r="444.2"/></clipPath></defs>
+<rect class="bs-gen__w" width="1200" height="800"/>
+<text class="bs-gen__glyph bs-gen__b" x="242.5" y="688">嵌</text>
+<g clip-path="url(#g-nu910b)"><rect class="bs-gen__b" width="1200" height="800"/><path d="M21.5 21.5h.01M64.5 21.5h.01M107.5 21.5h.01M150.5 21.5h.01M193.5 21.5h.01M236.5 21.5h.01M279.5 21.5h.01M322.5 21.5h.01M365.5 21.5h.01M408.5 21.5h.01M451.5 21.5h.01M494.5 21.5h.01M537.5 21.5h.01M580.5 21.5h.01M623.5 21.5h.01M666.5 21.5h.01M709.5 21.5h.01M752.5 21.5h.01M795.5 21.5h.01M838.5 21.5h.01M881.5 21.5h.01M924.5 21.5h.01M967.5 21.5h.01M1010.5 21.5h.01M1053.5 21.5h.01M1096.5 21.5h.01M1139.5 21.5h.01M1182.5 21.5h.01M21.5 64.5h.01M64.5 64.5h.01M107.5 64.5h.01M150.5 64.5h.01M193.5 64.5h.01M236.5 64.5h.01M279.5 64.5h.01M322.5 64.5h.01M365.5 64.5h.01M408.5 64.5h.01M451.5 64.5h.01M494.5 64.5h.01M537.5 64.5h.01M580.5 64.5h.01M623.5 64.5h.01M666.5 64.5h.01M709.5 64.5h.01M752.5 64.5h.01M795.5 64.5h.01M838.5 64.5h.01M881.5 64.5h.01M924.5 64.5h.01M967.5 64.5h.01M1010.5 64.5h.01M1053.5 64.5h.01M1096.5 64.5h.01M1139.5 64.5h.01M1182.5 64.5h.01M21.5 107.5h.01M64.5 107.5h.01M107.5 107.5h.01M150.5 107.5h.01M193.5 107.5h.01M236.5 107.5h.01M279.5 107.5h.01M322.5 107.5h.01M365.5 107.5h.01M408.5 107.5h.01M451.5 107.5h.01M494.5 107.5h.01M537.5 107.5h.01M580.5 107.5h.01M623.5 107.5h.01M666.5 107.5h.01M709.5 107.5h.01M752.5 107.5h.01M795.5 107.5h.01M838.5 107.5h.01M881.5 107.5h.01M924.5 107.5h.01M967.5 107.5h.01M1010.5 107.5h.01M1053.5 107.5h.01M1096.5 107.5h.01M1139.5 107.5h.01M1182.5 107.5h.01M21.5 150.5h.01M64.5 150.5h.01M107.5 150.5h.01M150.5 150.5h.01M193.5 150.5h.01M236.5 150.5h.01M279.5 150.5h.01M322.5 150.5h.01M365.5 150.5h.01M408.5 150.5h.01M451.5 150.5h.01M494.5 150.5h.01M537.5 150.5h.01M580.5 150.5h.01M623.5 150.5h.01M666.5 150.5h.01M709.5 150.5h.01M752.5 150.5h.01M795.5 150.5h.01M838.5 150.5h.01M881.5 150.5h.01M924.5 150.5h.01M967.5 150.5h.01M1010.5 150.5h.01M1053.5 150.5h.01M1096.5 150.5h.01M1139.5 150.5h.01M1182.5 150.5h.01M21.5 193.5h.01M64.5 193.5h.01M107.5 193.5h.01M150.5 193.5h.01M193.5 193.5h.01M236.5 193.5h.01M279.5 193.5h.01M322.5 193.5h.01M365.5 193.5h.01M408.5 193.5h.01M451.5 193.5h.01M494.5 193.5h.01M537.5 193.5h.01M580.5 193.5h.01M623.5 193.5h.01M666.5 193.5h.01M709.5 193.5h.01M752.5 193.5h.01M795.5 193.5h.01M838.5 193.5h.01M881.5 193.5h.01M924.5 193.5h.01M967.5 193.5h.01M1010.5 193.5h.01M1053.5 193.5h.01M1096.5 193.5h.01M1139.5 193.5h.01M1182.5 193.5h.01M21.5 236.5h.01M64.5 236.5h.01M107.5 236.5h.01M150.5 236.5h.01M193.5 236.5h.01M236.5 236.5h.01M279.5 236.5h.01M322.5 236.5h.01M365.5 236.5h.01M408.5 236.5h.01M451.5 236.5h.01M494.5 236.5h.01M537.5 236.5h.01M580.5 236.5h.01M623.5 236.5h.01M666.5 236.5h.01M709.5 236.5h.01M752.5 236.5h.01M795.5 236.5h.01M838.5 236.5h.01M881.5 236.5h.01M924.5 236.5h.01M967.5 236.5h.01M1010.5 236.5h.01M1053.5 236.5h.01M1096.5 236.5h.01M1139.5 236.5h.01M1182.5 236.5h.01M21.5 279.5h.01M64.5 279.5h.01M107.5 279.5h.01M150.5 279.5h.01M193.5 279.5h.01M236.5 279.5h.01M279.5 279.5h.01M322.5 279.5h.01M365.5 279.5h.01M408.5 279.5h.01M451.5 279.5h.01M494.5 279.5h.01M537.5 279.5h.01M580.5 279.5h.01M623.5 279.5h.01M666.5 279.5h.01M709.5 279.5h.01M752.5 279.5h.01M795.5 279.5h.01M838.5 279.5h.01M881.5 279.5h.01M924.5 279.5h.01M967.5 279.5h.01M1010.5 279.5h.01M1053.5 279.5h.01M1096.5 279.5h.01M1139.5 279.5h.01M1182.5 279.5h.01M21.5 322.5h.01M64.5 322.5h.01M107.5 322.5h.01M150.5 322.5h.01M193.5 322.5h.01M236.5 322.5h.01M279.5 322.5h.01M322.5 322.5h.01M365.5 322.5h.01M408.5 322.5h.01M451.5 322.5h.01M494.5 322.5h.01M537.5 322.5h.01M580.5 322.5h.01M623.5 322.5h.01M666.5 322.5h.01M709.5 322.5h.01M752.5 322.5h.01M795.5 322.5h.01M838.5 322.5h.01M881.5 322.5h.01M924.5 322.5h.01M967.5 322.5h.01M1010.5 322.5h.01M1053.5 322.5h.01M1096.5 322.5h.01M1139.5 322.5h.01M1182.5 322.5h.01M21.5 365.5h.01M64.5 365.5h.01M107.5 365.5h.01M150.5 365.5h.01M193.5 365.5h.01M236.5 365.5h.01M279.5 365.5h.01M322.5 365.5h.01M365.5 365.5h.01M408.5 365.5h.01M451.5 365.5h.01M494.5 365.5h.01M537.5 365.5h.01M580.5 365.5h.01M623.5 365.5h.01M666.5 365.5h.01M709.5 365.5h.01M752.5 365.5h.01M795.5 365.5h.01M838.5 365.5h.01M881.5 365.5h.01M924.5 365.5h.01M967.5 365.5h.01M1010.5 365.5h.01M1053.5 365.5h.01M1096.5 365.5h.01M1139.5 365.5h.01M1182.5 365.5h.01M21.5 408.5h.01M64.5 408.5h.01M107.5 408.5h.01M150.5 408.5h.01M193.5 408.5h.01M236.5 408.5h.01M279.5 408.5h.01M322.5 408.5h.01M365.5 408.5h.01M408.5 408.5h.01M451.5 408.5h.01M494.5 408.5h.01M537.5 408.5h.01M580.5 408.5h.01M623.5 408.5h.01M666.5 408.5h.01M709.5 408.5h.01M752.5 408.5h.01M795.5 408.5h.01M838.5 408.5h.01M881.5 408.5h.01M924.5 408.5h.01M967.5 408.5h.01M1010.5 408.5h.01M1053.5 408.5h.01M1096.5 408.5h.01M1139.5 408.5h.01M1182.5 408.5h.01M21.5 451.5h.01M64.5 451.5h.01M107.5 451.5h.01M150.5 451.5h.01M193.5 451.5h.01M236.5 451.5h.01M279.5 451.5h.01M322.5 451.5h.01M365.5 451.5h.01M408.5 451.5h.01M451.5 451.5h.01M494.5 451.5h.01M537.5 451.5h.01M580.5 451.5h.01M623.5 451.5h.01M666.5 451.5h.01M709.5 451.5h.01M752.5 451.5h.01M795.5 451.5h.01M838.5 451.5h.01M881.5 451.5h.01M924.5 451.5h.01M967.5 451.5h.01M1010.5 451.5h.01M1053.5 451.5h.01M1096.5 451.5h.01M1139.5 451.5h.01M1182.5 451.5h.01M21.5 494.5h.01M64.5 494.5h.01M107.5 494.5h.01M150.5 494.5h.01M193.5 494.5h.01M236.5 494.5h.01M279.5 494.5h.01M322.5 494.5h.01M365.5 494.5h.01M408.5 494.5h.01M451.5 494.5h.01M494.5 494.5h.01M537.5 494.5h.01M580.5 494.5h.01M623.5 494.5h.01M666.5 494.5h.01M709.5 494.5h.01M752.5 494.5h.01M795.5 494.5h.01M838.5 494.5h.01M881.5 494.5h.01M924.5 494.5h.01M967.5 494.5h.01M1010.5 494.5h.01M1053.5 494.5h.01M1096.5 494.5h.01M1139.5 494.5h.01M1182.5 494.5h.01M21.5 537.5h.01M64.5 537.5h.01M107.5 537.5h.01M150.5 537.5h.01M193.5 537.5h.01M236.5 537.5h.01M279.5 537.5h.01M322.5 537.5h.01M365.5 537.5h.01M408.5 537.5h.01M451.5 537.5h.01M494.5 537.5h.01M537.5 537.5h.01M580.5 537.5h.01M623.5 537.5h.01M666.5 537.5h.01M709.5 537.5h.01M752.5 537.5h.01M795.5 537.5h.01M838.5 537.5h.01M881.5 537.5h.01M924.5 537.5h.01M967.5 537.5h.01M1010.5 537.5h.01M1053.5 537.5h.01M1096.5 537.5h.01M1139.5 537.5h.01M1182.5 537.5h.01M21.5 580.5h.01M64.5 580.5h.01M107.5 580.5h.01M150.5 580.5h.01M193.5 580.5h.01M236.5 580.5h.01M279.5 580.5h.01M322.5 580.5h.01M365.5 580.5h.01M408.5 580.5h.01M451.5 580.5h.01M494.5 580.5h.01M537.5 580.5h.01M580.5 580.5h.01M623.5 580.5h.01M666.5 580.5h.01M709.5 580.5h.01M752.5 580.5h.01M795.5 580.5h.01M838.5 580.5h.01M881.5 580.5h.01M924.5 580.5h.01M967.5 580.5h.01M1010.5 580.5h.01M1053.5 580.5h.01M1096.5 580.5h.01M1139.5 580.5h.01M1182.5 580.5h.01M21.5 623.5h.01M64.5 623.5h.01M107.5 623.5h.01M150.5 623.5h.01M193.5 623.5h.01M236.5 623.5h.01M279.5 623.5h.01M322.5 623.5h.01M365.5 623.5h.01M408.5 623.5h.01M451.5 623.5h.01M494.5 623.5h.01M537.5 623.5h.01M580.5 623.5h.01M623.5 623.5h.01M666.5 623.5h.01M709.5 623.5h.01M752.5 623.5h.01M795.5 623.5h.01M838.5 623.5h.01M881.5 623.5h.01M924.5 623.5h.01M967.5 623.5h.01M1010.5 623.5h.01M1053.5 623.5h.01M1096.5 623.5h.01M1139.5 623.5h.01M1182.5 623.5h.01M21.5 666.5h.01M64.5 666.5h.01M107.5 666.5h.01M150.5 666.5h.01M193.5 666.5h.01M236.5 666.5h.01M279.5 666.5h.01M322.5 666.5h.01M365.5 666.5h.01M408.5 666.5h.01M451.5 666.5h.01M494.5 666.5h.01M537.5 666.5h.01M580.5 666.5h.01M623.5 666.5h.01M666.5 666.5h.01M709.5 666.5h.01M752.5 666.5h.01M795.5 666.5h.01M838.5 666.5h.01M881.5 666.5h.01M924.5 666.5h.01M967.5 666.5h.01M1010.5 666.5h.01M1053.5 666.5h.01M1096.5 666.5h.01M1139.5 666.5h.01M1182.5 666.5h.01M21.5 709.5h.01M64.5 709.5h.01M107.5 709.5h.01M150.5 709.5h.01M193.5 709.5h.01M236.5 709.5h.01M279.5 709.5h.01M322.5 709.5h.01M365.5 709.5h.01M408.5 709.5h.01M451.5 709.5h.01M494.5 709.5h.01M537.5 709.5h.01M580.5 709.5h.01M623.5 709.5h.01M666.5 709.5h.01M709.5 709.5h.01M752.5 709.5h.01M795.5 709.5h.01M838.5 709.5h.01M881.5 709.5h.01M924.5 709.5h.01M967.5 709.5h.01M1010.5 709.5h.01M1053.5 709.5h.01M1096.5 709.5h.01M1139.5 709.5h.01M1182.5 709.5h.01M21.5 752.5h.01M64.5 752.5h.01M107.5 752.5h.01M150.5 752.5h.01M193.5 752.5h.01M236.5 752.5h.01M279.5 752.5h.01M322.5 752.5h.01M365.5 752.5h.01M408.5 752.5h.01M451.5 752.5h.01M494.5 752.5h.01M537.5 752.5h.01M580.5 752.5h.01M623.5 752.5h.01M666.5 752.5h.01M709.5 752.5h.01M752.5 752.5h.01M795.5 752.5h.01M838.5 752.5h.01M881.5 752.5h.01M924.5 752.5h.01M967.5 752.5h.01M1010.5 752.5h.01M1053.5 752.5h.01M1096.5 752.5h.01M1139.5 752.5h.01M1182.5 752.5h.01M21.5 795.5h.01M64.5 795.5h.01M107.5 795.5h.01M150.5 795.5h.01M193.5 795.5h.01M236.5 795.5h.01M279.5 795.5h.01M322.5 795.5h.01M365.5 795.5h.01M408.5 795.5h.01M451.5 795.5h.01M494.5 795.5h.01M537.5 795.5h.01M580.5 795.5h.01M623.5 795.5h.01M666.5 795.5h.01M709.5 795.5h.01M752.5 795.5h.01M795.5 795.5h.01M838.5 795.5h.01M881.5 795.5h.01M924.5 795.5h.01M967.5 795.5h.01M1010.5 795.5h.01M1053.5 795.5h.01M1096.5 795.5h.01M1139.5 795.5h.01M1182.5 795.5h.01" class="bs-gen__e" stroke-width="5" stroke-linecap="round" fill="none" opacity=".55"/><text class="bs-gen__glyph bs-gen__w" x="242.5" y="688">嵌</text></g>
+<text class="bs-gen__label" x="40" y="64">NO.24 / 2026</text>
+</svg>
+    </figure>
+  </header>
+
+  <div class="bs-post__layout">
+    <aside class="bs-rail" aria-label="阅读进度与目录">
+      <div class="bs-rail__inner">
+        <a class="bs-progress" href="#top" data-to-top aria-label="回到顶部"><span class="bs-progress__fill"></span></a>
+        
+        <p class="bs-rail__label">目录 · CONTENTS</p>
+        <ol class="bs-toc"><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E5%AE%83%E6%98%AF%E4%BB%80%E4%B9%88"><span class="bs-toc-number">1.</span> <span class="bs-toc-text">它是什么</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%B8%89%E4%B8%AA%E9%98%B6%E6%AE%B5%EF%BC%8C%E4%B9%9D%E9%97%A8%E8%AF%BE"><span class="bs-toc-number">2.</span> <span class="bs-toc-text">三个阶段，九门课</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E7%BB%9F%E4%B8%80%E7%9A%84%E4%BB%93%E5%BA%93%E7%BA%A6%E5%AE%9A"><span class="bs-toc-number">3.</span> <span class="bs-toc-text">统一的仓库约定</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%B8%80%E4%B8%AA%E5%80%BC%E5%BE%97%E8%AE%B0%E4%BD%8F%E7%9A%84%E7%BB%86%E8%8A%82"><span class="bs-toc-number">4.</span> <span class="bs-toc-text">一个值得记住的细节</span></a></li><li class="bs-toc-item bs-toc-level-2"><a class="bs-toc-link" href="#%E4%BB%93%E5%BA%93"><span class="bs-toc-number">5.</span> <span class="bs-toc-text">仓库</span></a></li></ol>
+        
+      </div>
+    </aside>
+    <div class="bs-prose" data-prose>
+      <p>九门课、九个仓库，如果只是平铺在 GitHub 首页，它们就只是一堆孤立的资料。这个索引仓库做了一件事：给它们排一个顺序，让「先学什么、后学什么、为什么是这个顺序」有一个明确的答案。</p>
+<span id="more"></span>
+
+<h2 id="它是什么"><a href="#它是什么" class="headerlink" title="它是什么"></a>它是什么</h2><p>这是一个<strong>索引仓库</strong>，不存放课程文件本身。它把分散在 9 个独立仓库中的嵌入式课程笔记，按一条从语言基础到系统开发的主线串联起来，形成一条可执行的阅读路径。每个仓库只负责一个明确的知识域，可以单独克隆、单独阅读，也可以按编号顺序推进。</p>
+<p>目标写得很清楚：<strong>读得懂数据手册、点亮一颗芯片、交付一版固件</strong>。</p>
+<h2 id="三个阶段，九门课"><a href="#三个阶段，九门课" class="headerlink" title="三个阶段，九门课"></a>三个阶段，九门课</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">基础 ──&gt; 硬件 ──&gt; 系统</span><br><span class="line"></span><br><span class="line">01 C 语言               03 模拟电路      06 STM32 单片机</span><br><span class="line">02 数据结构与算法       04 数字电路与组成 07 FreeRTOS</span><br><span class="line">                        05 原理图与 PCB   08 Linux 与 Shell</span><br><span class="line">                                         09 Linux 应用层</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>仓库</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>01</td>
+<td>c-systems-programming-handbook</td>
+<td>C 核心语法、指针、预处理器、自定义类型、动态内存与文件操作</td>
+</tr>
+<tr>
+<td>02</td>
+<td>data-structures-and-algorithms</td>
+<td>数组、链表、栈、队列，查找、排序与复杂度分析</td>
+</tr>
+<tr>
+<td>03</td>
+<td>analog-circuits-and-components</td>
+<td>电学基础、电阻电容电感、二极管&#x2F;三极管&#x2F;MOS 管与典型电路</td>
+</tr>
+<tr>
+<td>04</td>
+<td>digital-logic-and-computer-organization</td>
+<td>逻辑门、触发器、冯诺依曼模型、指令集、总线与引导流程</td>
+</tr>
+<tr>
+<td>05</td>
+<td>schematic-and-pcb-design</td>
+<td>嘉立创 EDA 原理图、PCB 布局布线、封装设计与焊接</td>
+</tr>
+<tr>
+<td>06</td>
+<td>stm32-mcu-development-notes</td>
+<td>GPIO、中断、定时器、DMA、ADC、SPI、CAN、以太网与低功耗</td>
+</tr>
+<tr>
+<td>07</td>
+<td>freertos-learning-notes</td>
+<td>任务调度、内核移植、队列、信号量、事件组与内存管理</td>
+</tr>
+<tr>
+<td>08</td>
+<td>linux-shell-regex-notes</td>
+<td>Ubuntu 系统管理、Shell 脚本与正则表达式</td>
+</tr>
+<tr>
+<td>09</td>
+<td>linux-application-development-notes</td>
+<td>GCC 工具链、文件 I&#x2F;O、进程线程、IPC、Socket 与 epoll</td>
+</tr>
+</tbody></table>
+<p>顺序不是课程表本身，而是<strong>依赖关系</strong>：没有指针和内存模型，看不懂寄存器位域；不理解触发器，就理解不了定时器与中断；没跑过裸机，RTOS 的调度器只是黑盒；不熟悉系统调用，Linux 应用层就只在背 API。</p>
+<h2 id="统一的仓库约定"><a href="#统一的仓库约定" class="headerlink" title="统一的仓库约定"></a>统一的仓库约定</h2><p>九个仓库遵循同一套结构，便于批量阅读与检索：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">repository/</span><br><span class="line">├── README.md            中文索引与内容概览</span><br><span class="line">├── README-English.md    English index</span><br><span class="line">└── docs/</span><br><span class="line">    ├── &lt;title&gt;.pdf      课程文档（只读，便于在线预览）</span><br><span class="line">    └── &lt;title&gt;.docx     可编辑版本</span><br></pre></td></tr></table></figure>
+
+<p>约定里有一条边界值得借鉴：<strong>README 只做索引与学习建议，完整定义、图示与示例以 <code>docs/</code> 中的文档为准</strong>。也就是说，索引不复制正文，避免同一份知识在两处维护、两处过期。每个仓库末尾还有一段「关键词」，列出覆盖的技术术语，方便搜索时定位。</p>
+<p>文档同时提供 PDF 与 DOCX：PDF 用于在线预览，DOCX 用于批注和摘录——同一内容的两种消费方式。</p>
+<h2 id="一个值得记住的细节"><a href="#一个值得记住的细节" class="headerlink" title="一个值得记住的细节"></a>一个值得记住的细节</h2><p>这个仓库本身没有一行代码，但它可能是整个体系里最有价值的一个——因为它回答的是「路径」问题。资料越多，路径越稀缺：九个仓库各自都完整，但没有排序时，新人面对的是九扇没有门牌的门。</p>
+<p>把「阅读顺序」单独做成一个版本化的仓库，还有一个隐性好处：路线图和课程仓库可以独立演进。课程内容更新不影响路线，路线调整也不需要动任何一门课的正文。</p>
+<h2 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ashleycurry/embedded-roadmap">embedded-roadmap</a></li>
+</ul>
+
+    </div>
+  </div>
+
+  <footer class="bs-pfoot">
+    
+    <ul class="bs-tags" aria-label="标签">
+      <li><a href="/tags/%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/">#学习路线</a></li><li><a href="/tags/%E7%A1%AC%E4%BB%B6%E5%9F%BA%E7%A1%80/">#硬件基础</a></li><li><a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/">#嵌入式</a></li><li><a href="/tags/%E7%B4%A2%E5%BC%95%E4%BB%93%E5%BA%93/">#索引仓库</a></li><li><a href="/tags/STM32/">#STM32</a></li><li><a href="/tags/FreeRTOS/">#FreeRTOS</a></li><li><a href="/tags/Linux/">#Linux</a></li>
+    </ul>
+    
+    <div class="bs-pfoot__grid">
+      
+      <p class="bs-license">
+        <span class="bs-kicker">LICENSE</span>
+        本文作者 XiaoGao，采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可。
+        转载请注明出处：<a href="https://xiaogao-code.space/2026/10/22/embedded-roadmap/">https:&#x2F;&#x2F;xiaogao-code.space&#x2F;2026&#x2F;10&#x2F;22&#x2F;embedded-roadmap&#x2F;</a>
+      </p>
+      
+      
+      
+    </div>
+  </footer>
+
+  <nav class="bs-pnav" aria-label="分页">
+    <span class="bs-pnav__item bs-pnav__item--newer is-empty"><span class="bs-kicker">这是最新的一篇</span></span>
+    
+    <a class="bs-pnav__item bs-pnav__item--older" href="/2026/10/21/ai-foundations-handbook/" rel="next">
+      <span class="bs-kicker">较早 OLDER →</span><span class="bs-pnav__t">AI 基础手册：37 篇笔记从线性代数走到知识图谱</span>
+    </a>
+    
+  </nav>
+
+  
+</article>
+</main>
+
+<footer class="bs-footer">
+  <div class="bs-footer__white">
+    <a class="bs-brand bs-brand--footer" href="/">
+      <span class="bs-mark" aria-hidden="true"></span>
+      <span class="bs-brand__name">XiaoGao 的个人博客</span>
+    </a>
+    <p class="bs-footer__desc">嵌入式软件 / 机器人 / 计算机视觉 / LLM 应用的学习与实践笔记</p>
+    <ul class="bs-footer__social">
+      
+      <li><a href="https://github.com/Ashleycurry" target="_blank" rel="noopener">GitHub</a></li>
+      
+      <li><a href="/atom.xml">RSS</a></li>
+    </ul>
+    <p class="bs-footer__meta">
+      © 2026 XiaoGao
+       · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+      · 由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 与 <a href="https://github.com/LiuXiu233/hexo-theme-bisect" target="_blank" rel="noopener">Bisect</a> 主题驱动
+    </p>
+    <p class="bs-footer__meta">
+      总访问量 · <strong id="bs-visit-count">666</strong><span id="busuanzi_value_site_pv" hidden></span>
+    </p>
+  </div>
+  <div class="bs-footer__blue">
+    
+<p class="bs-slogan bs-slogan--footer">
+  <span class="bs-slogan__zh">从寄存器到推理，把设备、数据与智能连起来。</span>
+  <span class="bs-slogan__en">Build close to the machine. Bring intelligence to the edge.</span>
+</p>
+
+
+    
+    <div class="bs-footer__actions">
+      
+      <a class="bs-btn bs-btn--line" href="#top" data-to-top>回到顶部 ↑</a>
+    </div>
+  </div>
+</footer>
+<script id="bs-config" type="application/json">{"root":"/","search":"/search.xml","lang":"zh-CN","comments":null,"chatra":{"enable":false,"id":null},"mermaid":{"enable":true,"js":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.0/mermaid.min.js"},"i18n":{"copy":"复制","copied":"已复制","failed":"复制失败","empty":"没有找到。换个词试试，或输入 > 查看命令。","unavailable":"没有找到搜索索引。安装 hexo-generator-searchdb 后即可搜索。","kindTitle":"标题","kindTag":"标签","kindText":"正文","cmdTheme":"切换深浅色","cmdRandom":"随机读一篇","cmdTop":"回到页面顶部","cmdArchive":"打开归档"}}</script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script>
+  (function () {
+    var out = document.getElementById('bs-visit-count');
+    var src = document.getElementById('busuanzi_value_site_pv');
+    if (!out || !src) return;
+    var timer = setInterval(function () {
+      var n = parseInt(src.textContent, 10);
+      if (!isNaN(n)) {
+        clearInterval(timer);
+        out.textContent = (n + 666).toLocaleString('en-US');
+      }
+    }, 400);
+    setTimeout(function () { clearInterval(timer); }, 15000);
+  })();
+</script>
+
+<dialog class="bs-search" id="bs-search" aria-label="搜索文章或输入命令">
+  <form class="bs-search__bar" method="dialog" role="search">
+    <span class="bs-search__prompt" aria-hidden="true">&gt;</span>
+    <label class="bs-sr" for="bs-search-input">搜索文章或输入命令</label>
+    <input id="bs-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="搜索标题、正文、标签……  输入 &gt; 查看命令">
+    <button class="bs-search__close" type="submit" aria-label="关闭">esc</button>
+  </form>
+  <ol class="bs-search__list" id="bs-search-list" role="listbox" aria-label="结果"></ol>
+  <p class="bs-search__hint"><span>↑↓ 选择</span><span>↵ 打开</span><span>&gt;theme · &gt;random · &gt;top · &gt;archive</span></p>
+</dialog>
+
+<script type="module" src="/js/bisect.js"></script>
+</body>
+</html>
